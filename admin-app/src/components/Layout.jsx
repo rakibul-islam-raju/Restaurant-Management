@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import LeftSidebar, { DrawerHeader } from "./LeftSidebar";
 import { Outlet } from "react-router-dom";
-import { drawerWidth } from "../../config/dashboardConfigs";
+import { drawerWidth } from "../config/dashboardConfigs";
 
 const AppBar = styled(MuiAppBar, {
 	shouldForwardProp: (prop) => prop !== "open",
