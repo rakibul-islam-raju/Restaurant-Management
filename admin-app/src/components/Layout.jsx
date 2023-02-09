@@ -1,16 +1,21 @@
-import { useState } from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
-import LeftSidebar, { DrawerHeader } from "./LeftSidebar";
-import { Outlet } from "react-router-dom";
+import { Menu, MenuItem } from "@mui/material";
+import MuiAppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
 import { drawerWidth } from "../config/dashboardConfigs";
+import { userLoggedOut } from "../features/auth/authSlice";
+import useAuth from "../hooks/useAuth";
+import LeftSidebar, { DrawerHeader } from "./LeftSidebar";
 
 const AppBar = styled(MuiAppBar, {
 	shouldForwardProp: (prop) => prop !== "open",
@@ -31,7 +36,34 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function Layout() {
+	const dispatch = useDispatch();
+	const isLoggedIn = useAuth();
+
 	const [open, setOpen] = useState(true);
+	const [anchorElNav, setAnchorElNav] = useState(null);
+	const [anchorElUser, setAnchorElUser] = useState(null);
+
+	const handleOpenNavMenu = (event) => {
+		setAnchorElNav(event.currentTarget);
+	};
+
+	const handleCloseNavMenu = () => {
+		setAnchorElNav(null);
+	};
+
+	const handleCloseUserMenu = () => {
+		setAnchorElUser(null);
+	};
+
+	const handleLogout = () => {
+		dispatch(userLoggedOut());
+		localStorage.removeItem("takeMyOrder_auth");
+		setAnchorElUser(null);
+	};
+
+	const handleOpenUserMenu = (event) => {
+		setAnchorElUser(event.currentTarget);
+	};
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -41,7 +73,7 @@ export default function Layout() {
 		setOpen(false);
 	};
 
-	return (
+	return isLoggedIn ? (
 		<Box sx={{ display: "flex" }}>
 			<CssBaseline />
 			<AppBar position="fixed" open={open}>
@@ -58,9 +90,35 @@ export default function Layout() {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" noWrap component="div">
+					<Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
 						Take My Order
 					</Typography>
+					<Box>
+						<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+							<AccountCircle style={{ color: "white" }} />
+						</IconButton>
+						<Menu
+							sx={{ mt: "45px" }}
+							id="menu-appbar"
+							anchorEl={anchorElUser}
+							anchorOrigin={{
+								vertical: "top",
+								horizontal: "right",
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: "top",
+								horizontal: "right",
+							}}
+							open={Boolean(anchorElUser)}
+							onClose={handleCloseUserMenu}
+						>
+							<MenuItem onClick={handleLogout}>
+								<LogoutIcon />
+								<Typography textAlign="center">Logout</Typography>
+							</MenuItem>
+						</Menu>
+					</Box>
 				</Toolbar>
 			</AppBar>
 			<>
@@ -73,5 +131,7 @@ export default function Layout() {
 				</>
 			</Box>
 		</Box>
+	) : (
+		<Navigate to="/login" replace />
 	);
 }

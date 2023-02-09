@@ -1,7 +1,7 @@
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Box } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LoginForm from "./components/LoginForm";
 
 export default function Login() {

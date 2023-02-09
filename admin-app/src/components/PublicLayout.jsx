@@ -1,10 +1,10 @@
-import CssBaseline from "@mui/material/CssBaseline";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { Outlet } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 function Copyright(props) {
 	return (
@@ -25,7 +25,9 @@ function Copyright(props) {
 }
 
 export default function PublicLayout() {
-	return (
+	const isLoggedIn = useAuth();
+
+	return !isLoggedIn ? (
 		<>
 			<Grid container component="main" sx={{ height: "100vh" }}>
 				<CssBaseline />
@@ -55,5 +57,7 @@ export default function PublicLayout() {
 				</Grid>
 			</Grid>
 		</>
+	) : (
+		<Navigate to="/" replace />
 	);
 }
