@@ -1,6 +1,6 @@
 import { apiSlice } from "../api/apiSlice";
 
-export const authApi = apiSlice.injectEndpoints({
+export const categoryApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getCategories: builder.query({
 			query: (params) => `/categories`,
@@ -14,14 +14,19 @@ export const authApi = apiSlice.injectEndpoints({
 			}),
 			async onQueryStarted(arg, { queryFulfilled, dispatch }) {
 				const patchResult = dispatch(
-					apiSlice.util.updateQueryData("getCategories", "", (draft) => {
-						const newCategory = { ...arg.data };
-						newCategory.id = draft.results[0] + 1;
-						newCategory.created_at = new Date();
-						newCategory.updated_at = new Date();
+					apiSlice.util.updateQueryData(
+						"getCategories",
+						arg.params,
+						(draft) => {
+							const newCategory = { ...arg.data };
+							newCategory.id = draft.results[0] + 1;
+							newCategory.created_at = new Date();
+							newCategory.updated_at = new Date();
+							newCategory.is_active = true;
 
-						draft.results.unshift(newCategory);
-					})
+							draft.results.unshift(newCategory);
+						}
+					)
 				);
 				try {
 					await queryFulfilled;
@@ -89,4 +94,4 @@ export const {
 	useAddCategoryMutation,
 	useEditCategoryMutation,
 	useDeleteCategoryMutation,
-} = authApi;
+} = categoryApi;

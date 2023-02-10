@@ -7,19 +7,18 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
+export default function OrderTable({ data, editMenuHandler }) {
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650 }} aria-label="simple table">
 				<TableHead>
 					<TableRow>
-						<TableCell></TableCell>
-						<TableCell align="left">Name</TableCell>
-						<TableCell align="left">Category</TableCell>
-						<TableCell align="left">Description</TableCell>
-						<TableCell align="left">Price</TableCell>
-						<TableCell align="left">Offer Price</TableCell>
-						<TableCell align="left">Cook Time</TableCell>
+						<TableCell align="left">Customer Name</TableCell>
+						<TableCell align="left">Customer Email</TableCell>
+						<TableCell align="left">Total</TableCell>
+						<TableCell align="left">Tax</TableCell>
+						<TableCell align="left">Paid</TableCell>
+						<TableCell align="left">Served</TableCell>
 						<TableCell align="left">Created At</TableCell>
 						<TableCell align="left">Updated At</TableCell>
 						<TableCell align="left">Active</TableCell>
@@ -34,20 +33,15 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
 							>
 								<TableCell component="th" scope="row">
-									<img
-										src={row.image}
-										alt={row.name}
-										style={{ maxWidth: "80px" }}
-									/>
+									{`${row.user.first_name} ${row.user.last_name}`}
 								</TableCell>
-								<TableCell align="left">{row.name}</TableCell>
-								<TableCell align="left">{row.category.name}</TableCell>
+								<TableCell align="left">{row.user.email}</TableCell>
+								<TableCell align="left">{row.total_price}</TableCell>
+								<TableCell align="left">{row.tax}</TableCell>
+								<TableCell align="left">{row.is_paid ? "Yes" : "No"}</TableCell>
 								<TableCell align="left">
-									<pre>{row.description}</pre>
+									{row.is_served ? "Yes" : "No"}
 								</TableCell>
-								<TableCell align="left">{row.price}</TableCell>
-								<TableCell align="left">{row.offer_price}</TableCell>
-								<TableCell align="left">{row.cook_time}</TableCell>
 								<TableCell align="left">
 									{new Date(row.created_at).toLocaleString()}
 								</TableCell>
@@ -65,14 +59,7 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 											type="button"
 											onClick={() => editMenuHandler(row)}
 										>
-											Edit
-										</Button>
-										<Button
-											color="error"
-											size="small"
-											onClick={() => deleteHandler(row.id)}
-										>
-											Delete
+											View
 										</Button>
 									</Stack>
 								</TableCell>

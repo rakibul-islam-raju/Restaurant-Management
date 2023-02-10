@@ -53,7 +53,7 @@ export default function categoryForm({
 	});
 
 	const onSubmit = (data) => {
-		if (edit) {
+		if (edit && editData.id) {
 			dispatch(editCategory({ data, params: queryParams, id: editData.id }));
 		} else {
 			dispatch(addCategory({ data, params: queryParams }));
@@ -67,6 +67,8 @@ export default function categoryForm({
 			// TODO: toast alert
 		}
 	}, [isSuccess, editSuccess]);
+
+	// TODO: automate slug
 
 	return (
 		<Box component={"form"} onSubmit={handleSubmit(onSubmit)}>
