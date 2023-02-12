@@ -1,19 +1,19 @@
-import React, { FC, ReactElement } from "react";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import MailIcon from "@mui/icons-material/Mail";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import { Divider, Typography } from "@mui/material";
+import MuiDrawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import List from "@mui/material/List";
-import { Divider, Typography } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import MuiDrawer from "@mui/material/Drawer";
-import { drawerWidth } from "../config/dashboardConfigs";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { drawerWidth } from "../config/dashboardConfigs";
 
 const openedMixin = (theme) => ({
 	width: drawerWidth,
@@ -79,6 +79,12 @@ const MENUS = [
 		id: 3,
 		text: "Menus",
 		path: "/menus",
+		icon: <MailIcon color="primary" />,
+	},
+	{
+		id: 4,
+		text: "Categories",
+		path: "/categories",
 		icon: <MailIcon color="primary" />,
 	},
 ];

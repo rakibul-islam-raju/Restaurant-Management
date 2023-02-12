@@ -4,13 +4,13 @@ import { useDispatch } from "react-redux";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
 import {
-	useDeleteMenuMutation,
-	useGetMenusQuery,
-} from "../../features/menu/menuApi";
-import MenuForm from "./components/MenuForm";
-import MenuTable from "./components/MenuTable";
+	useDeleteCategoryMutation,
+	useGetCategoriesQuery,
+} from "../../features/category/categoryApi";
+import CategoryForm from "./components/categoryForm";
+import CategoryTable from "./components/CategoryTable";
 
-export default function Menus() {
+export default function Categories() {
 	const dispatch = useDispatch();
 
 	const [openModal, setOpenModal] = useState(false);
@@ -19,16 +19,16 @@ export default function Menus() {
 	const [editData, setEditData] = useState(null);
 
 	const {
-		data: menus,
+		data: categories,
 		isLoading,
 		isError,
 		error: responseError,
-	} = useGetMenusQuery(params);
+	} = useGetCategoriesQuery(params);
 
 	const [
 		deleteCategory,
 		{ isSuccess: deleteSuccess, error: deleteResponseError },
-	] = useDeleteMenuMutation();
+	] = useDeleteCategoryMutation();
 
 	const closeModal = () => {
 		setOpenModal(false);
@@ -36,7 +36,7 @@ export default function Menus() {
 		setEditData(null);
 	};
 
-	const editMenuHandler = (data) => {
+	const editCategoryHandler = (data) => {
 		setEdit(true);
 		setEditData(data);
 		setOpenModal(true);
@@ -59,14 +59,14 @@ export default function Menus() {
 		<>
 			<Stack direction={"row"} justifyContent={"space-between"} mb={2}>
 				<Typography variant="h4" gutterBottom>
-					Menus
+					Categories
 				</Typography>
 				<Button
 					variant="contained"
 					color="primary"
 					onClick={() => setOpenModal(true)}
 				>
-					Add Menu
+					Add Category
 				</Button>
 			</Stack>
 			<Divider />
@@ -75,9 +75,9 @@ export default function Menus() {
 			{isLoading ? (
 				<Loader />
 			) : (
-				<MenuTable
-					data={menus}
-					editMenuHandler={editMenuHandler}
+				<CategoryTable
+					data={categories}
+					editCategoryHandler={editCategoryHandler}
 					deleteHandler={deleteHandler}
 				/>
 			)}
@@ -86,10 +86,10 @@ export default function Menus() {
 			<Modal
 				open={openModal}
 				closeModal={closeModal}
-				title="Add New Menu"
+				title={`${edit ? "Edit Category" : "Add New Category"}`}
 				size="md"
 			>
-				<MenuForm
+				<CategoryForm
 					closeModal={closeModal}
 					queryParams={params}
 					edit={edit}
