@@ -3,7 +3,6 @@ import About from "components/About";
 import Feature from "components/Feature";
 import FeaturedMenus from "components/Feature/FeatureMenus";
 import Header from "components/Header";
-import Review from "components/Review";
 import Statistics from "components/Statistics";
 
 import Head from "next/head";
@@ -19,7 +18,6 @@ export default function Home() {
 				<link rel="stylesheet" href="boxicons.min.css" />
 				<link rel="stylesheet"
 					href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
-
 				<head />
 			</Head>
 
@@ -28,10 +26,20 @@ export default function Home() {
 				<Feature />
 				<About />
 				<Statistics />
-				<Review />
-
-
-
+				<div class="flex gap-8 p-8 w-screen overflow-x-scroll scroll whitespace-nowrap cursor-pointer scroll-smooth w-full">
+					<div
+						class="flex-shrink-0 w-80 h-40 bg-cyan-300 rounded-2xl snap-center"
+					></div>
+					<div
+						class="flex-shrink-0 w-80 h-40 bg-violet-400 rounded-2xl snap-center"
+					></div>
+					<div
+						class="flex-shrink-0 w-80 h-40 bg-fuchsia-400 rounded-2xl snap-center"
+					></div>
+					<div
+						class="flex-shrink-0 w-80 h-40 bg-yellow-500 rounded-2xl"
+					></div>
+				</div>
 			</section>
 		</>
 	);
