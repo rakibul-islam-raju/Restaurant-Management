@@ -21,11 +21,25 @@ export default function Home() {
 				<head />
 			</Head>
 
-			<section>
+			<section className="scroll-smooth">
 				<Header />
 				<Feature />
 				<About />
 				<Statistics />
+				<div class="flex gap-8 p-8 w-screen overflow-x-scroll scroll whitespace-nowrap cursor-pointer scroll-smooth w-full">
+					<div
+						class="flex-shrink-0 w-80 h-40 bg-cyan-300 rounded-2xl snap-center"
+					></div>
+					<div
+						class="flex-shrink-0 w-80 h-40 bg-violet-400 rounded-2xl snap-center"
+					></div>
+					<div
+						class="flex-shrink-0 w-80 h-40 bg-fuchsia-400 rounded-2xl snap-center"
+					></div>
+					<div
+						class="flex-shrink-0 w-80 h-40 bg-yellow-500 rounded-2xl"
+					></div>
+				</div>
 			</section>
 		</>
 	);
