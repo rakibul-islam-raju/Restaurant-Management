@@ -1,4 +1,7 @@
-import { Alert, Button, Stack } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Alert, Button, ButtonGroup, Tooltip } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -38,9 +41,19 @@ export default function OrderTable({ data, editMenuHandler }) {
 								<TableCell align="left">{row.user.email}</TableCell>
 								<TableCell align="left">{row.total_price}</TableCell>
 								<TableCell align="left">{row.tax}</TableCell>
-								<TableCell align="left">{row.is_paid ? "Yes" : "No"}</TableCell>
 								<TableCell align="left">
-									{row.is_served ? "Yes" : "No"}
+									{row.is_paid ? (
+										<DoneIcon color="success" />
+									) : (
+										<CloseIcon color="error" />
+									)}
+								</TableCell>
+								<TableCell align="left">
+									{row.is_served ? (
+										<DoneIcon color="success" />
+									) : (
+										<CloseIcon color="error" />
+									)}
 								</TableCell>
 								<TableCell align="left">
 									{new Date(row.created_at).toLocaleString()}
@@ -49,19 +62,25 @@ export default function OrderTable({ data, editMenuHandler }) {
 									{new Date(row.updated_at).toLocaleString()}
 								</TableCell>
 								<TableCell align="left">
-									{row.is_active ? "Yes" : "no"}
+									{row.is_active ? (
+										<DoneIcon color="success" />
+									) : (
+										<CloseIconCloseIcon color="error" />
+									)}
 								</TableCell>
 								<TableCell align="left">
-									<Stack direction={"row"}>
-										<Button
-											color="primary"
-											size="small"
-											type="button"
-											onClick={() => editMenuHandler(row)}
-										>
-											View
-										</Button>
-									</Stack>
+									<ButtonGroup>
+										<Tooltip title="View Details">
+											<Button
+												color="primary"
+												size="small"
+												type="button"
+												onClick={() => editMenuHandler(row)}
+											>
+												<VisibilityIcon />
+											</Button>
+										</Tooltip>
+									</ButtonGroup>
 								</TableCell>
 							</TableRow>
 						))

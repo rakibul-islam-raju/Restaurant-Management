@@ -1,4 +1,8 @@
-import { Alert, Button, Stack } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DoneIcon from "@mui/icons-material/Done";
+import EditIcon from "@mui/icons-material/Edit";
+import { Alert, Button, ButtonGroup, Tooltip } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -42,25 +46,33 @@ export default function CategoryTable({
 									{new Date(row.updated_at).toLocaleString()}
 								</TableCell>
 								<TableCell align="left">
-									{row.is_active ? "Yes" : "no"}
+									{row.is_active ? (
+										<DoneIcon color="success" />
+									) : (
+										<CloseIcon color="error" />
+									)}
 								</TableCell>
 								<TableCell align="left">
-									<Stack direction={"row"}>
-										<Button
-											color="primary"
-											size="small"
-											onClick={() => editCategoryHandler(row)}
-										>
-											Edit
-										</Button>
-										<Button
-											color="error"
-											size="small"
-											onClick={() => deleteHandler(row.id)}
-										>
-											Delete
-										</Button>
-									</Stack>
+									<ButtonGroup>
+										<Tooltip title="Edit">
+											<Button
+												color="primary"
+												size="small"
+												onClick={() => editCategoryHandler(row)}
+											>
+												<EditIcon />
+											</Button>
+										</Tooltip>
+										<Tooltip title="Delete">
+											<Button
+												color="error"
+												size="small"
+												onClick={() => deleteHandler(row.id)}
+											>
+												<DeleteForeverIcon />
+											</Button>
+										</Tooltip>
+									</ButtonGroup>
 								</TableCell>
 							</TableRow>
 						))

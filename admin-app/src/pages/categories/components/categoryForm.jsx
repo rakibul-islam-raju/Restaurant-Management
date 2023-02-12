@@ -7,7 +7,7 @@ import {
 	Stack,
 	TextField,
 } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
@@ -15,6 +15,7 @@ import {
 	useAddCategoryMutation,
 	useEditCategoryMutation,
 } from "../../../features/category/categoryApi";
+import { slugify } from "../../../utils/slugify";
 
 const categorySchema = yup
 	.object({
@@ -32,6 +33,8 @@ export default function categoryForm({
 }) {
 	const dispatch = useDispatch();
 
+	const [slug, setSlug] = useState("");
+
 	const [addCategory, { isLoading, isError, error: responseError, isSuccess }] =
 		useAddCategoryMutation();
 
@@ -48,6 +51,7 @@ export default function categoryForm({
 		register,
 		handleSubmit,
 		formState: { errors },
+		watch,
 	} = useForm({
 		resolver: yupResolver(categorySchema),
 	});
@@ -68,7 +72,21 @@ export default function categoryForm({
 		}
 	}, [isSuccess, editSuccess]);
 
-	// TODO: automate slug
+	const name = watch("name");
+
+	useEffect(() => {
+		if (name) {
+			setSlug(slugify(name));
+		} else {
+			setSlug("");
+		}
+	}, [name]);
+
+	useEffect(() => {
+		if (editData?.slug) {
+			setSlug(slugify(editData.slug));
+		}
+	}, []);
 
 	return (
 		<Box component={"form"} onSubmit={handleSubmit(onSubmit)}>
@@ -89,7 +107,9 @@ export default function categoryForm({
 				fullWidth
 				label="Slug"
 				defaultValue={edit ? editData.slug : ""}
+				value={slug}
 				{...register("slug")}
+				onChange={(e) => setSlug(e.target.value)}
 				error={errors.slug?.message || responseError?.data?.slug}
 				helperText={errors.slug?.message || responseError?.data?.slug}
 			/>

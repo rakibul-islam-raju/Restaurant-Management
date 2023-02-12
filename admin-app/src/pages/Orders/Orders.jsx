@@ -56,7 +56,11 @@ export default function Orders() {
 				title="Order Details"
 				size="md"
 			>
-				<OrderDetail order={editData} />
+				<OrderDetail
+					orderId={editData?.id}
+					closeModal={closeModal}
+					queryParams={params}
+				/>
 			</Modal>
 		</>
 	);

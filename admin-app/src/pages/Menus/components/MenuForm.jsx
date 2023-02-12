@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import {
 	Box,
 	Button,
@@ -7,8 +8,9 @@ import {
 	MenuItem,
 	Stack,
 	TextField,
+	Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
@@ -17,11 +19,14 @@ import {
 	useAddMenuMutation,
 	useEditMenuMutation,
 } from "../../../features/menu/menuApi";
+import { getFormData } from "../../../utils/getFormData";
+import { slugify } from "../../../utils/slugify";
 
 const menuSchema = yup
 	.object({
 		name: yup.string().required().max(100),
 		slug: yup.string().optional(),
+		image: yup.mixed().required("Image is required"),
 		price: yup.number().required(),
 		offer_price: yup.number().optional(),
 		description: yup.string().required(),
@@ -33,6 +38,10 @@ const menuSchema = yup
 
 export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 	const dispatch = useDispatch();
+
+	const [slug, setSlug] = useState("");
+	const [image, setImage] = useState(null);
+	const [previewImage, setPreviewImage] = useState(null);
 
 	const [addMenu, { isLoading, error: responseError, isSuccess }] =
 		useAddMenuMutation();
@@ -52,15 +61,31 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 		register,
 		handleSubmit,
 		formState: { errors },
+		watch,
 	} = useForm({
 		resolver: yupResolver(menuSchema),
 	});
 
 	const onSubmit = (data) => {
 		if (edit) {
-			dispatch(editMenu({ data, params: queryParams, id: editData.id }));
+			const newData = { ...data, slug };
+			if (image) {
+				newData.image = image;
+			} else {
+				delete newData.image;
+			}
+			const formData = getFormData(newData);
+			console.log("formdata => ", formData);
+
+			console.log("edit formData =>", formData.get("is_active"));
+
+			dispatch(
+				editMenu({ data: formData, params: queryParams, id: editData.id })
+			);
 		} else {
-			dispatch(addMenu({ data, params: queryParams }));
+			const newData = { ...data, image };
+			const formData = getFormData(newData);
+			dispatch(addMenu({ data: formData, params: queryParams }));
 		}
 	};
 
@@ -71,6 +96,22 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 			// TODO: toast alert
 		}
 	}, [isSuccess, editSuccess]);
+
+	const name = watch("name");
+
+	useEffect(() => {
+		if (name) {
+			setSlug(slugify(name));
+		} else {
+			setSlug("");
+		}
+	}, [name]);
+
+	useEffect(() => {
+		if (editData?.slug) {
+			setSlug(slugify(editData.slug));
+		}
+	}, []);
 
 	return (
 		<Box component={"form"} onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -91,10 +132,13 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 				fullWidth
 				label="Slug"
 				defaultValue={edit ? editData.slug : ""}
+				value={slug}
 				{...register("slug")}
+				onChange={(e) => setSlug(e.target.value)}
 				error={errors.slug?.message || responseError?.data?.slug}
 				helperText={errors.slug?.message || responseError?.data?.slug}
 			/>
+
 			<Stack
 				direction={"row"}
 				justifyContent="space-between"
@@ -119,7 +163,7 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 					type="number"
 					fullWidth
 					label="Discount Price"
-					defaultValue={edit ? editData.offer_price : ""}
+					defaultValue={edit ? editData.offer_price : 0}
 					{...register("offer_price")}
 					error={
 						errors.offer_price?.message || responseError?.data?.offer_price
@@ -185,6 +229,37 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 						))}
 				</TextField>
 			</Stack>
+			<Box mt={2}>
+				{(previewImage || editData?.image) && (
+					<img
+						style={{ width: "100%", marginBottom: "5px" }}
+						src={previewImage ? previewImage : editData?.image}
+						alt="image preview"
+					/>
+				)}
+
+				<Button variant="contained" fullWidth color="primary" component="label">
+					<CameraAltIcon sx={{ mr: 2 }} />
+					Upload Image
+					<input
+						{...register("image")}
+						onChange={(e) => {
+							setImage(e.target.files[0]);
+							setPreviewImage(URL.createObjectURL(e.target.files[0]));
+						}}
+						type="file"
+						multiple
+						accept="image/*"
+						hidden
+					/>
+				</Button>
+
+				{(errors?.image?.message || responseError?.data?.image) && (
+					<Typography color="error">
+						{errors?.image?.message || responseError?.data?.image}
+					</Typography>
+				)}
+			</Box>
 
 			{edit && (
 				<FormControlLabel
@@ -201,14 +276,18 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 
 			<Stack direction={"row"} justifyContent="end" gap={2} mt={3}>
 				<Button
-					disabled={isLoading}
+					disabled={isLoading || editLoading}
 					type="button"
 					color="inherit"
 					onClick={closeModal}
 				>
 					Cancel
 				</Button>
-				<Button disabled={isLoading} type="submit" color="primary">
+				<Button
+					disabled={isLoading || editLoading}
+					type="submit"
+					color="primary"
+				>
 					Submit
 				</Button>
 			</Stack>
