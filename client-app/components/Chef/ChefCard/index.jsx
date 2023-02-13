@@ -1,12 +1,17 @@
+import Image from 'next/image';
 import React from 'react';
 
 function ChefCard() {
   return (
     <div className='w-full  p-4 '>
-      <div
-        className=' bg-top  bg-cover bg-no-repeat   h-72 md:h-96  '
-        style={{ backgroundImage: `url(${'/chef-4.jpg.webp'})` }}
-      ></div>
+      <div className=' relative  h-72 md:h-96  '>
+        <Image
+          src={'/chef-4.jpg.webp'}
+          fill
+          alt=' Check order chef'
+          className='object-cover object-top'
+        />
+      </div>
       <div className='text-left text-lg pt-5 pb-3 '>
         <p className='text-lg'>Noman Reign</p>
         <p className='text-sm'>Noman Reign Lorem .</p>

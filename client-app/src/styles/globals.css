@@ -3,10 +3,14 @@
 @tailwind utilities;
 
 
-.app{
+.app {
   @apply text-gray-600
 }
 
 .wrapper {
-  @apply container px-5 mx-auto
+  @apply flex justify-between items-start
+}
+
+.flex-center {
+  @apply flex justify-between items-start
 }
