@@ -17,15 +17,6 @@ function Footer() {
             <a href=''>
               <i class='bx bxl-twitter  '></i>
             </a>
-            <a href=''>
-              <i class='bx bxl-facebook  '></i>
-            </a>
-            <a href=''>
-              <i class='bx bxl-youtube  '></i>
-            </a>
-            <a href=''>
-              <i class='bx bxl-whatsapp  '></i>
-            </a>
           </div>
         </div>
 
