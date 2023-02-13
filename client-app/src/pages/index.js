@@ -1,5 +1,6 @@
 
 import About from "components/About";
+import Chef from "components/Chef";
 import Feature from "components/Feature";
 import FeaturedMenus from "components/Feature/FeatureMenus";
 import Header from "components/Header";
@@ -29,6 +30,7 @@ export default function Home() {
 				<About />
 				<Statistics />
 				<Review />
+				<Chef />
 
 
 
