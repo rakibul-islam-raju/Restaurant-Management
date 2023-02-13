@@ -91,7 +91,7 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 							</TableRow>
 						))
 					) : (
-						<TableRow colspan={8}>
+						<TableRow colSpan={8}>
 							<Alert severity="warning">No Data Found!</Alert>
 						</TableRow>
 					)}
