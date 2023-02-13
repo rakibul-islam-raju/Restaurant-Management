@@ -115,6 +115,14 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 
 	return (
 		<Box component={"form"} onSubmit={handleSubmit(onSubmit)} noValidate>
+			{(responseError?.data?.detail || editResponseError?.data?.detail) && (
+				<Alert severity="error">
+					{responseError?.data?.detail ||
+						editResponseError.data?.detail ||
+						"Something went wrong!"}
+				</Alert>
+			)}
+
 			<TextField
 				variant="standard"
 				margin="normal"

@@ -1,5 +1,5 @@
-import { Button, Divider, Stack, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Alert, Button, Divider, Stack, Typography } from "@mui/material";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
@@ -49,12 +49,6 @@ export default function Categories() {
 		}
 	};
 
-	useEffect(() => {
-		if (deleteSuccess) {
-			closeModal;
-		}
-	}, [deleteSuccess]);
-
 	return (
 		<>
 			<Stack direction={"row"} justifyContent={"space-between"} mb={2}>
@@ -74,6 +68,12 @@ export default function Categories() {
 
 			{isLoading ? (
 				<Loader />
+			) : isError ? (
+				<Alert severity="error">
+					{responseError?.data?.detail ||
+						deleteResponseError?.data?.detail ||
+						"Something went wrong!"}
+				</Alert>
 			) : (
 				<CategoryTable
 					data={categories}
