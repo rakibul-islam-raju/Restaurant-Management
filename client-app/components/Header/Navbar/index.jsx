@@ -41,7 +41,7 @@ export default function Navbar() {
         </div>
         <div
           className={
-            ' md:static md:bg-transparent fixed bottom-0   left-0 right-0 px-4  py-1 md:border-0 border-t-[1px]   shadow-inner  bg-gray-100  '
+            ' md:static md:bg-transparent fixed bottom-0   left-0 right-0 px-4  py-1 md:border-0 border-t-[1px]   shadow-inner  bg-gray-100 md:bg-none '
           }
         >
           <ul className='pb-1   text-gray-500 flex items-center  flex-row md:ml-auto  md:mx-0 md:pl-0 space-x-4 transition-all duration-200 ease-in justify-between  '>
