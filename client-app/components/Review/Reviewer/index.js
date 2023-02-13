@@ -15,7 +15,7 @@ import Image from 'next/image';
 export default function Reviewer() {
 	return (
 
-		<div class='  pb-14    max-w-sm  p-8    space-y-2 rounded-2xl   '>
+		<div class='  pb-14     p-8    space-y-2 rounded-2xl bg-slate-400   '>
 			<Image
 				src={'/person_3.jpg.webp'}
 				height={99}
