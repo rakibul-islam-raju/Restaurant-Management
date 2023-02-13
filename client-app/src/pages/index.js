@@ -3,6 +3,7 @@ import Chef from "components/Chef";
 import Feature from "components/Feature";
 import FeaturedMenus from "components/Feature/FeatureMenus";
 import Header from "components/Header";
+import Review from "components/Review";
 import Statistics from "components/Statistics";
 
 import Head from "next/head";
