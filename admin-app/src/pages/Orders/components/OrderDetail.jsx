@@ -22,18 +22,12 @@ export default function OrderDetail({ orderId, closeModal, queryParams }) {
 	const {
 		data: order,
 		isLoading,
-		isError,
 		error: responseError,
 	} = useGetOrderQuery(orderId);
 
 	const [
 		editOrder,
-		{
-			isLoading: editLoading,
-			isError: editError,
-			error: editResponseError,
-			isSuccess,
-		},
+		{ isLoading: editLoading, error: editResponseError, isSuccess },
 	] = useEditOrderMutation();
 
 	const updateOrder = (data) => {
@@ -68,12 +62,18 @@ export default function OrderDetail({ orderId, closeModal, queryParams }) {
 		if (isSuccess) closeModal();
 	}, [isSuccess]);
 
-	console.log("order =>", order);
-
 	return isLoading ? (
 		<Loader />
 	) : (
 		<Box>
+			{(responseError?.data?.detail || editResponseError?.data?.detail) && (
+				<Alert severity="error">
+					{responseError?.data?.detail ||
+						editResponseError.data?.detail ||
+						"Something went wrong!"}
+				</Alert>
+			)}
+
 			<Stack direction={"row"} justifyContent={"space-between"} mb={2}>
 				<Box>
 					<Typography
@@ -88,6 +88,7 @@ export default function OrderDetail({ orderId, closeModal, queryParams }) {
 						color={order?.is_paid ? "success" : "error"}
 						size="small"
 						onClick={togglePaid}
+						disabled={isLoading || editLoading}
 					>
 						{order?.is_paid ? "Paid" : "Unpaid"}
 					</Button>
@@ -96,6 +97,7 @@ export default function OrderDetail({ orderId, closeModal, queryParams }) {
 						color={order?.is_served ? "success" : "error"}
 						size="small"
 						onClick={toggleServed}
+						disabled={isLoading || editLoading}
 					>
 						{order?.is_served ? "Served" : "Not Served"}
 					</Button>
@@ -104,6 +106,7 @@ export default function OrderDetail({ orderId, closeModal, queryParams }) {
 						color={order?.is_active ? "success" : "error"}
 						size="small"
 						onClick={toggleActive}
+						disabled={isLoading || editLoading}
 					>
 						{order?.is_active ? "Active" : "Canceled"}
 					</Button>

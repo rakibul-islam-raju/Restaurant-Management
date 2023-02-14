@@ -11,6 +11,7 @@ import Menus from "../pages/Menus/Menus";
 import NotFound from "../pages/NotFound/NotFound";
 import Orders from "../pages/Orders/Orders";
 import Register from "../pages/Register/Register";
+import Reservations from "../pages/Reservations/Reservations";
 
 export default function App() {
 	const authChecked = useAuthCheck();
@@ -30,6 +31,7 @@ export default function App() {
 				<Route path="/orders" element={<Orders />} />
 				<Route path="/menus" element={<Menus />} />
 				<Route path="/categories" element={<Categories />} />
+				<Route path="/reservations" element={<Reservations />} />
 				<Route path="*" element={<NotFound />} />
 			</Route>
 		</Routes>
