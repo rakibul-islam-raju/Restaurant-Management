@@ -1,4 +1,4 @@
-import { Divider, Typography } from "@mui/material";
+import { Alert, Divider, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Loader from "../../components/Loader";
@@ -20,7 +20,11 @@ export default function Orders() {
 		isLoading,
 		isError,
 		error: responseError,
-	} = useGetOrdersQuery(params);
+	} = useGetOrdersQuery(params, {
+		refetchOnFocus: true,
+		refetchOnReconnect: true,
+		refetchOnMountOrArgChange: true,
+	});
 
 	const closeModal = () => {
 		setOpenModal(false);
@@ -45,6 +49,10 @@ export default function Orders() {
 
 			{isLoading ? (
 				<Loader />
+			) : isError ? (
+				<Alert severity="error">
+					{responseError?.data?.detail || "Something went wrong!"}
+				</Alert>
 			) : (
 				<OrderTable data={orders} editMenuHandler={editMenuHandler} />
 			)}

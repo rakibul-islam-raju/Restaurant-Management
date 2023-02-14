@@ -4,13 +4,13 @@ import { useDispatch } from "react-redux";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
 import {
-	useDeleteCategoryMutation,
-	useGetCategoriesQuery,
-} from "../../features/category/categoryApi";
-import CategoryForm from "./components/categoryForm";
-import CategoryTable from "./components/CategoryTable";
+	useDeleteReservationMutation,
+	useGetReservationsQuery,
+} from "../../features/reservation/reservationApi";
+import ReservationForm from "./components/ReservationForm";
+import ReservationTable from "./components/ReservationTable";
 
-export default function Categories() {
+export default function Reservations() {
 	const dispatch = useDispatch();
 
 	const [openModal, setOpenModal] = useState(false);
@@ -19,16 +19,16 @@ export default function Categories() {
 	const [editData, setEditData] = useState(null);
 
 	const {
-		data: categories,
+		data: resarvations,
 		isLoading,
 		isError,
 		error: responseError,
-	} = useGetCategoriesQuery(params);
+	} = useGetReservationsQuery(params);
 
 	const [
-		deleteCategory,
+		deleteReservation,
 		{ isSuccess: deleteSuccess, error: deleteResponseError },
-	] = useDeleteCategoryMutation();
+	] = useDeleteReservationMutation();
 
 	const closeModal = () => {
 		setOpenModal(false);
@@ -36,7 +36,7 @@ export default function Categories() {
 		setEditData(null);
 	};
 
-	const editCategoryHandler = (data) => {
+	const editResarvationHandler = (data) => {
 		setEdit(true);
 		setEditData(data);
 		setOpenModal(true);
@@ -45,7 +45,7 @@ export default function Categories() {
 	const deleteHandler = (id) => {
 		const res = window.confirm("Do you want to delete this item?");
 		if (res) {
-			dispatch(deleteCategory({ id, params }));
+			dispatch(deleteReservation({ id, params }));
 		}
 	};
 
@@ -53,14 +53,14 @@ export default function Categories() {
 		<>
 			<Stack direction={"row"} justifyContent={"space-between"} mb={2}>
 				<Typography variant="h4" gutterBottom>
-					Categories
+					Reservations
 				</Typography>
 				<Button
 					variant="contained"
 					color="primary"
 					onClick={() => setOpenModal(true)}
 				>
-					Add Category
+					Add Reservation
 				</Button>
 			</Stack>
 			<Divider />
@@ -75,9 +75,9 @@ export default function Categories() {
 						"Something went wrong!"}
 				</Alert>
 			) : (
-				<CategoryTable
-					data={categories}
-					editCategoryHandler={editCategoryHandler}
+				<ReservationTable
+					data={resarvations}
+					editResarvationHandler={editResarvationHandler}
 					deleteHandler={deleteHandler}
 				/>
 			)}
@@ -86,10 +86,10 @@ export default function Categories() {
 			<Modal
 				open={openModal}
 				closeModal={closeModal}
-				title={`${edit ? "Edit Category" : "Add New Category"}`}
+				title={`${edit ? "Edit Reservation" : "Add New Reservation"}`}
 				size="md"
 			>
-				<CategoryForm
+				<ReservationForm
 					closeModal={closeModal}
 					queryParams={params}
 					edit={edit}
