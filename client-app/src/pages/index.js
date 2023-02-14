@@ -1,4 +1,5 @@
 import About from "components/About";
+import BookTable from "components/BookTable";
 import Chef from "components/Chef";
 import Feature from "components/Feature";
 import FeaturedMenus from "components/Feature/FeatureMenus";
@@ -27,9 +28,10 @@ export default function Home() {
         <Feature />
         <About />
         <Statistics />
-        <Review />
         <Menu />
         <Chef />
+        <BookTable />
+        <Review />
 
         <Footer />
       </section>
