@@ -3,12 +3,41 @@
 @tailwind utilities;
 
 
+
+
+
+@layer base {
+  html {
+    font-family: system-ui, sans-serif;
+  }
+
+  h1 {
+    @apply text-black leading-normal text-3xl md:text-6xl font-semibold tracking-wide
+  }
+
+  h2 {
+    @apply text-black text-[40px] md:text-[50px] font-black leading-tight
+  }
+
+  h3 {
+    @apply text-black text-2xl leading-tight font-medium
+  }
+
+  p {
+    @apply text-[17px] font-normal leading-loose text-[#666666]
+  }
+
+  label {
+    @apply text-[17px] text-black font-semibold leading-loose
+  }
+}
+
 .app {
   @apply text-gray-600
 }
 
 .wrapper {
-  @apply flex justify-between items-start
+  @apply md:max-w-6xl mx-auto p-4
 }
 
 .flex-center {

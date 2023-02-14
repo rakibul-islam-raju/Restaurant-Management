@@ -3,13 +3,13 @@ import React from 'react';
 
 function ChefCard() {
   return (
-    <div className='w-full  p-4 '>
+    <div className='w-full  p-4  '>
       <div className=' relative  h-72 md:h-96  '>
         <Image
           src={'/chef-4.jpg.webp'}
           fill
           alt=' Check order chef'
-          className='object-cover object-top'
+          className='object-cover object-top rounded-lg'
         />
       </div>
       <div className='text-left text-lg pt-5 pb-3 '>
