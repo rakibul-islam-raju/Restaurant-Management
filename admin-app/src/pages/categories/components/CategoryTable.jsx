@@ -77,8 +77,10 @@ export default function CategoryTable({
 							</TableRow>
 						))
 					) : (
-						<TableRow colSpan={8}>
-							<Alert severity="warning">No Data Found!</Alert>
+						<TableRow>
+							<TableCell colSpan={5}>
+								<Alert severity="warning">No Data Found!</Alert>
+							</TableCell>
 						</TableRow>
 					)}
 				</TableBody>
