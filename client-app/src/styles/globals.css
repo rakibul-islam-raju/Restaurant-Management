@@ -12,7 +12,7 @@
   }
 
   h1 {
-    @apply text-black leading-normal text-3xl md:text-6xl font-semibold tracking-wide
+    @apply leading-normal text-3xl md:text-6xl font-semibold tracking-wide
   }
 
   h2 {
@@ -22,6 +22,8 @@
   h3 {
     @apply text-black text-2xl leading-tight font-medium
   }
+
+
 
   p {
     @apply text-[17px] font-normal leading-loose text-[#666666]
@@ -37,9 +39,17 @@
 }
 
 .wrapper {
-  @apply md:max-w-6xl mx-auto p-4
+  @apply md:max-w-6xl mx-auto
 }
 
 .flex-center {
-  @apply flex justify-between items-start
+  @apply flex justify-between items-center
+}
+
+.nav-button {
+  @apply opacity-[1] font-normal md:py-3 md:p-5 transition ease-in-out text-sm text-gray-500
+}
+
+.great-font {
+  @apply font-great text-golden leading-none
 }

@@ -13,6 +13,11 @@ module.exports = {
       colors: {
         golden: "#c8a97e",
       },
+      fontFamily: {
+        great: ['Great Vibes', 'cursive'],
+        poppins: ['Poppins', 'sans-seri']
+
+      }, //e
     },
   },
   plugins: [],

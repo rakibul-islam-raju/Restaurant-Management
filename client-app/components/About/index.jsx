@@ -31,7 +31,9 @@ function About() {
           </div>
         </div>
         <div className=' col-span-5 md:col-span-2 text-justify space-y-4 '>
-          <h1 className=''>ORDER CHECK RESTAURANT</h1>
+          <h2 className='text-[40px] md:text-[50px] font-semibold'>
+            TAKE-ORDER RESTAURANT
+          </h2>
           <p className=' space-y-5'>Feliciano Restaurant</p>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil

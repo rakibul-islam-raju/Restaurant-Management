@@ -22,7 +22,7 @@ export default function Home() {
 				<head />
 			</Head>
 
-			<section className="scroll-smooth">
+			<section className="scroll-smooth font-poppins">
 				<Header />
 				<Feature />
 				<About />
