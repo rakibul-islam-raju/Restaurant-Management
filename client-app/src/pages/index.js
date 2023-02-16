@@ -33,7 +33,7 @@ export default function Home() {
 				<Statistics />
 				<CateringService />
 				<BookTable />
-				<BookTable />
+
 				<Review />
 				<Chef />
 				<Menu />
