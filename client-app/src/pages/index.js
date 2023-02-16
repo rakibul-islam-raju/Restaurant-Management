@@ -1,4 +1,5 @@
 import About from "components/About";
+import CateringService from "components/CateringService";
 import Chef from "components/Chef";
 import Feature from "components/Feature";
 import FeaturedMenus from "components/Feature/FeatureMenus";
@@ -22,11 +23,12 @@ export default function Home() {
 				<head />
 			</Head>
 
-			<section className="scroll-smooth">
+			<section className="scroll-smooth font-poppins">
 				<Header />
 				<Feature />
 				<About />
 				<Statistics />
+				<CateringService />
 				<Review />
 				<Chef />
 

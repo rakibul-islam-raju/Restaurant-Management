@@ -15,21 +15,21 @@ import Image from 'next/image';
 export default function Reviewer() {
 	return (
 
-		<div class='  pb-14     p-8    space-y-2 rounded-2xl   '>
+		<div class='  pb-14   flex flex-col items-center py-4    space-y-8 rounded-2xl   '>
 			<Image
 				src={'/person_3.jpg.webp'}
 				height={99}
 				width={99}
-				className='rounded-full ring-4 ring-green-400  mx-auto '
+				className='rounded-full ring-4 ring-golden  mx-auto '
 			/>
 
 			<div className='text-center space-y-2'>
-				<p className='text-base text-center'>
+				<p className=' text-center'>
 					Far far away, behind the word mountains, far from the
-					countries Vokalia and Consonantia,
+					countries Vokalia
 				</p>
-				<p className='text-2xl'>Mark Stevenson</p>
-				<p className='text-sm'>Customer</p>
+				<h4 className='text-2xl'>Mark Stevenson</h4>
+				<p className='text-xs font-semibold uppercase leading-loose'>Customer</p>
 			</div>
 		</div>
 
