@@ -1,15 +1,19 @@
 const Topbar = () => {
   return (
-    <section className='absolute top-0 text-white text-center bg-gray-600 opacity-50 bg left-0 right-0 py-1 z-[3] px-10 hidden md:block w-full'>
-      <div className='container mx-auto px-16 flex items-center justify-between'>
+    <section className='absolute   bg-topbarBg left-0 right-0  z-[3]  hidden md:block '>
+      <div className='  flex items-center justify-between container px-4 py-1 '>
         <div>
-          <p>Lorem ipsum dolor sit amet .</p>
+          <small>
+            <i class='bx bxs-phone-call p-1'></i>+ 1235 2355 98
+          </small>
         </div>
         <div>
-          <p>Lorem ipsum dolor sit amet .</p>
+          <small>
+            <i class='bx bxs-paper-plane p-1'></i>msptonmoy@gmail.com
+          </small>
         </div>
         <div>
-          <p>Lorem ipsum dolor sit amet .</p>
+          <small>Open hours: Monday - Sunday 8:00AM - 9:00PM</small>
         </div>
       </div>
     </section>

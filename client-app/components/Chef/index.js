@@ -5,9 +5,9 @@ import ChefCard from './ChefCard';
 
 function Chef() {
 	return (
-		<section className='md:max-w-6xl mx-auto md:pt-16 pt-3 '>
+		<section className='wrapper  '>
 			<SectionHeader upperText={'Chef'} lowerText={'Our Master Chef'} />
-			<div className='grid grid-cols-1  md:grid-cols-4  '>
+			<div className='grid grid-cols-1  md:grid-cols-4 gap-4  '>
 
 				<ChefCard />
 				<ChefCard />

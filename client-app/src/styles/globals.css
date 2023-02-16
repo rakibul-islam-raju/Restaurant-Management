@@ -20,9 +20,19 @@
   }
 
   h3 {
-    @apply text-black text-2xl leading-tight font-medium
+    @apply text-golden font-bold text-3xl md:text-[40px] leading-loose
   }
 
+  h4 {
+    @apply text-black text-2xl leading-tight font-medium
+  }
+  h5 {
+    @apply text-black text-lg leading-loose font-semibold 
+  }
+
+  small{
+    @apply text-[#FFFFFFB3] font-normal
+  }
 
 
   p {
@@ -39,6 +49,10 @@
 }
 
 .wrapper {
+  @apply md:max-w-6xl mx-auto  p-4 pb-32
+}
+
+.container{
   @apply md:max-w-6xl mx-auto
 }
 
@@ -52,4 +66,12 @@
 
 .great-font {
   @apply font-great text-golden leading-none
+}
+
+.stats-strong {
+  @apply text-golden font-bold text-3xl md:text-[44px] leading-none
+}
+
+.icon-bg{
+  @apply  bg-neutral-700 p-1 rounded-full text-center
 }

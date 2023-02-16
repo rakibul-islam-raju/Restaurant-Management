@@ -5,7 +5,7 @@ import Topbar from './Topbar';
 
 function Header() {
   return (
-    <div>
+    <div className='md:pb-32 '>
       <Topbar />
       <Navbar />
       <section className='relative bg-gradient-to-br w-full h-screen from-gray-800 to-gray-600  '>
@@ -17,7 +17,7 @@ function Header() {
             className='object-cover object-center md:object-center'
           />
         </div>
-        <div className='absolute text-center right-[20%] left-[18%] top-[40%] text-white'>
+        <div className='absolute text-center right-0 left-0  top-[40%] md:top-[35%] text-white'>
           <p className='text-[80px] great-font '>Take Order</p>
           <h1 className=''>Best Restraurant</h1>
         </div>

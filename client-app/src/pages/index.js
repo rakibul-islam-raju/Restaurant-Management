@@ -1,4 +1,5 @@
 import About from "components/About";
+import CateringService from "components/CateringService";
 import Chef from "components/Chef";
 import Feature from "components/Feature";
 import FeaturedMenus from "components/Feature/FeatureMenus";
@@ -27,6 +28,7 @@ export default function Home() {
 				<Feature />
 				<About />
 				<Statistics />
+				<CateringService />
 				<Review />
 				<Chef />
 

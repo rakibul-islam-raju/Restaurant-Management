@@ -32,7 +32,7 @@ export default function Navbar() {
       <div
         className={`${
           navbar ? ' md:my-0' : 'md:my-4  '
-        } flex items-center wrapper p-4 md:p-0 `}
+        } flex items-center md:max-w-6xl mx-auto  p-4  pb-4 md:py-0  `}
       >
         <a
           className={`${
@@ -52,7 +52,7 @@ export default function Navbar() {
             <NavLinks value={navbar} />
           </ul>
         </div>
-        <div className='hover:text-yellow-600 text-2xl ml-auto   cursor-pointer md:ml-7  '>
+        <div className=' text-golden hover:opacity-80 text-2xl ml-auto   cursor-pointer md:ml-7  '>
           <i class='bx bxs-user-circle'></i>
         </div>
       </div>
