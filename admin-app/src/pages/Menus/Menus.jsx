@@ -1,4 +1,4 @@
-import { Button, Divider, Stack, Typography } from "@mui/material";
+import { Alert, Button, Divider, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Loader from "../../components/Loader";
@@ -74,6 +74,12 @@ export default function Menus() {
 
 			{isLoading ? (
 				<Loader />
+			) : isError ? (
+				<Alert severity="error">
+					{responseError?.data?.detail ||
+						deleteResponseError?.data?.detail ||
+						"Something went wrong!"}
+				</Alert>
 			) : (
 				<MenuTable
 					data={menus}

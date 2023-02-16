@@ -1,7 +1,5 @@
-import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import DoneIcon from "@mui/icons-material/Done";
-import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Alert, Button, ButtonGroup, Tooltip } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -11,22 +9,21 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
+export default function ContactTable({
+	data,
+	editContactHandler,
+	deleteHandler,
+}) {
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650 }} aria-label="simple table">
 				<TableHead>
 					<TableRow>
-						<TableCell></TableCell>
 						<TableCell align="left">Name</TableCell>
-						<TableCell align="left">Category</TableCell>
-						<TableCell align="left">Description</TableCell>
-						<TableCell align="left">Price</TableCell>
-						<TableCell align="left">Offer Price</TableCell>
-						<TableCell align="left">Cook Time</TableCell>
+						<TableCell align="left">Subject</TableCell>
+						<TableCell align="left">Email</TableCell>
 						<TableCell align="left">Created At</TableCell>
 						<TableCell align="left">Updated At</TableCell>
-						<TableCell align="left">Active</TableCell>
 						<TableCell align="left">Action</TableCell>
 					</TableRow>
 				</TableHead>
@@ -35,23 +32,20 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 						data?.results.map((row) => (
 							<TableRow
 								key={row.id}
-								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+								sx={{
+									"&:last-child td, &:last-child th": { border: 0 },
+									backgroundColor: `${
+										!row?.read ? "rgba(94,163,255, 0.1)" : "inherit"
+									} `,
+									borderLeft: `${!row?.read ? "5px solid #2196f3" : "inherit"}`,
+								}}
 							>
-								<TableCell component="th" scope="row">
-									<img
-										src={row.image}
-										alt={row.name}
-										style={{ maxWidth: "80px" }}
-									/>
+								<TableCell component="th" scope="row" align="left">
+									{row.name}
 								</TableCell>
-								<TableCell align="left">{row.name}</TableCell>
-								<TableCell align="left">{row.category.name}</TableCell>
-								<TableCell align="left">
-									<pre>{row.description}</pre>
-								</TableCell>
-								<TableCell align="left">{row.price}</TableCell>
-								<TableCell align="left">{row.offer_price}</TableCell>
-								<TableCell align="left">{row.cook_time}</TableCell>
+
+								<TableCell align="left">{row.subject}</TableCell>
+								<TableCell align="left">{row.email}</TableCell>
 								<TableCell align="left">
 									{new Date(row.created_at).toLocaleString()}
 								</TableCell>
@@ -59,22 +53,14 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 									{new Date(row.updated_at).toLocaleString()}
 								</TableCell>
 								<TableCell align="left">
-									{row.is_active ? (
-										<DoneIcon color="success" />
-									) : (
-										<CloseIcon color="error" />
-									)}
-								</TableCell>
-								<TableCell align="left">
 									<ButtonGroup>
 										<Tooltip title="Edit">
 											<Button
 												color="primary"
 												size="small"
-												type="button"
-												onClick={() => editMenuHandler(row)}
+												onClick={() => editContactHandler(row)}
 											>
-												<EditIcon />
+												<VisibilityIcon />
 											</Button>
 										</Tooltip>
 										<Tooltip title="Delete">
@@ -92,7 +78,7 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={11}>
+							<TableCell colSpan={5}>
 								<Alert severity="warning">No Data Found!</Alert>
 							</TableCell>
 						</TableRow>

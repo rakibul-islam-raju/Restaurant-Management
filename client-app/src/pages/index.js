@@ -1,5 +1,7 @@
 import About from "components/About";
 import CateringService from "components/CateringService";
+
+import BookTable from "components/BookTable";
 import Chef from "components/Chef";
 import Feature from "components/Feature";
 import FeaturedMenus from "components/Feature/FeatureMenus";
@@ -30,6 +32,7 @@ export default function Home() {
 				<About />
 				<Statistics />
 				<CateringService />
+       <BookTable />
 				<Review />
 				<Chef />
 				<Menu />
@@ -41,4 +44,5 @@ export default function Home() {
 			</section>
 		</>
 	);
+  
 }

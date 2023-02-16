@@ -1,16 +1,16 @@
-import { Alert, Button, Divider, Stack, Typography } from "@mui/material";
+import { Alert, Divider, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
 import {
-	useDeleteCategoryMutation,
-	useGetCategoriesQuery,
-} from "../../features/category/categoryApi";
-import CategoryForm from "./components/categoryForm";
-import CategoryTable from "./components/CategoryTable";
+	useDeleteContactMutation,
+	useGetContactsQuery,
+} from "../../features/contact/contactApi";
+import ContactDetails from "./component/ContactDetails";
+import ContactTable from "./component/ContactTable";
 
-export default function Categories() {
+export default function Contacts() {
 	const dispatch = useDispatch();
 
 	const [openModal, setOpenModal] = useState(false);
@@ -19,16 +19,16 @@ export default function Categories() {
 	const [editData, setEditData] = useState(null);
 
 	const {
-		data: categories,
+		data: contacts,
 		isLoading,
 		isError,
 		error: responseError,
-	} = useGetCategoriesQuery(params);
+	} = useGetContactsQuery(params);
 
 	const [
-		deleteCategory,
+		deleteContact,
 		{ isSuccess: deleteSuccess, error: deleteResponseError },
-	] = useDeleteCategoryMutation();
+	] = useDeleteContactMutation();
 
 	const closeModal = () => {
 		setOpenModal(false);
@@ -36,7 +36,7 @@ export default function Categories() {
 		setEditData(null);
 	};
 
-	const editCategoryHandler = (data) => {
+	const editContactHandler = (data) => {
 		setEdit(true);
 		setEditData(data);
 		setOpenModal(true);
@@ -45,24 +45,16 @@ export default function Categories() {
 	const deleteHandler = (id) => {
 		const res = window.confirm("Do you want to delete this item?");
 		if (res) {
-			dispatch(deleteCategory({ id, params }));
+			dispatch(deleteContact({ id, params }));
 		}
 	};
 
 	return (
 		<>
-			<Stack direction={"row"} justifyContent={"space-between"} mb={2}>
-				<Typography variant="h4" gutterBottom>
-					Categories
-				</Typography>
-				<Button
-					variant="contained"
-					color="primary"
-					onClick={() => setOpenModal(true)}
-				>
-					Add Category
-				</Button>
-			</Stack>
+			<Typography variant="h4" gutterBottom>
+				Contacts
+			</Typography>
+
 			<Divider />
 			<br />
 
@@ -75,9 +67,9 @@ export default function Categories() {
 						"Something went wrong!"}
 				</Alert>
 			) : (
-				<CategoryTable
-					data={categories}
-					editCategoryHandler={editCategoryHandler}
+				<ContactTable
+					data={contacts}
+					editContactHandler={editContactHandler}
 					deleteHandler={deleteHandler}
 				/>
 			)}
@@ -86,10 +78,10 @@ export default function Categories() {
 			<Modal
 				open={openModal}
 				closeModal={closeModal}
-				title={`${edit ? "Edit Category" : "Add New Category"}`}
+				title={`${edit ? "Contact Details" : ""}`}
 				size="md"
 			>
-				<CategoryForm
+				<ContactDetails
 					closeModal={closeModal}
 					queryParams={params}
 					edit={edit}
