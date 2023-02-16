@@ -15,6 +15,10 @@
 		"@hookform/resolvers": "^2.9.10",
 		"@mui/icons-material": "^5.11.0",
 		"@mui/material": "^5.11.7",
+<<<<<<< HEAD
+=======
+		"@mui/styles": "^5.11.9",
+>>>>>>> 36748f9223de1ad21b9283f0e7346893028826d9
 		"@mui/x-date-pickers": "^5.0.18",
 		"@reduxjs/toolkit": "^1.9.2",
 		"async-mutex": "^0.4.0",
