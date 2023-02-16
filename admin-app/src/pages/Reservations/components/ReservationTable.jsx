@@ -11,19 +11,22 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
+export default function CategoryTable({
+	data,
+	editResarvationHandler,
+	deleteHandler,
+}) {
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650 }} aria-label="simple table">
 				<TableHead>
 					<TableRow>
-						<TableCell></TableCell>
 						<TableCell align="left">Name</TableCell>
-						<TableCell align="left">Category</TableCell>
-						<TableCell align="left">Description</TableCell>
-						<TableCell align="left">Price</TableCell>
-						<TableCell align="left">Offer Price</TableCell>
-						<TableCell align="left">Cook Time</TableCell>
+						<TableCell align="left">Email</TableCell>
+						{/* <TableCell align="left">Phone</TableCell> */}
+						<TableCell align="left">Persons</TableCell>
+						<TableCell align="left">Time</TableCell>
+						<TableCell align="left">Date</TableCell>
 						<TableCell align="left">Created At</TableCell>
 						<TableCell align="left">Updated At</TableCell>
 						<TableCell align="left">Active</TableCell>
@@ -37,21 +40,16 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 								key={row.id}
 								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
 							>
-								<TableCell component="th" scope="row">
-									<img
-										src={row.image}
-										alt={row.name}
-										style={{ maxWidth: "80px" }}
-									/>
+								<TableCell component="th" scope="row" align="left">
+									{row.name}
 								</TableCell>
-								<TableCell align="left">{row.name}</TableCell>
-								<TableCell align="left">{row.category.name}</TableCell>
+								<TableCell align="left">{row.user?.email}</TableCell>
+								{/* <TableCell align="left">{row.user?.phone}</TableCell> */}
+								<TableCell align="left">{row.person}</TableCell>
+								<TableCell align="left">{row.time}</TableCell>
 								<TableCell align="left">
-									<pre>{row.description}</pre>
+									{new Date(row.date).toLocaleDateString()}
 								</TableCell>
-								<TableCell align="left">{row.price}</TableCell>
-								<TableCell align="left">{row.offer_price}</TableCell>
-								<TableCell align="left">{row.cook_time}</TableCell>
 								<TableCell align="left">
 									{new Date(row.created_at).toLocaleString()}
 								</TableCell>
@@ -71,8 +69,7 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 											<Button
 												color="primary"
 												size="small"
-												type="button"
-												onClick={() => editMenuHandler(row)}
+												onClick={() => editResarvationHandler(row)}
 											>
 												<EditIcon />
 											</Button>
@@ -92,7 +89,7 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={11}>
+							<TableCell colSpan={9}>
 								<Alert severity="warning">No Data Found!</Alert>
 							</TableCell>
 						</TableRow>

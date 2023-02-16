@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
+	Alert,
 	Box,
 	Button,
 	Checkbox,
@@ -89,7 +90,15 @@ export default function categoryForm({
 	}, []);
 
 	return (
-		<Box component={"form"} onSubmit={handleSubmit(onSubmit)}>
+		<Box component={"form"} onSubmit={handleSubmit(onSubmit)} noValidate>
+			{(responseError?.data?.detail || editResponseError?.data?.detail) && (
+				<Alert severity="error">
+					{responseError?.data?.detail ||
+						editResponseError.data?.detail ||
+						"Something went wrong!"}
+				</Alert>
+			)}
+
 			<TextField
 				variant="standard"
 				margin="normal"
@@ -129,14 +138,18 @@ export default function categoryForm({
 
 			<Stack direction={"row"} justifyContent="end" gap={2} mt={3}>
 				<Button
-					disabled={isLoading}
+					disabled={isLoading || editLoading}
 					type="button"
 					color="inherit"
 					onClick={closeModal}
 				>
 					Cancel
 				</Button>
-				<Button disabled={isLoading} type="submit" color="primary">
+				<Button
+					disabled={isLoading || editLoading}
+					type="submit"
+					color="primary"
+				>
 					Submit
 				</Button>
 			</Stack>

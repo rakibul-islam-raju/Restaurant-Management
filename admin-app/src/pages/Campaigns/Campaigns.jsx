@@ -4,13 +4,13 @@ import { useDispatch } from "react-redux";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
 import {
-	useDeleteCategoryMutation,
-	useGetCategoriesQuery,
-} from "../../features/category/categoryApi";
-import CategoryForm from "./components/categoryForm";
-import CategoryTable from "./components/CategoryTable";
+	useDeleteCampaignMutation,
+	useGetCampaignsQuery,
+} from "../../features/campaign/campaignApi";
+import CampaignForm from "./components/CampaignForm";
+import CampaignTable from "./components/CampaignTable";
 
-export default function Categories() {
+export default function Campaigns() {
 	const dispatch = useDispatch();
 
 	const [openModal, setOpenModal] = useState(false);
@@ -19,16 +19,16 @@ export default function Categories() {
 	const [editData, setEditData] = useState(null);
 
 	const {
-		data: categories,
+		data: campaigns,
 		isLoading,
 		isError,
 		error: responseError,
-	} = useGetCategoriesQuery(params);
+	} = useGetCampaignsQuery(params);
 
 	const [
-		deleteCategory,
+		deleteCampaign,
 		{ isSuccess: deleteSuccess, error: deleteResponseError },
-	] = useDeleteCategoryMutation();
+	] = useDeleteCampaignMutation();
 
 	const closeModal = () => {
 		setOpenModal(false);
@@ -36,7 +36,7 @@ export default function Categories() {
 		setEditData(null);
 	};
 
-	const editCategoryHandler = (data) => {
+	const editCampaignHandler = (data) => {
 		setEdit(true);
 		setEditData(data);
 		setOpenModal(true);
@@ -45,7 +45,7 @@ export default function Categories() {
 	const deleteHandler = (id) => {
 		const res = window.confirm("Do you want to delete this item?");
 		if (res) {
-			dispatch(deleteCategory({ id, params }));
+			dispatch(deleteCampaign({ id, params }));
 		}
 	};
 
@@ -53,14 +53,14 @@ export default function Categories() {
 		<>
 			<Stack direction={"row"} justifyContent={"space-between"} mb={2}>
 				<Typography variant="h4" gutterBottom>
-					Categories
+					Campaigns
 				</Typography>
 				<Button
 					variant="contained"
 					color="primary"
 					onClick={() => setOpenModal(true)}
 				>
-					Add Category
+					Add Campaign
 				</Button>
 			</Stack>
 			<Divider />
@@ -75,9 +75,9 @@ export default function Categories() {
 						"Something went wrong!"}
 				</Alert>
 			) : (
-				<CategoryTable
-					data={categories}
-					editCategoryHandler={editCategoryHandler}
+				<CampaignTable
+					data={campaigns}
+					editCampaignHandler={editCampaignHandler}
 					deleteHandler={deleteHandler}
 				/>
 			)}
@@ -86,10 +86,10 @@ export default function Categories() {
 			<Modal
 				open={openModal}
 				closeModal={closeModal}
-				title={`${edit ? "Edit Category" : "Add New Category"}`}
+				title={`${edit ? "Edit Campaign" : "Add New Campaign"}`}
 				size="md"
 			>
-				<CategoryForm
+				<CampaignForm
 					closeModal={closeModal}
 					queryParams={params}
 					edit={edit}

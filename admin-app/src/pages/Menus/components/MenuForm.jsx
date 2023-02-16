@@ -75,10 +75,6 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 				delete newData.image;
 			}
 			const formData = getFormData(newData);
-			console.log("formdata => ", formData);
-
-			console.log("edit formData =>", formData.get("is_active"));
-
 			dispatch(
 				editMenu({ data: formData, params: queryParams, id: editData.id })
 			);
@@ -115,6 +111,14 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 
 	return (
 		<Box component={"form"} onSubmit={handleSubmit(onSubmit)} noValidate>
+			{(responseError?.data?.detail || editResponseError?.data?.detail) && (
+				<Alert severity="error">
+					{responseError?.data?.detail ||
+						editResponseError.data?.detail ||
+						"Something went wrong!"}
+				</Alert>
+			)}
+
 			<TextField
 				variant="standard"
 				margin="normal"

@@ -1,7 +1,10 @@
+import CampaignIcon from "@mui/icons-material/Campaign";
+import CategoryIcon from "@mui/icons-material/Category";
+import ChairIcon from "@mui/icons-material/Chair";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import FastfoodIcon from "@mui/icons-material/Fastfood";
+import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import { Divider, Typography } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -67,25 +70,31 @@ const MENUS = [
 		id: 1,
 		text: "Orders",
 		path: "/orders",
-		icon: <MailIcon color="primary" />,
+		icon: <TakeoutDiningIcon color="primary" />,
 	},
 	{
 		id: 2,
 		text: "Reservations",
 		path: "/reservations",
-		icon: <MailIcon color="primary" />,
+		icon: <ChairIcon color="primary" />,
 	},
 	{
 		id: 3,
 		text: "Menus",
 		path: "/menus",
-		icon: <MailIcon color="primary" />,
+		icon: <FastfoodIcon color="primary" />,
 	},
 	{
 		id: 4,
 		text: "Categories",
 		path: "/categories",
-		icon: <MailIcon color="primary" />,
+		icon: <CategoryIcon color="primary" />,
+	},
+	{
+		id: 5,
+		text: "Campaigns",
+		path: "/campaigns",
+		icon: <CampaignIcon color="primary" />,
 	},
 ];
 
@@ -133,32 +142,6 @@ export default function LeftSidebar({ open, handleDrawerClose }) {
 								primary={menu.text}
 								sx={{ opacity: open ? 1 : 0 }}
 							/>
-						</ListItemButton>
-					</ListItem>
-				))}
-			</List>
-
-			<Divider />
-			<List>
-				{["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-					<ListItem key={text} disablePadding sx={{ display: "block" }}>
-						<ListItemButton
-							sx={{
-								minHeight: 48,
-								justifyContent: open ? "initial" : "center",
-								px: 2.5,
-							}}
-						>
-							<ListItemIcon
-								sx={{
-									minWidth: 0,
-									mr: open ? 3 : "auto",
-									justifyContent: "center",
-								}}
-							>
-								{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-							</ListItemIcon>
-							<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 						</ListItemButton>
 					</ListItem>
 				))}

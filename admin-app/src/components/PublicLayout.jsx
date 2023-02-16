@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { Link, Navigate, Outlet } from "react-router-dom";
+import loginBG from "../assets/loginBG.jpg";
 import useAuth from "../hooks/useAuth";
 
 function Copyright(props) {
@@ -37,7 +38,7 @@ export default function PublicLayout() {
 					sm={4}
 					md={7}
 					sx={{
-						backgroundImage: "url(https://source.unsplash.com/random)",
+						backgroundImage: `url(${loginBG})`,
 						backgroundRepeat: "no-repeat",
 						backgroundColor: (t) =>
 							t.palette.mode === "light"
