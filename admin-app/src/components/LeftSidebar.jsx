@@ -1,3 +1,4 @@
+import CampaignIcon from "@mui/icons-material/Campaign";
 import CategoryIcon from "@mui/icons-material/Category";
 import ChairIcon from "@mui/icons-material/Chair";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -88,6 +89,12 @@ const MENUS = [
 		text: "Categories",
 		path: "/categories",
 		icon: <CategoryIcon color="primary" />,
+	},
+	{
+		id: 5,
+		text: "Campaigns",
+		path: "/campaigns",
+		icon: <CampaignIcon color="primary" />,
 	},
 ];
 
