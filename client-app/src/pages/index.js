@@ -5,6 +5,7 @@ import Feature from "components/Feature";
 import FeaturedMenus from "components/Feature/FeatureMenus";
 import Footer from "components/Footer";
 import Header from "components/Header";
+import Menu from "components/Menu";
 import Review from "components/Review";
 import Statistics from "components/Statistics";
 
@@ -31,7 +32,7 @@ export default function Home() {
 				<CateringService />
 				<Review />
 				<Chef />
-
+				<Menu />
 
 				<Footer />
 
