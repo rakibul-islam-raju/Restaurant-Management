@@ -9,6 +9,7 @@ import PublicLayout from "../components/PublicLayout";
 import useAuthCheck from "../hooks/useAuthCheck";
 import Campaigns from "../pages/Campaigns/Campaigns";
 import Categories from "../pages/categories/Categories";
+import Contacts from "../pages/Contacts/Contacts";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login/Login";
 import Menus from "../pages/Menus/Menus";
@@ -56,6 +57,7 @@ export default function App() {
 						<Route path="/login" element={<Login />} />
 						<Route path="/register" element={<Register />} />
 					</Route>
+
 					{/* private route */}
 					<Route element={<Layout />}>
 						<Route index element={<Dashboard />} />
@@ -64,6 +66,7 @@ export default function App() {
 						<Route path="/categories" element={<Categories />} />
 						<Route path="/reservations" element={<Reservations />} />
 						<Route path="/campaigns" element={<Campaigns />} />
+						<Route path="/contacts" element={<Contacts />} />
 						<Route path="*" element={<NotFound />} />
 					</Route>
 				</Routes>

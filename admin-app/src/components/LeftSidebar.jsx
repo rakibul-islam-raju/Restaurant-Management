@@ -4,6 +4,7 @@ import ChairIcon from "@mui/icons-material/Chair";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
+import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import { Divider, Typography } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
@@ -95,6 +96,12 @@ const MENUS = [
 		text: "Campaigns",
 		path: "/campaigns",
 		icon: <CampaignIcon color="primary" />,
+	},
+	{
+		id: 6,
+		text: "Contacts",
+		path: "/contacts",
+		icon: <MarkUnreadChatAltIcon color="primary" />,
 	},
 ];
 
