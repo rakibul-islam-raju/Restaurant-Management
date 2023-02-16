@@ -2,10 +2,10 @@ import SectionHeader from "./SectionHeader";
 
 const Menu = () => {
   return (
-    <section className="wrapper w-full h-full flex-col justify-center mt-10">
+    <section className="w-full h-full flex-col justify-center mt-10">
       <SectionHeader upperText={"Specialities"} lowerText={"Our Menu"} />
 
-      <div className=" grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4 lg:gap-3  ">
+      <div className="mx-4 sm:mx-6 lg:mx-20 grid grid-cols-1 gap-0 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4 lg:gap-3  ">
         {/* below this div is single card. need to loop over it when dynamic data comes  */}
         <div className="border w-full  h-[350px] flex flex-col mb-4 ">
           <div className="w-full h-full p-2">
