@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const NavLinks = ({ value }) => {
@@ -28,7 +29,7 @@ const NavLinks = ({ value }) => {
     <>
       {Links.map((link, i) => (
         <li key={i} className=' hover:text-yellow-600 '>
-          <a
+          <Link
             className={` ${
               value
                 ? ' md:text-black  nav-button  '
@@ -43,18 +44,18 @@ const NavLinks = ({ value }) => {
             )}
 
             {link.name}
-          </a>
+          </Link>
         </li>
       ))}
       <li className='hover:text-yellow-600 '>
-        <a
+        <Link
           className={`${
             value ? '  md:rounded-none  ' : '   rounded-lg  '
           } ' text-white  bg-golden p-3  hover:opacity-80 rounded-lg  `}
           href='/'
         >
           Book Table
-        </a>
+        </Link>
       </li>
     </>
   );

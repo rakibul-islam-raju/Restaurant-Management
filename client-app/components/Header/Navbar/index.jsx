@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 import NavLinks from '../Navlink';
@@ -34,14 +35,14 @@ export default function Navbar() {
           navbar ? ' md:my-0' : 'md:my-4  '
         } flex items-center md:max-w-6xl mx-auto  p-4  pb-4 md:py-0  `}
       >
-        <a
+        <Link
           className={`${
             navbar ? 'md:text-black ' : 'md:text-white'
           } font-black text-2xl text-white `}
-          href=''
+          href='/'
         >
           Check Order
-        </a>
+        </Link>
 
         <div
           className={
@@ -53,7 +54,9 @@ export default function Navbar() {
           </ul>
         </div>
         <div className=' text-golden hover:opacity-80 text-2xl ml-auto   cursor-pointer md:ml-7  '>
-          <i class='bx bxs-user-circle'></i>
+          <Link href='/'>
+            <i class='bx bxs-user-circle'></i>
+          </Link>
         </div>
       </div>
     </nav>
