@@ -1,16 +1,10 @@
-<<<<<<< HEAD
-=======
 import CampaignIcon from "@mui/icons-material/Campaign";
->>>>>>> 36748f9223de1ad21b9283f0e7346893028826d9
 import CategoryIcon from "@mui/icons-material/Category";
 import ChairIcon from "@mui/icons-material/Chair";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
-<<<<<<< HEAD
-=======
 import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
->>>>>>> 36748f9223de1ad21b9283f0e7346893028826d9
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import { Divider, Typography } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
@@ -96,8 +90,6 @@ const MENUS = [
 		text: "Categories",
 		path: "/categories",
 		icon: <CategoryIcon color="primary" />,
-<<<<<<< HEAD
-=======
 	},
 	{
 		id: 5,
@@ -110,7 +102,6 @@ const MENUS = [
 		text: "Contacts",
 		path: "/contacts",
 		icon: <MarkUnreadChatAltIcon color="primary" />,
->>>>>>> 36748f9223de1ad21b9283f0e7346893028826d9
 	},
 ];
 

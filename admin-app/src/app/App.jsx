@@ -21,27 +21,6 @@ import Reservations from "../pages/Reservations/Reservations";
 export default function App() {
 	const authChecked = useAuthCheck();
 
-<<<<<<< HEAD
-	return !authChecked ? (
-		<Loader />
-	) : (
-		<Routes>
-			{/* public route */}
-			<Route element={<PublicLayout />}>
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
-			</Route>
-			{/* private route */}
-			<Route element={<Layout />}>
-				<Route index element={<Dashboard />} />
-				<Route path="/orders" element={<Orders />} />
-				<Route path="/menus" element={<Menus />} />
-				<Route path="/categories" element={<Categories />} />
-				<Route path="/reservations" element={<Reservations />} />
-				<Route path="*" element={<NotFound />} />
-			</Route>
-		</Routes>
-=======
 	const theme = createTheme({
 		palette: {
 			primary: {
@@ -93,6 +72,5 @@ export default function App() {
 				</Routes>
 			)}
 		</ThemeProvider>
->>>>>>> 36748f9223de1ad21b9283f0e7346893028826d9
 	);
 }

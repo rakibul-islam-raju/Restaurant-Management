@@ -27,7 +27,10 @@
     @apply text-black text-2xl leading-tight font-medium
   }
   h5 {
-    @apply text-black text-lg leading-loose font-semibold 
+    @apply text-black text-xl  font-semibold 
+  }
+  h6 {
+    @apply text-black text-lg leading-normal font-semibold 
   }
 
   small{

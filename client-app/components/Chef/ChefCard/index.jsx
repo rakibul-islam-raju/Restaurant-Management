@@ -15,7 +15,7 @@ function ChefCard() {
       </div>
       <div className='text-left text-lg pt-5 pb-3 flex  justify-between md:flex-col  space-y-3 '>
         <div>
-          <h5>Noman Reign</h5>
+          <h6>Noman Reign</h6>
           <p className='text-sm'>Noman Reign Lorem .</p>
         </div>
         <div className='self-end md:self-auto'>
