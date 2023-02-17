@@ -1,7 +1,5 @@
-import FooterImage from 'components/utils/FooterImage';
+import FooterImage from 'components/Footer/FooterImage';
 import Icons from 'components/utils/Icons';
-import Image from 'next/image';
-import React from 'react';
 
 function Footer() {
   return (
