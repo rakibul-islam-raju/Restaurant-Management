@@ -1,10 +1,20 @@
-const SectionHeader = ({ upperText, lowerText }) => {
+const SectionHeader = ({
+  upperText,
+  lowerText,
+  textPosition = 'text-center',
+  left = 'left-0',
+  right = 'right-0',
+  pB = 'mb-12',
+  fontWeight,
+}) => {
   return (
-    <div className="text-center mb-7 md:mb-16 ">
-      <h1 className="text-golden text-2xl  md:text-5xl italic">{upperText}</h1>
-      <h1 className="text-2xl  md:text-5xl text-slate-900 font-semibold">
-        {lowerText}
-      </h1>
+    <div className={`${textPosition} relative ${pB} `}>
+      <p
+        className={`text-[100px] great-font absolute top-[-45px] ${left} ${right} z-[-1] `}
+      >
+        {upperText}
+      </p>
+      <h2 className={`   ${fontWeight} `}>{lowerText}</h2>
     </div>
   );
 };

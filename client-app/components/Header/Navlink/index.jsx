@@ -1,6 +1,7 @@
+import Link from 'next/link';
 import React from 'react';
 
-const NavLinks = () => {
+const NavLinks = ({ value }) => {
   const Links = [
     {
       name: 'Home',
@@ -22,22 +23,18 @@ const NavLinks = () => {
       link: '/',
       icon: 'bx bx-message-square-dots',
     },
-    {
-      name: 'Book a Table',
-      link: '/',
-      icon: 'bx bx-purchase-tag',
-    },
   ];
+
   return (
     <>
       {Links.map((link, i) => (
         <li key={i} className=' hover:text-yellow-600 '>
-          <a
+          <Link
             className={` ${
-              (link.name == 'Book a Table' &&
-                ' bg-yellow-500 text-white px-4 py-3 md:py-3 text-sm font-normal opacity-[1] block rounded-md  transition ease-in-out hover:bg-yellow-600 ') ||
-              'px-0 py:2 md:py-4 text-sm  text-gray-400 font-normal opacity-[1]  hover:text-yellow-500 transition ease-in-out flex flex-col items-center space-y-1 '
-            }`}
+              value
+                ? ' md:text-black  nav-button  '
+                : ' md:text-white  nav-button     '
+            }hover:text-yellow-500  flex flex-col items-center `}
             href={link.link}
           >
             {link.name != 'Book a Table' && (
@@ -47,11 +44,46 @@ const NavLinks = () => {
             )}
 
             {link.name}
-          </a>
+          </Link>
         </li>
       ))}
+      <li className='hover:text-yellow-600 '>
+        <Link
+          className={`${
+            value ? '  md:rounded-none  ' : '   rounded-lg  '
+          } ' text-white  bg-golden p-3  hover:opacity-80 rounded-lg  `}
+          href='/'
+        >
+          Book Table
+        </Link>
+      </li>
     </>
   );
 };
 
 export default NavLinks;
+
+// {
+//   Links.map((link, i) => (
+//     <li key={i} className=' hover:text-yellow-600 '>
+//       <a
+//         className={` ${
+//           link.name == 'Book a Table'
+//             ? ' text-white nav-button bg-yellow-500 p-3     hover:bg-yellow-600 '
+//             : value
+//             ? ' md:text-black  nav-button    '
+//             : ' md:text-white  nav-button     '
+//         }hover:text-yellow-500  flex flex-col items-center `}
+//         href={link.link}
+//       >
+//         {link.name != 'Book a Table' && (
+//           <span className='text-2xl md:hidden'>
+//             <i class={`${link.icon}`}></i>
+//           </span>
+//         )}
+
+//         {link.name}
+//       </a>
+//     </li>
+//   ));
+// }

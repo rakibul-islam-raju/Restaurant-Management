@@ -2,18 +2,18 @@ import React from 'react';
 import Image from 'next/image';
 const FeaturedMenus = () => {
   return (
-    <div className='  text-center space-y-3 p-5 md:text-white'>
-      <div className='bg-center mx-auto'>
+    <div className='  text-center space-y-3  md:text-white mt-3'>
+      <div className='relative h-20 w-20 mx-auto '>
         <Image
-          className=' rounded-[50%] inline-block'
           src='/breakfast-2.jpg.webp'
-          height={99}
-          width={99}
+          fill
+          alt=' Grilled Beef'
+          className='object-cover object-center rounded-full '
         />
       </div>
       <div>
-        <p className='text-lg'>Grilled Beef with potatoes</p>
-        <p className='text-sm'>Grilled Beef with potatoes</p>
+        <h5 className='md:text-white'>Grilled Beef with potatoes</h5>
+        <p className='text-sm md:text-white'>Grilled Beef with potatoes</p>
       </div>
     </div>
   );

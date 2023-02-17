@@ -6,11 +6,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper';
 
 import Reviewer from './Reviewer';
+import SectionHeader from 'components/SectionHeader';
 
 export default function Review() {
   return (
     <>
-      <div className='p-4  md:max-w-6xl mx-auto  '>
+      <div className='wrapper '>
+        <SectionHeader upperText={'Testimony'} lowerText={'Happy Customer'} />
         <div className=''>
           <Swiper
             spaceBetween={30}
