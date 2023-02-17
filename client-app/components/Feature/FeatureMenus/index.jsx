@@ -12,7 +12,7 @@ const FeaturedMenus = () => {
         />
       </div>
       <div>
-        <h5 className='md:text-white'>Grilled Beef with potatoes</h5>
+        <h6 className='md:text-white'>Grilled Beef with potatoes</h6>
         <p className='text-sm md:text-white'>Grilled Beef with potatoes</p>
       </div>
     </div>

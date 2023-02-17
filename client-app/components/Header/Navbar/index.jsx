@@ -52,7 +52,7 @@ export default function Navbar() {
             <NavLinks value={navbar} />
           </ul>
         </div>
-        <div className=' text-golden hover:opacity-80 text-2xl ml-auto   cursor-pointer md:ml-7  '>
+        <div className=' text-white md:text-golden hover:opacity-80 text-2xl ml-auto   cursor-pointer md:ml-7  '>
           <i class='bx bxs-user-circle'></i>
         </div>
       </div>

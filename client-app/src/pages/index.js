@@ -1,18 +1,15 @@
 import About from "components/About";
 import CateringService from "components/CateringService";
-
-import BookTable from "components/BookTable";
 import Chef from "components/Chef";
 import Feature from "components/Feature";
-import FeaturedMenus from "components/Feature/FeatureMenus";
 import Footer from "components/Footer";
 import Header from "components/Header";
-import Menu from "components/Menu";
 import Review from "components/Review";
 import Statistics from "components/Statistics";
-
 import Head from "next/head";
 import Image from "next/image";
+import Specialities from "components/Sepcialities";
+import TableBookingForm from "components/TableBookingForm";
 
 export default function Home() {
   return (
@@ -31,15 +28,12 @@ export default function Home() {
         <Feature />
         <About />
         <Statistics />
-        <Menu />
+        <Specialities />
         <CateringService />
-        <BookTable />
+        <TableBookingForm />
         <Review />
         <Chef />
         <Footer />
-
-
-
       </section>
     </>
   );
