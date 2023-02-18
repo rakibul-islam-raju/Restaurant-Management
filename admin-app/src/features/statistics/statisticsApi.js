@@ -4,6 +4,7 @@ export const statisticsApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getSummary: builder.query({
 			query: (params) => `/statistics/summary`,
+			providesTags: ["SummaryStats"],
 		}),
 	}),
 });

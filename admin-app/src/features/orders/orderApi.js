@@ -16,6 +16,7 @@ export const orderApi = apiSlice.injectEndpoints({
 				method: "PATCH",
 				body: data,
 			}),
+			invalidatesTags: ["SummaryStats"],
 			async onQueryStarted(arg, { queryFulfilled, dispatch }) {
 				// update getOrders
 				const patchResult1 = dispatch(

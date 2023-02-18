@@ -12,6 +12,7 @@ export const reservationApi = apiSlice.injectEndpoints({
 				method: "POST",
 				body: data,
 			}),
+			invalidatesTags: ["SummaryStats"],
 			async onQueryStarted(arg, { queryFulfilled, dispatch }) {
 				const patchResult = dispatch(
 					apiSlice.util.updateQueryData(
@@ -42,6 +43,7 @@ export const reservationApi = apiSlice.injectEndpoints({
 				method: "PATCH",
 				body: data,
 			}),
+			invalidatesTags: ["SummaryStats"],
 			async onQueryStarted(arg, { queryFulfilled, dispatch }) {
 				const patchResult = dispatch(
 					apiSlice.util.updateQueryData(
@@ -72,6 +74,7 @@ export const reservationApi = apiSlice.injectEndpoints({
 				url: `/resarvations/${id}`,
 				method: "DELETE",
 			}),
+			invalidatesTags: ["SummaryStats"],
 			async onQueryStarted(arg, { queryFulfilled, dispatch }) {
 				const patchResult = dispatch(
 					apiSlice.util.updateQueryData(

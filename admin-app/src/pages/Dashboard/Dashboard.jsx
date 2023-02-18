@@ -119,7 +119,7 @@ export default function Dashboard() {
 									</CardContent>
 									<CardActions className={classes.cardBottom}>
 										<Typography variant="h5" align="center" mt={1}>
-											Registered User
+											Active Clients
 										</Typography>
 									</CardActions>
 								</Card>

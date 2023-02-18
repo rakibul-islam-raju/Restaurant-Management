@@ -17,6 +17,7 @@ import NotFound from "../pages/NotFound/NotFound";
 import Orders from "../pages/Orders/Orders";
 import Register from "../pages/Register/Register";
 import Reservations from "../pages/Reservations/Reservations";
+import Users from "../pages/Users/Users";
 
 export default function App() {
 	const authChecked = useAuthCheck();
@@ -67,6 +68,7 @@ export default function App() {
 						<Route path="/reservations" element={<Reservations />} />
 						<Route path="/campaigns" element={<Campaigns />} />
 						<Route path="/contacts" element={<Contacts />} />
+						<Route path="/users" element={<Users />} />
 						<Route path="*" element={<NotFound />} />
 					</Route>
 				</Routes>

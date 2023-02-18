@@ -4,6 +4,7 @@ import ChairIcon from "@mui/icons-material/Chair";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
+import GroupIcon from "@mui/icons-material/Group";
 import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import { Divider, Typography } from "@mui/material";
@@ -102,6 +103,12 @@ const MENUS = [
 		text: "Contacts",
 		path: "/contacts",
 		icon: <MarkUnreadChatAltIcon color="primary" />,
+	},
+	{
+		id: 7,
+		text: "Users",
+		path: "/users",
+		icon: <GroupIcon color="primary" />,
 	},
 ];
 
