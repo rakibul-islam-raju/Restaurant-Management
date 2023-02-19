@@ -1,30 +1,25 @@
-import { Alert, Divider, Typography } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { Alert, Box, Divider, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CustomDrawer from "../../components/CustomDrawer";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
-import { useGetOrdersQuery } from "../../features/orders/orderApi";
+import { useLazyGetOrdersQuery } from "../../features/orders/orderApi";
+import FilterList from "./components/FilterList";
 import OrderDetail from "./components/OrderDetail";
 import OrderTable from "./components/OrderTable";
 
 export default function Orders() {
 	const dispatch = useDispatch();
+	const { filters, filterApplied } = useSelector((state) => state.order);
 
 	const [openModal, setOpenModal] = useState(false);
-	const [params, setParams] = useState("");
 	const [edit, setEdit] = useState(false);
 	const [editData, setEditData] = useState(null);
+	const [applyFilter, setApplyFilter] = useState(true);
 
-	const {
-		data: orders,
-		isLoading,
-		isError,
-		error: responseError,
-	} = useGetOrdersQuery(params, {
-		refetchOnFocus: true,
-		refetchOnReconnect: true,
-		refetchOnMountOrArgChange: true,
-	});
+	const [trigger, { data: orders, isLoading, isError, error: responseError }] =
+		useLazyGetOrdersQuery();
 
 	const closeModal = () => {
 		setOpenModal(false);
@@ -38,11 +33,38 @@ export default function Orders() {
 		setOpenModal(true);
 	};
 
+	const filterSubmitHandler = () => setApplyFilter(true);
+
+	useEffect(() => {
+		if (applyFilter) {
+			const params = { ...filters };
+			if (filters?.user__email === "") delete params.user__email;
+			if (filters?.is_paid === "") delete params.is_paid;
+			if (filters?.is_served === "") delete params.is_served;
+			if (filters?.is_active === "") delete params.is_active;
+
+			trigger(params);
+			setApplyFilter(false);
+		}
+	}, [applyFilter]);
+
 	return (
 		<>
-			<Typography variant="h4" gutterBottom>
-				Orders
-			</Typography>
+			<Stack direction={"row"} justifyContent={"space-between"}>
+				<Typography variant="h4" gutterBottom>
+					Orders
+				</Typography>
+				<Box>
+					<CustomDrawer
+						drawerComponent={
+							<FilterList submitButtonHandler={filterSubmitHandler} />
+						}
+						buttonText="Filter"
+						anchor="right"
+						buttonVariant="contained"
+					/>
+				</Box>
+			</Stack>
 
 			<Divider />
 			<br />
@@ -67,7 +89,7 @@ export default function Orders() {
 				<OrderDetail
 					orderId={editData?.id}
 					closeModal={closeModal}
-					queryParams={params}
+					queryParams={filters}
 				/>
 			</Modal>
 		</>

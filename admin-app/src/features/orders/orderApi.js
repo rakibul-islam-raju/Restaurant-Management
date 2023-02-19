@@ -3,7 +3,10 @@ import { apiSlice } from "../api/apiSlice";
 export const orderApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getOrders: builder.query({
-			query: (params) => `/orders`,
+			query: (params = {}) => ({
+				url: `/orders`,
+				params,
+			}),
 		}),
 
 		getOrder: builder.query({
@@ -49,5 +52,9 @@ export const orderApi = apiSlice.injectEndpoints({
 	}),
 });
 
-export const { useGetOrdersQuery, useGetOrderQuery, useEditOrderMutation } =
-	orderApi;
+export const {
+	useGetOrdersQuery,
+	useLazyGetOrdersQuery,
+	useGetOrderQuery,
+	useEditOrderMutation,
+} = orderApi;

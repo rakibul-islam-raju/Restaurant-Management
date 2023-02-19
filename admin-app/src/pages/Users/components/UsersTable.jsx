@@ -8,8 +8,15 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useNavigate } from "react-router-dom";
 
 export default function UsersTable({ data }) {
+	const navigate = useNavigate();
+
+	const navigateToUserOrders = (user) => {
+		navigate(`/orders/user/${user.id}`, { state: { user } });
+	};
+
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
@@ -51,7 +58,7 @@ export default function UsersTable({ data }) {
 												color="primary"
 												size="small"
 												type="button"
-												onClick={() => {}}
+												onClick={() => navigateToUserOrders(row)}
 											>
 												<KeyboardDoubleArrowRightIcon />
 											</Button>
