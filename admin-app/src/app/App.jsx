@@ -17,6 +17,8 @@ import NotFound from "../pages/NotFound/NotFound";
 import Orders from "../pages/Orders/Orders";
 import Register from "../pages/Register/Register";
 import Reservations from "../pages/Reservations/Reservations";
+import UserOrders from "../pages/Users/UserOrders";
+import Users from "../pages/Users/Users";
 
 export default function App() {
 	const authChecked = useAuthCheck();
@@ -62,11 +64,13 @@ export default function App() {
 					<Route element={<Layout />}>
 						<Route index element={<Dashboard />} />
 						<Route path="/orders" element={<Orders />} />
+						<Route path="/orders/user/:userId" element={<UserOrders />} />
 						<Route path="/menus" element={<Menus />} />
 						<Route path="/categories" element={<Categories />} />
 						<Route path="/reservations" element={<Reservations />} />
 						<Route path="/campaigns" element={<Campaigns />} />
 						<Route path="/contacts" element={<Contacts />} />
+						<Route path="/users" element={<Users />} />
 						<Route path="*" element={<NotFound />} />
 					</Route>
 				</Routes>

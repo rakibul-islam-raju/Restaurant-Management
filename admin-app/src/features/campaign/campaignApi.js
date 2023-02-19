@@ -13,7 +13,7 @@ export const campaignApi = apiSlice.injectEndpoints({
 				method: "POST",
 				body: data,
 			}),
-			invalidatesTags: ["Campaigns"],
+			invalidatesTags: ["Campaigns", "SummaryStats"],
 		}),
 
 		editCampaign: builder.mutation({
@@ -22,7 +22,7 @@ export const campaignApi = apiSlice.injectEndpoints({
 				method: "PATCH",
 				body: data,
 			}),
-			invalidatesTags: ["Campaigns"],
+			invalidatesTags: ["Campaigns", "SummaryStats"],
 		}),
 
 		deleteCampaign: builder.mutation({
@@ -30,6 +30,7 @@ export const campaignApi = apiSlice.injectEndpoints({
 				url: `/campaigns/${id}`,
 				method: "DELETE",
 			}),
+			invalidatesTags: ["SummaryStats"],
 			async onQueryStarted(arg, { queryFulfilled, dispatch }) {
 				const patchResult = dispatch(
 					apiSlice.util.updateQueryData("getCampaigns", arg.params, (draft) => {
