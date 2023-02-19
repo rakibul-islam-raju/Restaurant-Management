@@ -1,14 +1,12 @@
-import FooterImage from 'components/utils/FooterImage';
+import FooterImage from 'components/Footer/FooterImage';
 import Icons from 'components/utils/Icons';
-import Image from 'next/image';
-import React from 'react';
 
 function Footer() {
   return (
     <footer class='bg-footer  '>
       <div class='grid grid-cols-1 gap-x-8 gap-y-10  md:grid-cols-4  text-white   container p-4 py-20  '>
         <div className='space-y-6  '>
-          <h5 className='text-white'>Take Order</h5>
+          <h6 className='text-white'>Take Order</h6>
 
           <div className='space-y-4'>
             <small>
@@ -20,7 +18,7 @@ function Footer() {
         </div>
 
         <div className=' space-y-6'>
-          <h5 className='text-white'>Open Hours</h5>
+          <h6 className='text-white'>Open Hours</h6>
 
           <div className='space-y-3'>
             <div className='flex-center '>
@@ -54,7 +52,7 @@ function Footer() {
           </div>
         </div>
         <div className=' space-y-6'>
-          <h5 className='text-white'>Instagram</h5>
+          <h6 className='text-white'>Instagram</h6>
           <div className='space-y-1 '>
             <div className='flex flex-col md:flex-row gap-1  '>
               <FooterImage image={'/insta-1.jpg.webp'} />
@@ -69,7 +67,7 @@ function Footer() {
           </div>
         </div>
         <div className=' space-y-6'>
-          <h5 className='text-white'>Newsletter</h5>
+          <h6 className='text-white'>Newsletter</h6>
 
           <div className='  '>
             <small>Lorem ipsum dolor, sit amet consectetur adipisicing</small>

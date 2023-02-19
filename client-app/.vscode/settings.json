@@ -1,5 +1,24 @@
 {
 	"[css]": {
 		"editor.formatOnSave": false
-	}
+	},
+
+	// config related to code formatting
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"[javascript]": {
+		"editor.formatOnSave": true
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true,
+		"source.fixAll.tslint": true,
+		"source.organizeImports": true
+	},
+	"eslint.debug": true,
+	// "eslint.format.enable": true,
+	"workbench.editor.enablePreview": true,
+	"explorer.confirmDelete": false,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"window.zoomLevel": 0,
+	"json.maxItemsComputed": 50000
 }
