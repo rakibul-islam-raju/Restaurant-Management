@@ -9,6 +9,8 @@ import Specialities from "@/components/Sepcialities";
 import Statistics from "@/components/Statistics";
 import TableBookingForm from "@/components/TableBookingForm";
 import Head from "next/head";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
 	return (
@@ -20,6 +22,7 @@ export default function Home() {
 			</Head>
 
 			<section className="scroll-smooth font-poppins">
+				<ToastContainer />
 				<Header />
 				<Feature />
 				<About />
