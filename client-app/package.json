@@ -9,13 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.11",
     "@next/font": "13.1.6",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "swiper": "^9.0.5"
+    "react-hook-form": "^7.43.1",
+    "swiper": "^9.0.5",
+    "yup": "^1.0.0",
+    "yup-password": "^0.2.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
