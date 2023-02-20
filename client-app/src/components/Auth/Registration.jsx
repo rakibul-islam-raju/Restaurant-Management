@@ -1,8 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import * as yup from "yup";
+import axios from "../../utils/axios";
 import Divider from "../Divider";
+import { ErrorMessage } from "../Messages";
 import Buttton from "../utils/Button";
 import Input from "../utils/Input";
 
@@ -13,7 +16,7 @@ const registerSchema = yup.object({
 	password: yup.string().required().label("Password").min(4).max(100),
 });
 
-export default function Registration() {
+export default function Registration({ setRegisterTab }) {
 	const {
 		register,
 		handleSubmit,
@@ -22,9 +25,25 @@ export default function Registration() {
 		resolver: yupResolver(registerSchema),
 	});
 
-	const [showPassword, setShowPassword] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState(null);
 
-	const onSubmit = (data) => console.log(data);
+	const onSubmit = async (data) => {
+		setErrorMessage(null);
+		setLoading(true);
+		try {
+			const response = await axios.post("/accounts/registration", data);
+			if (response?.data?.token) {
+				toast.success("Registration Successfull!");
+				setRegisterTab();
+			}
+		} catch (error) {
+			console.error(error);
+			setErrorMessage(error?.data?.details);
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	return (
 		<div>
@@ -32,13 +51,15 @@ export default function Registration() {
 				Create Account
 			</h2>
 			<Divider />
+			{errorMessage && <ErrorMessage text={errorMessage} />}
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<Input
 					labelText={"First Name"}
 					type="text"
 					placeholder="First Name"
 					required
-					{...register("first_name")}
+					register={register}
+					name="first_name"
 					error={errors?.first_name?.message}
 					helperText={errors?.first_name?.message}
 				/>
@@ -47,7 +68,8 @@ export default function Registration() {
 					type="text"
 					placeholder="Last Name"
 					required
-					{...register("last_name")}
+					register={register}
+					name="last_name"
 					error={errors?.last_name?.message}
 					helperText={errors?.last_name?.message}
 				/>
@@ -56,20 +78,27 @@ export default function Registration() {
 					type="email"
 					placeholder="Email Address"
 					required
-					{...register("email")}
+					register={register}
+					name="email"
 					error={errors?.email?.message}
 					helperText={errors?.email?.message}
 				/>
 				<Input
 					labelText={"Password"}
-					type={showPassword ? "text" : "password"}
+					type={"password"}
 					placeholder="Password"
 					required
-					{...register("password")}
+					register={register}
+					name="password"
 					error={errors?.password?.message}
 					helperText={errors?.password?.message}
 				/>
-				<Buttton text="Login" type="submit" width={"w-full"} />
+				<Buttton
+					disabled={loading}
+					text="Create Account"
+					type="submit"
+					width={"w-full"}
+				/>
 			</form>
 		</div>
 	);

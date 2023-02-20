@@ -1,15 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { setCookie } from "nookies";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import axios from "../../utils/axios";
 import Divider from "../Divider";
+import { ErrorMessage } from "../Messages";
 import Buttton from "../utils/Button";
 import Checkbox from "../utils/Checkbox";
 import Input from "../utils/Input";
 
 const loginSchema = yup.object({
-	email: yup.string().email().required().label("Email"),
-	password: yup.string().required().label("Password").min(4).max(100),
+	email: yup.string().email().required(),
+	password: yup.string().required().min(4).max(100),
 });
 
 export default function Login() {
@@ -22,8 +25,23 @@ export default function Login() {
 	});
 
 	const [showPassword, setShowPassword] = useState(false);
+	const [errorMessage, setErrorMessage] = useState(null);
+	const [loading, setLoading] = useState(false);
 
-	const onSubmit = (data) => console.log(data);
+	const onSubmit = async (data) => {
+		setErrorMessage(null);
+		setLoading(true);
+		try {
+			const response = await axios.post("/accounts/login", data);
+			const { access, refresh } = response.data;
+			setCookie(null, "access", access);
+			setCookie(null, "refresh", refresh);
+			window.location.href = "/";
+		} catch (error) {
+			console.error(error);
+			setErrorMessage(error?.data?.details);
+		}
+	};
 
 	return (
 		<div>
@@ -31,13 +49,15 @@ export default function Login() {
 				Login
 			</h2>
 			<Divider />
+			{errorMessage && <ErrorMessage text={errorMessage} />}
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<Input
 					labelText={"Email"}
 					type="email"
 					placeholder="Email Address"
 					required
-					{...register("email")}
+					register={register}
+					name="email"
 					error={errors?.email?.message}
 					helperText={errors?.email?.message}
 				/>
@@ -46,11 +66,13 @@ export default function Login() {
 					type={showPassword ? "text" : "password"}
 					placeholder="Password"
 					required
-					{...register("password")}
+					register={register}
+					name="password"
 					error={errors?.password?.message}
 					helperText={errors?.password?.message}
 				/>
 				<Checkbox
+					disabled={loading}
 					label={"Show Password"}
 					value={showPassword}
 					onChange={() => setShowPassword((prevState) => !prevState)}

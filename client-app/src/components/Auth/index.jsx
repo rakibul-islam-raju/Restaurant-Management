@@ -5,6 +5,11 @@ import Registration from "./Registration";
 export default function Auth() {
 	const [tabState, setTabState] = useState("login");
 
+	const setRegisterTab = () => {
+		console.log("ok");
+		setTabState("login");
+	};
+
 	return (
 		<>
 			<div className="w-full flex justify-evenly border rounded">
@@ -25,7 +30,11 @@ export default function Auth() {
 			</div>
 
 			<div className="">
-				{tabState === "login" ? <Login /> : <Registration />}
+				{tabState === "login" ? (
+					<Login />
+				) : (
+					<Registration setRegisterTab={setRegisterTab} />
+				)}
 			</div>
 		</>
 	);

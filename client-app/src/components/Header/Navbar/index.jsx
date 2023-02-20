@@ -2,15 +2,16 @@
 
 import Auth from "@/components/Auth";
 import Modal from "@/components/Modal";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 import Link from "next/link";
 import { useState } from "react";
 import NavLinks from "../Navlink";
 
 export default function Navbar() {
+	const [isAuthenticated, user] = useIsAuthenticated();
+
 	const [navbar, setNavbar] = useState(false);
 	const [open, setOpen] = useState(false);
-
-	const isAuthenticated = false;
 
 	const modalCloser = () => setOpen(false);
 	const modalOper = () => setOpen(true);
@@ -22,12 +23,11 @@ export default function Navbar() {
 			setNavbar(false);
 		}
 	};
-	// useEffect(() => {
 
-	// }, []);
 	if (typeof window != "undefined") {
 		window.addEventListener("scroll", changeBackground);
 	}
+
 	return (
 		<>
 			<nav
@@ -62,9 +62,16 @@ export default function Navbar() {
 					</div>
 					<div className=" text-white md:text-golden hover:opacity-80 text-2xl ml-auto cursor-pointer">
 						{isAuthenticated ? (
-							<i class="bx bxs-user-circle"></i>
+							<button
+								type="button"
+								className="bg-golden text-white px-4 py-2 text-lg flex items-center gap-2"
+							>
+								<i className="bx bxs-user-circle"></i>
+								{user?.first_name}
+							</button>
 						) : (
 							<button
+								type="button"
 								onClick={modalOper}
 								className="bg-golden text-white px-4 py-2 text-lg"
 							>
