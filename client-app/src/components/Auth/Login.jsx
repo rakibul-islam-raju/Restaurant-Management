@@ -1,9 +1,9 @@
+import authService from "@/services/authService";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { setCookie } from "nookies";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import axios from "../../utils/axios";
 import Divider from "../Divider";
 import { ErrorMessage } from "../Messages";
 import Buttton from "../utils/Button";
@@ -32,14 +32,16 @@ export default function Login() {
 		setErrorMessage(null);
 		setLoading(true);
 		try {
-			const response = await axios.post("/accounts/login", data);
-			const { access, refresh } = response.data;
-			setCookie(null, "access", access);
-			setCookie(null, "refresh", refresh);
-			window.location.href = "/";
+			const res = await authService.login(data);
+			const { access, refresh } = res;
+			if (access && refresh) {
+				setCookie(null, "access", access);
+				setCookie(null, "refresh", refresh);
+				window.location.href = "/";
+			}
 		} catch (error) {
 			console.error(error);
-			setErrorMessage(error?.data?.details);
+			setErrorMessage(error?.data?.details || "Something went wrong!");
 		}
 	};
 

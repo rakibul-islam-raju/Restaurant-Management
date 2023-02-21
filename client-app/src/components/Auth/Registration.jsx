@@ -1,9 +1,9 @@
+import authService from "@/services/authService";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import axios from "../../utils/axios";
 import Divider from "../Divider";
 import { ErrorMessage } from "../Messages";
 import Buttton from "../utils/Button";
@@ -32,14 +32,14 @@ export default function Registration({ setRegisterTab }) {
 		setErrorMessage(null);
 		setLoading(true);
 		try {
-			const response = await axios.post("/accounts/registration", data);
-			if (response?.data?.token) {
+			const res = await authService.register(data);
+			if (res?.token) {
 				toast.success("Registration Successfull!");
 				setRegisterTab();
 			}
 		} catch (error) {
 			console.error(error);
-			setErrorMessage(error?.data?.details);
+			setErrorMessage(error?.data?.details || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}
