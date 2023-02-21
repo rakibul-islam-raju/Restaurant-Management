@@ -1,49 +1,43 @@
 import SectionHeader from "@/components/SectionHeader";
+import menuService from "@/services/menuService";
+import { useEffect, useState } from "react";
 import Menu from "./Menu";
 
 function Specialities() {
-	const menu = [
-		{
-			name: "Grilled Beef with potatoes",
-			ingredients: "Meat, Potatoes, Rice, Tomatoes",
-		},
-		{
-			name: "Grilled Beef with potatoes",
-			ingredients: "Meat, Potatoes, Rice, Tomatoes",
-		},
-		{
-			name: "Grilled Beef with potatoes",
-			ingredients: "Meat, Potatoes, Rice, Tomatoes",
-		},
-		{
-			name: "Grilled Beef with potatoes",
-			ingredients: "Meat, Potatoes, Rice, Tomatoes",
-		},
-		{
-			name: "Grilled Beef with potatoes",
-			ingredients: "Meat, Potatoes, Rice, Tomatoes",
-		},
-		{
-			name: "Grilled Beef with potatoes",
-			ingredients: "Meat, Potatoes, Rice, Tomatoes",
-		},
-		{
-			name: "Grilled Beef with potatoes",
-			ingredients: "Meat, Potatoes, Rice, Tomatoes",
-		},
-	];
+	const [menus, setMenus] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [errorMessage, setErrorMessage] = useState(null);
+
+	const fetchMenus = async () => {
+		setErrorMessage(null);
+		try {
+			const res = await menuService.getFeaturedMenus();
+			if (res?.results?.length) {
+				setMenus(res.results);
+			}
+		} catch (err) {
+			setErrorMessage(err?.data?.details || "Something went wrong!");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchMenus();
+	}, []);
 
 	return (
 		<section className=" wrapper">
 			<SectionHeader upperText={"Specialities"} lowerText={"Menu"} />
 			<div className="grid grid-cols-1 md:grid-cols-2 border-2">
-				{menu.slice(0, 6).map((item, i) => {
-					if (i == 2 || i == 3) {
-						return <Menu key={i} value={false} />;
-					} else {
-						return <Menu key={i} />;
-					}
-				})}
+				{menus?.length > 0 &&
+					menus?.map((item, i) => {
+						if (i === 2 || i === 3) {
+							return <Menu menu={item} key={item.id} />;
+						} else {
+							return <Menu menu={item} key={item.id} reverse />;
+						}
+					})}
 			</div>
 		</section>
 	);

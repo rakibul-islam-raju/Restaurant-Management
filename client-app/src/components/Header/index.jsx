@@ -4,7 +4,7 @@ import Topbar from "./Topbar";
 
 function Header() {
 	return (
-		<div className="md:pb-32 ">
+		<div className="md:pb-32">
 			<Topbar />
 			<Navbar />
 			<section className="relative bg-gradient-to-br w-full h-screen from-gray-800 to-gray-600  ">
