@@ -2,19 +2,24 @@
 
 import Auth from "@/components/Auth";
 import Modal from "@/components/Modal";
+import Plate from "@/components/Order/Plate";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
+import usePlate from "@/hooks/usePlate";
 import Link from "next/link";
+import { destroyCookie } from "nookies";
 import { useState } from "react";
 import NavLinks from "../Navlink";
 
 export default function Navbar() {
 	const [isAuthenticated, user] = useIsAuthenticated();
+	const [plate] = usePlate();
 
 	const [navbar, setNavbar] = useState(false);
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(null);
 
-	const modalCloser = () => setOpen(false);
-	const modalOper = () => setOpen(true);
+	const modalCloser = () => setOpen(null);
+	const openAuthModal = () => setOpen("auth");
+	const openPlateModal = () => setOpen("plate");
 
 	const changeBackground = () => {
 		if (window.scrollY >= 80) {
@@ -28,6 +33,14 @@ export default function Navbar() {
 		window.addEventListener("scroll", changeBackground);
 	}
 
+	const handleLogout = () => {
+		destroyCookie(null, "access");
+		destroyCookie(null, "refresh");
+		window.location.href = "/";
+	};
+
+	console.log("plate =>", plate);
+
 	return (
 		<>
 			<nav
@@ -35,7 +48,7 @@ export default function Navbar() {
 					navbar
 						? "md:bg-gray-200 md:fixed md:transition md:duration-300  top-0 left-0 right-0 md:ease-out md:shadow-lg "
 						: "md:bg-transparent md:absolute md:top-[40px] border-gray-700 "
-				} fixed top-0  md:border-b-[1px] bg-golden md:bg-none z-50 w-full `}
+				} fixed top-0  md:border-b-[1px] bg-golden md:bg-none z-30 w-full `}
 			>
 				<div
 					className={`${
@@ -60,19 +73,52 @@ export default function Navbar() {
 							<NavLinks value={navbar} />
 						</ul>
 					</div>
-					<div className=" text-white md:text-golden hover:opacity-80 text-2xl ml-auto cursor-pointer">
+					<div className="ml-auto flex gap-3 items-center">
+						{plate?.length > 0 && (
+							<div className="">
+								<button
+									type="button"
+									onClick={openPlateModal}
+									className="text-golden font-semibold bg-white p-1 rounded shadow"
+								>
+									PLATE
+									<sup>{plate?.length}</sup>
+								</button>
+							</div>
+						)}
 						{isAuthenticated ? (
-							<button
-								type="button"
-								className="bg-golden text-white px-4 py-2 text-lg flex items-center gap-2"
-							>
-								<i className="bx bxs-user-circle"></i>
-								{user?.first_name}
-							</button>
+							<div className="relative group">
+								<button
+									type="button"
+									className="bg-golden text-white px-4 py-2 text-lg flex items-center gap-2"
+								>
+									<i className="bx bxs-user-circle"></i>
+									{user?.first_name}
+								</button>
+								{/* dropdown menus */}
+								<div className="hidden group-hover:block absolute w-full transition">
+									<ul className="bg-white shadow-lg w-full p-2 flex flex-col gap-1">
+										<li className="text-gray-700 font-semibold hover:text-golden transition">
+											<Link className="block" href={"/profile"}>
+												Profile
+											</Link>
+										</li>
+										<li className="text-gray-700 font-semibold hover:text-golden transition">
+											<button
+												className="block w-full text-left"
+												type="button"
+												onClick={handleLogout}
+											>
+												Logout
+											</button>
+										</li>
+									</ul>
+								</div>
+							</div>
 						) : (
 							<button
 								type="button"
-								onClick={modalOper}
+								onClick={openAuthModal}
 								className="bg-golden text-white px-4 py-2 text-lg"
 							>
 								Login
@@ -83,7 +129,7 @@ export default function Navbar() {
 			</nav>
 			{open && (
 				<Modal handleClose={modalCloser}>
-					<Auth />
+					{open === "auth" ? <Auth /> : <Plate />}
 				</Modal>
 			)}
 		</>

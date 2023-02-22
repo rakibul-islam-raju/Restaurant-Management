@@ -14,7 +14,7 @@ const NavLinks = ({ value }) => {
 		},
 		{
 			name: "Menu",
-			link: "/",
+			link: "/menus",
 			icon: "bx bx-food-menu",
 		},
 		{
