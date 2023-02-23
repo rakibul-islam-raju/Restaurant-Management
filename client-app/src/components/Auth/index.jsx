@@ -6,7 +6,6 @@ export default function Auth() {
 	const [tabState, setTabState] = useState("login");
 
 	const setRegisterTab = () => {
-		console.log("ok");
 		setTabState("login");
 	};
 

@@ -1,7 +1,8 @@
+import { AuthContext } from "@/contexts/AuthContext";
 import authService from "@/services/authService";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { setCookie } from "nookies";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Divider from "../Divider";
@@ -16,6 +17,8 @@ const loginSchema = yup.object({
 });
 
 export default function Login() {
+	const router = useRouter();
+	const { isAuthenticated, login } = useContext(AuthContext);
 	const {
 		register,
 		handleSubmit,
@@ -24,6 +27,8 @@ export default function Login() {
 		resolver: yupResolver(loginSchema),
 	});
 
+	console.log("isAuthenticated =>", isAuthenticated);
+
 	const [showPassword, setShowPassword] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -31,13 +36,17 @@ export default function Login() {
 	const onSubmit = async (data) => {
 		setErrorMessage(null);
 		setLoading(true);
+
+		const { next } = router.query;
+		const redirectUrl = next ? decodeURIComponent(next) : "/";
+
 		try {
 			const res = await authService.login(data);
 			const { access, refresh } = res;
 			if (access && refresh) {
-				setCookie(null, "access", access);
-				setCookie(null, "refresh", refresh);
-				window.location.href = "/";
+				login(access, refresh);
+				router.push(redirectUrl);
+				// window.location.href = "/";
 			}
 		} catch (error) {
 			console.error(error);
