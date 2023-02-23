@@ -1,7 +1,7 @@
 import Buttton from "@/components/utils/Button";
 import Image from "next/image";
 
-function Menu({ menu, reverse = false, addToPlateHandler }) {
+function Menu({ menu, reverse = false, addTocartHandler }) {
 	return (
 		<div
 			className={`flex flex-col ${
@@ -35,7 +35,7 @@ function Menu({ menu, reverse = false, addToPlateHandler }) {
 				</div>
 
 				<Buttton
-					onClickHandler={() => addToPlateHandler(menu)}
+					onClickHandler={() => addTocartHandler(menu)}
 					text="ADD TO PLATE"
 				/>
 			</div>

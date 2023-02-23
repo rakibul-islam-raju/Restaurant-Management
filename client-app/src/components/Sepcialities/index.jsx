@@ -1,8 +1,8 @@
 import SectionHeader from "@/components/SectionHeader";
+import { CartContext } from "@/contexts/CartContext";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
-import usePlate from "@/hooks/usePlate";
 import menuService from "@/services/menuService";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Auth from "../Auth";
 import { ErrorMessage } from "../Messages";
 import Modal from "../Modal";
@@ -11,7 +11,8 @@ import Menu from "./Menu";
 
 function Specialities() {
 	const [isAuthenticated] = useIsAuthenticated();
-	const [_, addToPlate] = usePlate();
+
+	const { addItem } = useContext(CartContext);
 
 	const [menus, setMenus] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -21,9 +22,8 @@ function Specialities() {
 
 	const handleClose = () => setOpenModal(false);
 
-	const addToPlateHandler = (item) => {
-		console.log("item =>", item);
-		addToPlate(item);
+	const handleAddToCart = (item) => {
+		addItem(item);
 	};
 
 	const fetchMenus = async () => {
@@ -61,7 +61,7 @@ function Specialities() {
 								<Menu
 									menu={item}
 									key={item.id}
-									addToPlateHandler={addToPlateHandler}
+									addTocartHandler={handleAddToCart}
 								/>
 							);
 						} else {
@@ -69,7 +69,7 @@ function Specialities() {
 								<Menu
 									menu={item}
 									key={item.id}
-									addToPlateHandler={addToPlateHandler}
+									addTocartHandler={handleAddToCart}
 									reverse
 								/>
 							);
