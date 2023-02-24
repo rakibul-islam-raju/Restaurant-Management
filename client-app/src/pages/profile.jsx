@@ -1,11 +1,9 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
-import { ErrorMessage, WarningMessage } from "@/components/Messages";
 import OrderTable from "@/components/Order/OrderTable";
 import SectionHeader from "@/components/SectionHeader";
 import { AuthContext } from "@/contexts/AuthContext";
-import orderService from "@/services/orderService";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -16,35 +14,13 @@ export default function Profile() {
 	const router = useRouter();
 	const { authChecked, isAuthenticated, user } = useContext(AuthContext);
 
-	const [orders, setOrders] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [errorMessage, setErrorMessage] = useState(null);
-
-	const fetchOrders = async () => {
-		setLoading(true);
-		setErrorMessage(null);
-
-		try {
-			const res = await orderService.getOrders(user?.email);
-			setOrders(res);
-		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
-		} finally {
-			setLoading(false);
-		}
-	};
+	const [tabState, setTabState] = useState("orders");
 
 	useEffect(() => {
 		if (authChecked && !isAuthenticated) {
 			router.push(`/login?next=${encodeURIComponent("profile")}`);
 		}
 	}, [isAuthenticated]);
-
-	useEffect(() => {
-		if (user?.email) {
-			fetchOrders();
-		}
-	}, [user]);
 
 	return !authChecked ? (
 		<h4>Loading</h4>
@@ -76,7 +52,6 @@ export default function Profile() {
 				<div className="wrapper">
 					<SectionHeader upperText={"Profile"} lowerText={"Profile"} />
 
-					{errorMessage && <ErrorMessage text={errorMessage} />}
 					<div className="">
 						{/* user info */}
 						<div className="p-2 rounded shadow w-full">
@@ -106,14 +81,28 @@ export default function Profile() {
 							</div>
 						</div>
 
-						{/* order history */}
+						{/* user history */}
 						<div className="mt-8">
-							<h3>Order History</h3>
-							{orders?.results?.length < 1 ? (
-								<WarningMessage text={"You do not have any orders!"} />
-							) : (
-								<OrderTable data={orders} />
-							)}
+							<div className="w-full flex justify-evenly border rounded">
+								{["orders", "reservations", "reviews"].map((item) => (
+									<div className="w-full text-center">
+										<div
+											className={`${
+												tabState === item.toLowerCase()
+													? "bg-golden text-white"
+													: "bg-white text-golden"
+											} uppercase py-2 rounded cursor-pointer transition`}
+											onClick={() => setTabState(item.toLowerCase())}
+										>
+											{item}
+										</div>
+									</div>
+								))}
+							</div>
+
+							<div className="mt-12">
+								{tabState === "orders" && <OrderTable />}
+							</div>
 						</div>
 					</div>
 				</div>

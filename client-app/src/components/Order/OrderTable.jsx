@@ -1,16 +1,46 @@
+import { AuthContext } from "@/contexts/AuthContext";
+import orderService from "@/services/orderService";
+import Link from "next/link";
+import { useContext, useEffect, useState } from "react";
 import Buttton from "../utils/Button";
 
-export default function OrderTable({ data }) {
-	const COLUMNS = [
-		"",
-		"Date",
-		"Price",
-		"Tax",
-		"Total",
-		"Paid",
-		"Served",
-		"Actions",
-	];
+const COLUMNS = [
+	"",
+	"Date",
+	"Price",
+	"Tax",
+	"Total",
+	"Paid",
+	"Served",
+	"Actions",
+];
+
+export default function OrderTable() {
+	const { user } = useContext(AuthContext);
+
+	const [orders, setOrders] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState(null);
+
+	const fetchOrders = async () => {
+		setLoading(true);
+		setErrorMessage(null);
+
+		try {
+			const res = await orderService.getOrders(user?.email);
+			setOrders(res);
+		} catch (err) {
+			setErrorMessage(err?.data?.details || "Something went wrong!");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		if (user?.email) {
+			fetchOrders();
+		}
+	}, [user]);
 
 	return (
 		<table className="min-w-full border-collapse block md:table">
@@ -27,7 +57,7 @@ export default function OrderTable({ data }) {
 				</tr>
 			</thead>
 			<tbody className="block md:table-row-group">
-				{data?.results?.map((item, i) => (
+				{orders?.results?.map((item, i) => (
 					<tr
 						key={item.id}
 						className="bg-gray-100 border border-gray-500 md:border-none block md:table-row"
@@ -75,7 +105,9 @@ export default function OrderTable({ data }) {
 						<td className="order-table-td">
 							<span className="inline-block w-1/3 md:hidden font-bold"></span>
 							<div className="flex justify-end md:justify-start gap-2">
-								<Buttton text="View" />
+								<Link href={`/order/${item?.id}`}>
+									<Buttton text="View" />
+								</Link>
 								{!item?.id_paid && <Buttton text="Pay" />}
 							</div>
 						</td>
