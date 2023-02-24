@@ -1,11 +1,9 @@
 import { CartContext } from "@/contexts/CartContext";
-import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 import Link from "next/link";
 import { useContext } from "react";
 import Buttton from "../utils/Button";
 
 export default function Cart({ orderPage = false }) {
-	const [isAuthenticated, user] = useIsAuthenticated();
 	const {
 		cartItems,
 		removeItem,

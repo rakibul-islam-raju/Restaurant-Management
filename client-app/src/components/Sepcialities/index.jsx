@@ -1,26 +1,16 @@
 import SectionHeader from "@/components/SectionHeader";
 import { CartContext } from "@/contexts/CartContext";
-import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 import menuService from "@/services/menuService";
 import { useContext, useEffect, useState } from "react";
-import Auth from "../Auth";
 import { ErrorMessage } from "../Messages";
-import Modal from "../Modal";
-import Order from "../Order/Order";
 import Menu from "./Menu";
 
 function Specialities() {
-	const [isAuthenticated] = useIsAuthenticated();
-
 	const { addItem } = useContext(CartContext);
 
 	const [menus, setMenus] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState(null);
-
-	const [openModal, setOpenModal] = useState(false);
-
-	const handleClose = () => setOpenModal(false);
 
 	const handleAddToCart = (item) => {
 		addItem(item);
@@ -77,13 +67,6 @@ function Specialities() {
 					})
 				)}
 			</div>
-
-			{/* modal */}
-			{openModal && (
-				<Modal handleClose={handleClose}>
-					{!isAuthenticated ? <Auth /> : <Order />}
-				</Modal>
-			)}
 		</section>
 	);
 }

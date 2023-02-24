@@ -24,7 +24,7 @@ export function WarningMessage({ text }) {
 
 export function InfoMessage({ text }) {
 	return (
-		<div className="bg-golden text-golden font-semibold p-2 rounded border border-golden my-2">
+		<div className="bg-golden text-white font-semibold p-2 rounded border border-golden my-2">
 			{text}
 		</div>
 	);
