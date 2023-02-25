@@ -131,7 +131,9 @@ export default function Cart({ orderPage = false }) {
 
 			<div className="flex justify-between">
 				<div className="font-semibold text-xl">Total</div>
-				<div className="font-semibold text-xl">{getTotalPrice()} ৳</div>
+				<div className="font-semibold text-xl">
+					{parseFloat(getTotalPrice()).toFixed(2)} ৳
+				</div>
 			</div>
 
 			{!orderPage && (
@@ -140,7 +142,7 @@ export default function Cart({ orderPage = false }) {
 						onClick={handleClearCart}
 						className="py-3 px-3 text-red-500 border border-red-500 hover:text-white bg-white hover:bg-red-500 rounded hover:duration-300"
 					>
-						Clear Cart
+						Clear Tray
 					</button>
 					<Link href={"/orders"}>
 						<Buttton onClickHandler={orderHandler} text="Continue Order" />

@@ -4,6 +4,7 @@ import Input from "@/components/utils/Input";
 import { AuthContext } from "@/contexts/AuthContext";
 import reservationService from "@/services/reservationService";
 import { yupResolver } from "@hookform/resolvers/yup";
+import moment from "moment";
 import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { useContext, useEffect, useState } from "react";
@@ -44,6 +45,7 @@ const TableBookingForm = () => {
 	const [reserveInfo, setReserveInfo] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
+	const [responseError, setResponseError] = useState([]);
 
 	const closeAuthModal = () => setAuthModal(false);
 
@@ -55,13 +57,20 @@ const TableBookingForm = () => {
 		}
 		try {
 			setLoading(true);
-			const response = await reservationService.createReservation(data);
+			console.log("data date =>", data?.date);
+			const newData = { ...data };
+			if (newData?.date) {
+				newData.date = moment(newData.date).format("YYYY-MM-DD");
+			}
+			const response = await reservationService.createReservation(newData);
+			console.log("response =>", response);
 			toast.success("Reservation Complete");
 			router.push("profile");
 		} catch (err) {
+			setResponseError(err?.response?.data);
 			setErrorMessage(err?.data?.details || "Something went wrong!");
 		} finally {
-			setLoading(true);
+			setLoading(false);
 		}
 	};
 
@@ -95,8 +104,8 @@ const TableBookingForm = () => {
 							defaultValue={reserveInfo?.name}
 							register={register}
 							name="name"
-							error={errors?.name?.message}
-							helperText={errors?.name?.message}
+							error={errors?.name?.message || responseError?.name}
+							helperText={errors?.name?.message || responseError?.name}
 						/>
 						<div className="flex flex-col md:flex-row gap-0 md:gap-2">
 							<div className="w-full">
@@ -108,8 +117,8 @@ const TableBookingForm = () => {
 									defaultValue={reserveInfo?.phone}
 									register={register}
 									name="phone"
-									error={errors?.phone?.message}
-									helperText={errors?.phone?.message}
+									error={errors?.phone?.message || responseError?.phone}
+									helperText={errors?.phone?.message || responseError?.phone}
 								/>
 							</div>
 							<div className="w-full">
@@ -122,8 +131,8 @@ const TableBookingForm = () => {
 									defaultValue={reserveInfo?.person ?? 2}
 									register={register}
 									name="person"
-									error={errors?.person?.message}
-									helperText={errors?.person?.message}
+									error={errors?.person?.message || responseError?.person}
+									helperText={errors?.person?.message || responseError?.person}
 								/>
 							</div>
 						</div>
@@ -137,8 +146,8 @@ const TableBookingForm = () => {
 									defaultValue={reserveInfo?.date}
 									register={register}
 									name="date"
-									error={errors?.date?.message}
-									helperText={errors?.date?.message}
+									error={errors?.date?.message || responseError?.date}
+									helperText={errors?.date?.message || responseError?.date}
 								/>
 							</div>
 							<div className="w-full">
@@ -150,8 +159,8 @@ const TableBookingForm = () => {
 									defaultValue={reserveInfo?.time}
 									register={register}
 									name="time"
-									error={errors?.time?.message}
-									helperText={errors?.time?.message}
+									error={errors?.time?.message || responseError?.time}
+									helperText={errors?.time?.message || responseError?.time}
 								/>
 							</div>
 						</div>

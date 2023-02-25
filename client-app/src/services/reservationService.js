@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axios";
 
 export const createReservation = async (data) => {
-	const res = await axiosInstance.get("/resarvations", data);
+	const res = await axiosInstance.post("/resarvations", data);
 	return res.data;
 };
 

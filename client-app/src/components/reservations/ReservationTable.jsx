@@ -42,7 +42,7 @@ export default function ReservationTable({ reservations }) {
 							<span className="inline-block w-1/3 md:hidden font-bold">
 								Date
 							</span>
-							{new Date(item?.date).toLocaleString()}
+							{new Date(item?.date).toLocaleDateString()}
 						</td>
 						<td className="order-table-td">
 							<span className="inline-block w-1/3 md:hidden font-bold">
@@ -54,16 +54,7 @@ export default function ReservationTable({ reservations }) {
 							<span className="inline-block w-1/3 md:hidden font-bold">
 								Status
 							</span>
-							{item?.status}
-						</td>
-						<td className="order-table-td">
-							<span className="inline-block w-1/3 md:hidden font-bold"></span>
-							<div className="flex justify-end md:justify-start gap-2">
-								<Link href={`/order/${item?.id}`}>
-									<Buttton text="View" />
-								</Link>
-								{!item?.id_paid && <Buttton text="Pay" />}
-							</div>
+							{(item?.status).toUpperCase()}
 						</td>
 					</tr>
 				))}

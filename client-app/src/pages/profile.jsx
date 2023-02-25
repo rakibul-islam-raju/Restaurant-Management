@@ -1,6 +1,8 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
+import Loader from "@/components/Loader";
+import { WarningMessage } from "@/components/Messages";
 import OrderTable from "@/components/Order/OrderTable";
 import ReservationTable from "@/components/reservations/ReservationTable";
 import SectionHeader from "@/components/SectionHeader";
@@ -127,31 +129,46 @@ export default function Profile() {
 						</div>
 
 						{/* user history */}
-						<div className="mt-8">
-							<div className="w-full flex justify-evenly border rounded">
-								{["orders", "reservations", "reviews"].map((item) => (
-									<div className="w-full text-center">
-										<div
-											className={`${
-												tabState === item.toLowerCase()
-													? "bg-golden text-white"
-													: "bg-white text-golden"
-											} uppercase py-2 rounded cursor-pointer transition`}
-											onClick={() => setTabState(item.toLowerCase())}
-										>
-											{item}
+						{loading ? (
+							<Loader />
+						) : (
+							<div className="mt-8">
+								<div className="w-full flex justify-evenly border rounded">
+									{["orders", "reservations", "reviews"].map((item) => (
+										<div className="w-full text-center">
+											<div
+												className={`${
+													tabState === item.toLowerCase()
+														? "bg-golden text-white"
+														: "bg-white text-golden"
+												} uppercase py-2 rounded cursor-pointer transition`}
+												onClick={() => setTabState(item.toLowerCase())}
+											>
+												{item}
+											</div>
 										</div>
-									</div>
-								))}
-							</div>
+									))}
+								</div>
 
-							<div className="mt-12">
-								{tabState === "orders" && <OrderTable orders={orders} />}
-								{tabState === "reservations" && (
-									<ReservationTable reservations={reservations} />
-								)}
+								<div className="mt-12">
+									{/* orders */}
+									{tabState === "orders" &&
+										(orders?.results?.length < 1 ? (
+											<WarningMessage text={"No data found!"} />
+										) : (
+											<OrderTable orders={orders} />
+										))}
+
+									{/* Reservations */}
+									{tabState === "reservations" &&
+										(reservations?.results?.length < 1 ? (
+											<WarningMessage text={"No data found!"} />
+										) : (
+											<ReservationTable reservations={reservations} />
+										))}
+								</div>
 							</div>
-						</div>
+						)}
 					</div>
 				</div>
 
