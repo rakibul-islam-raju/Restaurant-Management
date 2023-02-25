@@ -2,6 +2,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
 import OrderTable from "@/components/Order/OrderTable";
+import ReservationTable from "@/components/reservations/ReservationTable";
 import SectionHeader from "@/components/SectionHeader";
 import { AuthContext } from "@/contexts/AuthContext";
 import orderService from "@/services/orderService";
@@ -146,7 +147,9 @@ export default function Profile() {
 
 							<div className="mt-12">
 								{tabState === "orders" && <OrderTable orders={orders} />}
-								{/* {tabState === "reservations" && <OrderTable />} */}
+								{tabState === "reservations" && (
+									<ReservationTable reservations={reservations} />
+								)}
 							</div>
 						</div>
 					</div>
