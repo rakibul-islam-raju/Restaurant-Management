@@ -78,3 +78,7 @@
 .icon-bg{
   @apply  bg-neutral-700 p-1 rounded-full text-center
 }
+
+.order-table-td{
+  @apply p-2 md:border text-left block md:table-cell
+}

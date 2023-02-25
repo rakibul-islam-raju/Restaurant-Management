@@ -3,16 +3,16 @@
 import Auth from "@/components/Auth";
 import Modal from "@/components/Modal";
 import Cart from "@/components/Order/Cart";
+import { AuthContext } from "@/contexts/AuthContext";
 import { CartContext } from "@/contexts/CartContext";
-import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 import Link from "next/link";
 import { destroyCookie } from "nookies";
 import { useContext, useState } from "react";
 import NavLinks from "../Navlink";
 
 export default function Navbar() {
-	const [isAuthenticated, user] = useIsAuthenticated();
 	const { cartItems, removeItem, clearCart } = useContext(CartContext);
+	const { isAuthenticated, user } = useContext(AuthContext);
 
 	const [navbar, setNavbar] = useState(false);
 	const [open, setOpen] = useState(null);
@@ -143,7 +143,7 @@ export default function Navbar() {
 			</nav>
 			{open && (
 				<Modal handleClose={modalCloser}>
-					{open === "auth" ? <Auth /> : <Cart />}
+					{open === "auth" ? <Auth handleClose={modalCloser} /> : <Cart />}
 				</Modal>
 			)}
 		</>

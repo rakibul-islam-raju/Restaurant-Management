@@ -2,7 +2,7 @@ import { useState } from "react";
 import Login from "./Login";
 import Registration from "./Registration";
 
-export default function Auth() {
+export default function Auth({ handleClose }) {
 	const [tabState, setTabState] = useState("login");
 
 	const setRegisterTab = () => {
@@ -30,9 +30,12 @@ export default function Auth() {
 
 			<div className="">
 				{tabState === "login" ? (
-					<Login />
+					<Login handleClose={handleClose} />
 				) : (
-					<Registration setRegisterTab={setRegisterTab} />
+					<Registration
+						setRegisterTab={setRegisterTab}
+						handleClose={handleClose}
+					/>
 				)}
 			</div>
 		</>

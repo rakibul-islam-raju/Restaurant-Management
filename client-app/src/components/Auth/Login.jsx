@@ -16,7 +16,7 @@ const loginSchema = yup.object({
 	password: yup.string().required().min(4).max(100),
 });
 
-export default function Login() {
+export default function Login({ handleClose }) {
 	const router = useRouter();
 	const { isAuthenticated, login } = useContext(AuthContext);
 	const {
@@ -26,8 +26,6 @@ export default function Login() {
 	} = useForm({
 		resolver: yupResolver(loginSchema),
 	});
-
-	console.log("isAuthenticated =>", isAuthenticated);
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -46,6 +44,7 @@ export default function Login() {
 			if (access && refresh) {
 				login(access, refresh);
 				router.push(redirectUrl);
+				handleClose();
 				// window.location.href = "/";
 			}
 		} catch (error) {
