@@ -1,7 +1,4 @@
-import { AuthContext } from "@/contexts/AuthContext";
-import orderService from "@/services/orderService";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
 import Buttton from "../utils/Button";
 
 const COLUMNS = [
@@ -15,33 +12,7 @@ const COLUMNS = [
 	"Actions",
 ];
 
-export default function OrderTable() {
-	const { user } = useContext(AuthContext);
-
-	const [orders, setOrders] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [errorMessage, setErrorMessage] = useState(null);
-
-	const fetchOrders = async () => {
-		setLoading(true);
-		setErrorMessage(null);
-
-		try {
-			const res = await orderService.getOrders(user?.email);
-			setOrders(res);
-		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
-		} finally {
-			setLoading(false);
-		}
-	};
-
-	useEffect(() => {
-		if (user?.email) {
-			fetchOrders();
-		}
-	}, [user]);
-
+export default function OrderTable({ orders }) {
 	return (
 		<table className="min-w-full border-collapse block md:table">
 			<thead className="block md:table-header-group">

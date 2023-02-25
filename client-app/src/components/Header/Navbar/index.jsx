@@ -143,7 +143,7 @@ export default function Navbar() {
 			</nav>
 			{open && (
 				<Modal handleClose={modalCloser}>
-					{open === "auth" ? <Auth /> : <Cart />}
+					{open === "auth" ? <Auth handleClose={modalCloser} /> : <Cart />}
 				</Modal>
 			)}
 		</>

@@ -4,6 +4,8 @@ import Topbar from "@/components/Header/Topbar";
 import OrderTable from "@/components/Order/OrderTable";
 import SectionHeader from "@/components/SectionHeader";
 import { AuthContext } from "@/contexts/AuthContext";
+import orderService from "@/services/orderService";
+import reservationService from "@/services/reservationService";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -12,9 +14,51 @@ import profilePic from "../assets/images/profile-picture.jpeg";
 
 export default function Profile() {
 	const router = useRouter();
-	const { authChecked, isAuthenticated, user } = useContext(AuthContext);
+
+	const { user, isAuthenticated, authChecked } = useContext(AuthContext);
 
 	const [tabState, setTabState] = useState("orders");
+	const [reservations, setReservations] = useState(null);
+	const [orders, setOrders] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState(null);
+
+	const fetchOrders = async (email) => {
+		setLoading(true);
+		setErrorMessage(null);
+
+		try {
+			const res = await orderService.getOrders(email);
+			setOrders(res);
+		} catch (err) {
+			setErrorMessage(err?.data?.details || "Something went wrong!");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const fetchReservations = async (email) => {
+		setLoading(true);
+		setErrorMessage(null);
+
+		try {
+			const res = await reservationService.getReservations({
+				user__email: email,
+			});
+			setReservations(res);
+		} catch (err) {
+			setErrorMessage(err?.data?.details || "Something went wrong!");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		if (user?.email) {
+			fetchOrders(user.email);
+			fetchReservations(user.email);
+		}
+	}, [user]);
 
 	useEffect(() => {
 		if (authChecked && !isAuthenticated) {
@@ -101,7 +145,8 @@ export default function Profile() {
 							</div>
 
 							<div className="mt-12">
-								{tabState === "orders" && <OrderTable />}
+								{tabState === "orders" && <OrderTable orders={orders} />}
+								{/* {tabState === "reservations" && <OrderTable />} */}
 							</div>
 						</div>
 					</div>
