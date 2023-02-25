@@ -35,7 +35,7 @@ export default function Orders() {
 	};
 
 	const fivePercentTax = getTotalPrice() * 0.05;
-	const grandTotal = fivePercentTax + getTotalPrice();
+	const grandTotal = getTotalPrice() + fivePercentTax;
 
 	const confirmOrderHandler = async () => {
 		setLoading(true);
@@ -128,13 +128,15 @@ export default function Orders() {
 								<div className="font-semibold text-xl">
 									Tax <span className="text-sm">(5%)</span>
 								</div>
-								<div className="font-semibold text-xl">{fivePercentTax} ৳</div>
+								<div className="font-semibold text-xl">
+									{parseFloat(fivePercentTax).toFixed(2)} ৳
+								</div>
 							</div>
 							<div className="flex justify-between">
+								<div className="font-semibold text-xl">Grand Total</div>
 								<div className="font-semibold text-xl">
-									Grand Total <span className="text-sm">(5%)</span>
+									{parseFloat(grandTotal).toFixed(2)} ৳
 								</div>
-								<div className="font-semibold text-xl">{grandTotal} ৳</div>
 							</div>
 						</div>
 					</div>
