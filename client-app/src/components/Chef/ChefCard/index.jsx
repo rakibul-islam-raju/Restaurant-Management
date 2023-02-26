@@ -1,4 +1,3 @@
-import Icons from "@/components/utils/Icons";
 import Image from "next/image";
 
 function ChefCard() {
@@ -16,9 +15,6 @@ function ChefCard() {
 				<div>
 					<h6>Noman Reign</h6>
 					<p className="text-sm">Noman Reign Lorem .</p>
-				</div>
-				<div className="self-end md:self-auto">
-					<Icons color={true} />
 				</div>
 			</div>
 		</div>

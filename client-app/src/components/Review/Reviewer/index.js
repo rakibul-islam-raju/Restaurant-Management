@@ -1,32 +1,32 @@
-// Import Swiper React components
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-
-// import './styles.css';
-
-// import required modules
+import Star from "@/components/Star";
 import Image from "next/image";
+import Rating from "react-rating";
+import profilePic from "../../../assets/images/profile-picture.jpeg";
 
-export default function Reviewer() {
+export default function Reviewer({ data }) {
 	return (
-		<div className="  pb-14   flex flex-col items-center py-4    space-y-8 rounded-2xl   ">
+		<div className="pb-14 flex flex-col items-center py-4 space-y-8 rounded-2xl   ">
 			<Image
-				src={"/person_3.jpg.webp"}
+				src={profilePic}
 				height={99}
 				width={99}
 				className="rounded-full ring-4 ring-golden  mx-auto "
 			/>
 
 			<div className="text-center space-y-2">
-				<p className=" text-center">
-					Far far away, behind the word mountains, far from the countries
-					Vokalia
-				</p>
-				<h4 className="text-2xl">Mark Stevenson</h4>
+				<pre className=" text-center">{data?.comment}</pre>
+				<h6 className="text-lg">
+					{data?.user.first_name} {data?.user.last_name}
+				</h6>
 				<p className="text-xs font-semibold uppercase leading-loose">
-					Customer
+					<Rating
+						start={0}
+						stop={5}
+						initialRating={data?.rating}
+						readonly
+						emptySymbol={<Star />}
+						fullSymbol={<Star fill />}
+					/>
 				</p>
 			</div>
 		</div>
