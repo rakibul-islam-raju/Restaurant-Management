@@ -36,7 +36,7 @@ export default function Review() {
 	return (
 		<>
 			<div className="wrapper ">
-				<SectionHeader upperText={"Testimony"} lowerText={"Happy Customer"} />
+				<SectionHeader upperText={"Testimony"} lowerText={"Happy Customers"} />
 
 				{errorMessage && <ErrorMessage text={errorMessage} />}
 
