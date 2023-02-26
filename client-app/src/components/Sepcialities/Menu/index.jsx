@@ -1,5 +1,7 @@
+import Star from "@/components/Star";
 import Buttton from "@/components/utils/Button";
 import Image from "next/image";
+import Rating from "react-rating";
 
 function Menu({ menu, reverse = false, addTocartHandler }) {
 	return (
@@ -39,6 +41,18 @@ function Menu({ menu, reverse = false, addTocartHandler }) {
 						Cook Time:
 					</span>{" "}
 					<span className="">{menu?.cook_time} mins</span>
+				</div>
+
+				<div className="flex gap-2">
+					<Rating
+						start={0}
+						stop={5}
+						initialRating={menu?.rating?.rating__avg}
+						readonly
+						emptySymbol={<Star />}
+						fullSymbol={<Star fill />}
+					/>
+					<span>({menu?.total_reviews})</span>
 				</div>
 
 				<Buttton

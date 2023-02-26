@@ -1,6 +1,8 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
+import Modal from "@/components/Modal";
+import ReviewForm from "@/components/Review/ReviewForm";
 import SectionHeader from "@/components/SectionHeader";
 import Buttton from "@/components/utils/Button";
 import { AuthContext } from "@/contexts/AuthContext";
@@ -21,8 +23,17 @@ export default function SingleOrder() {
 	const [order, setOrder] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
+	const [showReviewModal, setShowReviewModal] = useState(false);
+	const [reviewItem, setReviewItem] = useState(null);
 
 	const order_items = order?.order_items;
+
+	const closeReviewModal = () => setShowReviewModal(false);
+
+	const handleReview = (item) => {
+		setReviewItem(item);
+		setShowReviewModal(true);
+	};
 
 	const fetchOrderDetails = async (id) => {
 		setLoading(true);
@@ -155,6 +166,12 @@ export default function SingleOrder() {
 														: price * quantity}{" "}
 													৳
 												</div>
+												<button
+													onClick={() => handleReview(item)}
+													className="mt-3 text-blue-500 bg-blue-100 px-2 py-1 rounded text-sm font-semibold hover:bg-blue-500 hover:text-white transition"
+												>
+													Review
+												</button>
 											</div>
 										</div>
 									);
@@ -162,9 +179,16 @@ export default function SingleOrder() {
 						</div>
 					</div>
 				</div>
-
-				<Footer />
 			</section>
+
+			{/* review modal */}
+			{showReviewModal && (
+				<Modal handleClose={closeReviewModal}>
+					<ReviewForm item={reviewItem} handleClose={closeReviewModal} />
+				</Modal>
+			)}
+
+			<Footer />
 		</>
 	);
 }
