@@ -2,13 +2,15 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
 import Loader from "@/components/Loader";
-import { WarningMessage } from "@/components/Messages";
+import { ErrorMessage, WarningMessage } from "@/components/Messages";
 import OrderTable from "@/components/Order/OrderTable";
 import ReservationTable from "@/components/reservations/ReservationTable";
+import ReviewsTable from "@/components/Review/ReviewsTable";
 import SectionHeader from "@/components/SectionHeader";
 import { AuthContext } from "@/contexts/AuthContext";
 import orderService from "@/services/orderService";
 import reservationService from "@/services/reservationService";
+import reviewService from "@/services/reviewService";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -23,14 +25,14 @@ export default function Profile() {
 	const [tabState, setTabState] = useState("orders");
 	const [reservations, setReservations] = useState(null);
 	const [orders, setOrders] = useState(null);
+	const [reviews, setReviews] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
 
 	const fetchOrders = async (email) => {
-		setLoading(true);
-		setErrorMessage(null);
-
 		try {
+			setLoading(true);
+			setErrorMessage(null);
 			const res = await orderService.getOrders(email);
 			setOrders(res);
 		} catch (err) {
@@ -41,10 +43,9 @@ export default function Profile() {
 	};
 
 	const fetchReservations = async (email) => {
-		setLoading(true);
-		setErrorMessage(null);
-
 		try {
+			setLoading(true);
+			setErrorMessage(null);
 			const res = await reservationService.getReservations({
 				user__email: email,
 			});
@@ -56,10 +57,24 @@ export default function Profile() {
 		}
 	};
 
+	const fetchReviews = async (email) => {
+		try {
+			setLoading(true);
+			setErrorMessage(null);
+			const res = await reviewService.getReviewsByUser({}, email);
+			setReviews(res);
+		} catch (err) {
+			setErrorMessage(err?.data?.details || "Something went wrong!");
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
 		if (user?.email) {
 			fetchOrders(user.email);
 			fetchReservations(user.email);
+			fetchReviews(user.email);
 		}
 	}, [user]);
 
@@ -98,6 +113,8 @@ export default function Profile() {
 
 				<div className="wrapper">
 					<SectionHeader upperText={"Profile"} lowerText={"Profile"} />
+
+					{errorMessage && <ErrorMessage text={errorMessage} />}
 
 					<div className="">
 						{/* user info */}
@@ -165,6 +182,14 @@ export default function Profile() {
 											<WarningMessage text={"No data found!"} />
 										) : (
 											<ReservationTable reservations={reservations} />
+										))}
+
+									{/* Reviews */}
+									{tabState === "reviews" &&
+										(reviews?.results?.length < 1 ? (
+											<WarningMessage text={"No data found!"} />
+										) : (
+											<ReviewsTable reviews={reviews} />
 										))}
 								</div>
 							</div>

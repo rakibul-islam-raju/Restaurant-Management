@@ -57,13 +57,11 @@ const TableBookingForm = () => {
 		}
 		try {
 			setLoading(true);
-			console.log("data date =>", data?.date);
 			const newData = { ...data };
 			if (newData?.date) {
 				newData.date = moment(newData.date).format("YYYY-MM-DD");
 			}
 			const response = await reservationService.createReservation(newData);
-			console.log("response =>", response);
 			toast.success("Reservation Complete");
 			router.push("profile");
 		} catch (err) {
