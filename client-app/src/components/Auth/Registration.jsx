@@ -29,9 +29,9 @@ export default function Registration({ setRegisterTab }) {
 	const [errorMessage, setErrorMessage] = useState(null);
 
 	const onSubmit = async (data) => {
-		setErrorMessage(null);
-		setLoading(true);
 		try {
+			setErrorMessage(null);
+			setLoading(true);
 			const res = await authService.register(data);
 			if (res?.token) {
 				toast.success("Registration Successfull!");

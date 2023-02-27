@@ -1,7 +1,7 @@
 import About from "@/components/About";
+import Campaigns from "@/components/Campaigns";
 import CateringService from "@/components/CateringService";
 import Chef from "@/components/Chef";
-import Feature from "@/components/Feature";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Review from "@/components/Review";
@@ -21,7 +21,7 @@ export default function Home() {
 
 			<section className="scroll-smooth font-poppins">
 				<Header />
-				<Feature />
+				<Campaigns />
 				<About />
 				<Statistics />
 				<Specialities />

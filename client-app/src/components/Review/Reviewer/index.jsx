@@ -11,6 +11,7 @@ export default function Reviewer({ data }) {
 				height={99}
 				width={99}
 				className="rounded-full ring-4 ring-golden  mx-auto "
+				alt={data?.menu?.name}
 			/>
 
 			<div className="mt-6">
