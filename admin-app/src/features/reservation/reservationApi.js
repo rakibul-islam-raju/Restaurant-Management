@@ -3,7 +3,10 @@ import { apiSlice } from "../api/apiSlice";
 export const reservationApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getReservations: builder.query({
-			query: (params) => `/resarvations`,
+			query: (params) => ({
+				url: `/resarvations`,
+				params,
+			}),
 		}),
 
 		addReservation: builder.mutation({

@@ -1,8 +1,10 @@
 import { Alert, Button, Divider, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import CustomPagination from "../../components/CustomPagination";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
+import { PAGINATION_LIMIT } from "../../config";
 import {
 	useDeleteMenuMutation,
 	useGetMenusQuery,
@@ -14,16 +16,22 @@ export default function Menus() {
 	const dispatch = useDispatch();
 
 	const [openModal, setOpenModal] = useState(false);
-	const [params, setParams] = useState("");
 	const [edit, setEdit] = useState(false);
 	const [editData, setEditData] = useState(null);
+	const [page, setPage] = useState(1);
+	const [params, setParams] = useState({
+		limit: PAGINATION_LIMIT,
+		offset: 0,
+	});
 
 	const {
 		data: menus,
 		isLoading,
 		isError,
 		error: responseError,
-	} = useGetMenusQuery(params);
+	} = useGetMenusQuery(params, {
+		refetchOnMountOrArgChange: true,
+	});
 
 	const [
 		deleteCategory,
@@ -47,6 +55,12 @@ export default function Menus() {
 		if (res) {
 			dispatch(deleteCategory({ id, params }));
 		}
+	};
+
+	const onPageChange = (e, page) => {
+		setPage(page);
+		const newOffset = (page - 1) * params.limit;
+		setParams({ ...params, offset: newOffset });
 	};
 
 	useEffect(() => {
@@ -81,11 +95,19 @@ export default function Menus() {
 						"Something went wrong!"}
 				</Alert>
 			) : (
-				<MenuTable
-					data={menus}
-					editMenuHandler={editMenuHandler}
-					deleteHandler={deleteHandler}
-				/>
+				<>
+					<MenuTable
+						data={menus}
+						editMenuHandler={editMenuHandler}
+						deleteHandler={deleteHandler}
+					/>
+
+					<CustomPagination
+						totalPages={Math.ceil(menus?.count / params.limit)}
+						currentPage={page}
+						onChange={onPageChange}
+					/>
+				</>
 			)}
 
 			{/* modal */}

@@ -1,8 +1,10 @@
 import { Alert, Divider, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import CustomPagination from "../../components/CustomPagination";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
+import { PAGINATION_LIMIT } from "../../config";
 import {
 	useDeleteContactMutation,
 	useGetContactsQuery,
@@ -14,7 +16,11 @@ export default function Contacts() {
 	const dispatch = useDispatch();
 
 	const [openModal, setOpenModal] = useState(false);
-	const [params, setParams] = useState("");
+	const [page, setPage] = useState(1);
+	const [params, setParams] = useState({
+		limit: PAGINATION_LIMIT,
+		offset: 0,
+	});
 	const [edit, setEdit] = useState(false);
 	const [editData, setEditData] = useState(null);
 
@@ -23,7 +29,9 @@ export default function Contacts() {
 		isLoading,
 		isError,
 		error: responseError,
-	} = useGetContactsQuery(params);
+	} = useGetContactsQuery(params, {
+		refetchOnMountOrArgChange: true,
+	});
 
 	const [
 		deleteContact,
@@ -49,6 +57,12 @@ export default function Contacts() {
 		}
 	};
 
+	const onPageChange = (e, page) => {
+		setPage(page);
+		const newOffset = (page - 1) * params.limit;
+		setParams({ ...params, offset: newOffset });
+	};
+
 	return (
 		<>
 			<Typography variant="h4" gutterBottom>
@@ -67,11 +81,19 @@ export default function Contacts() {
 						"Something went wrong!"}
 				</Alert>
 			) : (
-				<ContactTable
-					data={contacts}
-					editContactHandler={editContactHandler}
-					deleteHandler={deleteHandler}
-				/>
+				<>
+					<ContactTable
+						data={contacts}
+						editContactHandler={editContactHandler}
+						deleteHandler={deleteHandler}
+					/>
+
+					<CustomPagination
+						totalPages={Math.ceil(contacts?.count / params.limit)}
+						currentPage={page}
+						onChange={onPageChange}
+					/>
+				</>
 			)}
 
 			{/* modal */}

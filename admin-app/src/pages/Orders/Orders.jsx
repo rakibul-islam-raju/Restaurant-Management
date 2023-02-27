@@ -2,8 +2,10 @@ import { Alert, Box, Divider, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDrawer from "../../components/CustomDrawer";
+import CustomPagination from "../../components/CustomPagination";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
+import { PAGINATION_LIMIT } from "../../config";
 import { useLazyGetOrdersQuery } from "../../features/orders/orderApi";
 import FilterList from "./components/FilterList";
 import OrderDetail from "./components/OrderDetail";
@@ -17,6 +19,11 @@ export default function Orders() {
 	const [edit, setEdit] = useState(false);
 	const [editData, setEditData] = useState(null);
 	const [applyFilter, setApplyFilter] = useState(true);
+	const [page, setPage] = useState(1);
+	const [params, setParams] = useState({
+		limit: PAGINATION_LIMIT,
+		offset: 0,
+	});
 
 	const [trigger, { data: orders, isLoading, isError, error: responseError }] =
 		useLazyGetOrdersQuery();
@@ -34,6 +41,12 @@ export default function Orders() {
 	};
 
 	const filterSubmitHandler = () => setApplyFilter(true);
+
+	const onPageChange = (e, page) => {
+		setPage(page);
+		const newOffset = (page - 1) * params.limit;
+		setParams({ ...params, offset: newOffset });
+	};
 
 	useEffect(() => {
 		if (applyFilter) {
@@ -76,7 +89,15 @@ export default function Orders() {
 					{responseError?.data?.detail || "Something went wrong!"}
 				</Alert>
 			) : (
-				<OrderTable data={orders} editMenuHandler={editMenuHandler} />
+				<>
+					<OrderTable data={orders} editMenuHandler={editMenuHandler} />
+
+					<CustomPagination
+						totalPages={Math.ceil(orders?.count / params.limit)}
+						currentPage={page}
+						onChange={onPageChange}
+					/>
+				</>
 			)}
 
 			{/* modal */}
