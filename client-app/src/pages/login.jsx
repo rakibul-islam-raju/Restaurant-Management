@@ -1,9 +1,9 @@
 import Auth from "@/components/Auth";
+import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
 import Head from "next/head";
-import Image from "next/image";
 
 export default function Login() {
 	return (
@@ -15,21 +15,9 @@ export default function Login() {
 			</Head>
 
 			<section className="">
-				{/* breadcrumb section */}
-				<div className="md:pb-32">
-					<Topbar />
-					<Navbar />
-					<section className="relative bg-gradient-to-br w-full h-56  from-gray-800 to-gray-600  ">
-						<div className="md:top-0 h-72 top-16 mix-blend-overlay z-0 opacity-80 ">
-							<Image
-								src={"/bg_1.jpg.webp"}
-								fill
-								alt="Food Background"
-								className="object-cover object-center md:object-center"
-							/>
-						</div>
-					</section>
-				</div>
+				<Topbar />
+				<Navbar />
+				<Breadcrumb />
 
 				<div className="wrapper">
 					<div className="w-6/12 mx-auto">

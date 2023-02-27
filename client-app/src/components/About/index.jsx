@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function About() {
 	return (
-		<section className="wrapper">
+		<section id="about" className="wrapper">
 			<div className="grid grid-cols-5 md:gap-8 space-y-8">
 				<div className="col-span-5 md:col-span-3  ">
 					<div className="flex items-center justify-center space-x-4  ">

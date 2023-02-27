@@ -1,12 +1,8 @@
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// import required modules
-import { Pagination } from "swiper";
-
 import SectionHeader from "@/components/SectionHeader";
 import reviewService from "@/services/reviewService";
 import { useEffect, useState } from "react";
+import { Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Loader from "../Loader";
 import { ErrorMessage, WarningMessage } from "../Messages";
 import Reviewer from "./Reviewer";

@@ -1,3 +1,4 @@
+import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
@@ -6,7 +7,6 @@ import Menu from "@/components/Sepcialities/Menu";
 import categoryService from "@/services/categoryService";
 import menuService from "@/services/menuService";
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { WarningMessage } from "../components/Messages";
 
@@ -70,21 +70,9 @@ export default function menus() {
 			</Head>
 
 			<section className="">
-				{/* breadcrumb section */}
-				<div className="md:pb-32">
-					<Topbar />
-					<Navbar />
-					<section className="relative bg-gradient-to-br w-full h-56  from-gray-800 to-gray-600  ">
-						<div className="md:top-0 h-72 top-16 mix-blend-overlay z-0 opacity-80 ">
-							<Image
-								src={"/bg_1.jpg.webp"}
-								fill
-								alt="Food Background"
-								className="object-cover object-center md:object-center"
-							/>
-						</div>
-					</section>
-				</div>
+				<Topbar />
+				<Navbar />
+				<Breadcrumb />
 
 				<div className="wrapper">
 					<SectionHeader upperText={"Menus"} lowerText={"Menu"} />
@@ -92,16 +80,16 @@ export default function menus() {
 						<h6 className="text-center">Loading...</h6>
 					) : (
 						<>
-							<div className="w-full flex justify-evenly border rounded mb-28">
+							<div className="w-full flex items-center justify-evenly border rounded mb-28 overflow-x-scroll md:overflow-x-auto">
 								{categories?.results?.length > 0 ? (
 									categories?.results?.map((item) => (
-										<div className="w-full text-center">
+										<div className="w-full text-center min-w-[100px]">
 											<div
 												className={`${
 													tabState === item.id
 														? "bg-golden text-white"
 														: "bg-white text-golden"
-												} uppercase py-2 rounded cursor-pointer transition`}
+												} uppercase px-2 py-2 rounded cursor-pointer transition`}
 												onClick={() => setTabState(item.id)}
 											>
 												{item.name}

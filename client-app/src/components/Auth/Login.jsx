@@ -32,13 +32,12 @@ export default function Login({ handleClose }) {
 	const [loading, setLoading] = useState(false);
 
 	const onSubmit = async (data) => {
-		setErrorMessage(null);
-		setLoading(true);
-
 		const { next } = router.query;
 		const redirectUrl = next ? decodeURIComponent(next) : "/";
 
 		try {
+			setErrorMessage(null);
+			setLoading(true);
 			const res = await authService.login(data);
 			const { access, refresh } = res;
 			if (access && refresh) {
@@ -50,6 +49,8 @@ export default function Login({ handleClose }) {
 		} catch (error) {
 			console.error(error);
 			setErrorMessage(error?.data?.details || "Something went wrong!");
+		} finally {
+			setLoading(false);
 		}
 	};
 
