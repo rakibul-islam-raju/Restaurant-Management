@@ -149,7 +149,7 @@ export default function Dashboard() {
 				<Grid container spacing={4}>
 					<Grid item xs={12} sm={6}>
 						<Stack direction={"row"} justifyContent="space-between" mb={2}>
-							<Typography variant="h4">Last 20 Order</Typography>
+							<Typography variant="h4">Recent Orders</Typography>
 							<Button variant="outlined" color="primary">
 								View All
 							</Button>
@@ -165,7 +165,7 @@ export default function Dashboard() {
 					</Grid>
 					<Grid item xs={12} sm={6}>
 						<Stack direction={"row"} justifyContent="space-between" mb={2}>
-							<Typography variant="h4">Active Staffs</Typography>
+							<Typography variant="h4">Staffs</Typography>
 						</Stack>
 						<StaffTable data={staffs} staffEditHandler={staffEditHandler} />
 					</Grid>

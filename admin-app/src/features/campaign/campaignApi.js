@@ -3,7 +3,10 @@ import { apiSlice } from "../api/apiSlice";
 export const campaignApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getCampaigns: builder.query({
-			query: (params) => `/campaigns`,
+			query: (params) => ({
+				url: "/campaigns",
+				params,
+			}),
 			providesTags: ["Campaigns"],
 		}),
 

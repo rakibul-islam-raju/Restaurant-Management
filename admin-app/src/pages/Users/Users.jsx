@@ -11,18 +11,26 @@ import {
 import { Box } from "@mui/system";
 import debounce from "lodash/debounce";
 import { useCallback, useEffect, useState } from "react";
+import CustomPagination from "../../components/CustomPagination";
 import Loader from "../../components/Loader";
+import { PAGINATION_LIMIT } from "../../config";
 import { useLazyGetUsersQuery } from "../../features/users/usersApi";
 import UsersTable from "./components/UsersTable";
 
 export default function Users() {
 	const [trigger, { data: users, isLoading, isError, error: responseError }] =
 		useLazyGetUsersQuery();
+
+	const [page, setPage] = useState(1);
+	const [params, setParams] = useState({
+		limit: PAGINATION_LIMIT,
+		offset: 0,
+	});
 	const [searchTerm, setSearchTerm] = useState("");
 
 	const debouncedSearch = useCallback(
 		debounce((value) => {
-			trigger({ search: value });
+			trigger({ ...params, search: value });
 		}, 1000),
 		[]
 	);
@@ -33,11 +41,17 @@ export default function Users() {
 		debouncedSearch(value);
 	};
 
+	const onPageChange = (e, page) => {
+		setPage(page);
+		const newOffset = (page - 1) * params.limit;
+		setParams({ ...params, offset: newOffset });
+	};
+
 	useEffect(() => {
 		if (searchTerm) {
-			trigger({ search: searchTerm });
+			trigger({ ...params, search: searchTerm });
 		} else {
-			trigger();
+			trigger(params);
 		}
 	}, []);
 
@@ -83,7 +97,15 @@ export default function Users() {
 					{responseError?.data?.detail || "Something went wrong!"}
 				</Alert>
 			) : (
-				<UsersTable data={users} />
+				<>
+					<UsersTable data={users} />
+
+					<CustomPagination
+						totalPages={Math.ceil(users?.count / params.limit)}
+						currentPage={page}
+						onChange={onPageChange}
+					/>
+				</>
 			)}
 		</>
 	);

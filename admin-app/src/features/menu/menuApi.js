@@ -3,7 +3,10 @@ import { apiSlice } from "../api/apiSlice";
 export const menuApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getMenus: builder.query({
-			query: (params) => `/menus`,
+			query: (params) => ({
+				url: `/menus`,
+				params,
+			}),
 			providesTags: ["Menus"],
 		}),
 

@@ -1,8 +1,10 @@
 import { Alert, Button, Divider, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import CustomPagination from "../../components/CustomPagination";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
+import { PAGINATION_LIMIT } from "../../config";
 import {
 	useDeleteCategoryMutation,
 	useGetCategoriesQuery,
@@ -14,7 +16,11 @@ export default function Categories() {
 	const dispatch = useDispatch();
 
 	const [openModal, setOpenModal] = useState(false);
-	const [params, setParams] = useState("");
+	const [page, setPage] = useState(1);
+	const [params, setParams] = useState({
+		limit: PAGINATION_LIMIT,
+		offset: 0,
+	});
 	const [edit, setEdit] = useState(false);
 	const [editData, setEditData] = useState(null);
 
@@ -23,7 +29,9 @@ export default function Categories() {
 		isLoading,
 		isError,
 		error: responseError,
-	} = useGetCategoriesQuery(params);
+	} = useGetCategoriesQuery(params, {
+		refetchOnMountOrArgChange: true,
+	});
 
 	const [
 		deleteCategory,
@@ -47,6 +55,12 @@ export default function Categories() {
 		if (res) {
 			dispatch(deleteCategory({ id, params }));
 		}
+	};
+
+	const onPageChange = (e, page) => {
+		setPage(page);
+		const newOffset = (page - 1) * params.limit;
+		setParams({ ...params, offset: newOffset });
 	};
 
 	return (
@@ -75,11 +89,19 @@ export default function Categories() {
 						"Something went wrong!"}
 				</Alert>
 			) : (
-				<CategoryTable
-					data={categories}
-					editCategoryHandler={editCategoryHandler}
-					deleteHandler={deleteHandler}
-				/>
+				<>
+					<CategoryTable
+						data={categories}
+						editCategoryHandler={editCategoryHandler}
+						deleteHandler={deleteHandler}
+					/>
+
+					<CustomPagination
+						totalPages={Math.ceil(categories?.count / params.limit)}
+						currentPage={page}
+						onChange={onPageChange}
+					/>
+				</>
 			)}
 
 			{/* modal */}
