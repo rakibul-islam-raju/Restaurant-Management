@@ -19,7 +19,7 @@ const NavLinks = ({ value }) => {
 		},
 		{
 			name: "Contact",
-			link: "/",
+			link: "/#contact",
 			icon: "bx bx-message-square-dots",
 		},
 	];

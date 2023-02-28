@@ -2,6 +2,7 @@ import About from "@/components/About";
 import Campaigns from "@/components/Campaigns";
 import CateringService from "@/components/CateringService";
 import Chef from "@/components/Chef";
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Review from "@/components/Review";
@@ -29,6 +30,7 @@ export default function Home() {
 				<TableBookingForm />
 				<Review />
 				<Chef />
+				<Contact />
 				<Footer />
 			</section>
 		</>
