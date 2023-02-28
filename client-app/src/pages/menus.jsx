@@ -10,12 +10,23 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { WarningMessage } from "../components/Messages";
 
+const SELECT_OPTIONS = [
+	{ value: "", label: "Latest" },
+	{ value: "price", label: "From Low To High Price" },
+	{ value: "-price", label: "From High To Low Price" },
+	{ value: "avg_rating", label: "From Low To High Rating" },
+	{ value: "-avg_rating", label: "From High To Low Rating" },
+	{ value: "cook_time", label: "From Low To High Cooking Time" },
+	{ value: "-cook_time", label: "From High To Low Cooking Time" },
+];
+
 export default function menus() {
 	const [menus, setMenus] = useState(null);
 	const [categories, setCategories] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [tabState, setTabState] = useState(null);
+	const [ordering, setOrdering] = useState("");
 
 	const fetchMenus = async (params) => {
 		setErrorMessage(null);
@@ -52,10 +63,12 @@ export default function menus() {
 	useEffect(() => {
 		const params = {};
 		if (tabState) {
+			if (ordering !== "") params.ordering = ordering;
+
 			params.category = tabState;
 		}
 		fetchMenus(params);
-	}, [tabState]);
+	}, [tabState, ordering]);
 
 	useEffect(() => {
 		fetchCategories();
@@ -69,7 +82,7 @@ export default function menus() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 			</Head>
 
-			<section className="">
+			<section className="relative">
 				<Topbar />
 				<Navbar />
 				<Breadcrumb />
@@ -99,6 +112,20 @@ export default function menus() {
 								) : (
 									<WarningMessage text="No data found!" />
 								)}
+							</div>
+
+							<div className="flex justify-end mb-4">
+								<select
+									defaultValue={""}
+									onChange={(e) => setOrdering(e.target.value)}
+									className="px-3 py-1 rounded font-semibold ring ring-golden ring-offset-1"
+								>
+									{SELECT_OPTIONS.map((opt) => (
+										<option key={opt.value} value={opt.value}>
+											{opt.label}
+										</option>
+									))}
+								</select>
 							</div>
 
 							<div className="grid grid-cols-1 gap-3">

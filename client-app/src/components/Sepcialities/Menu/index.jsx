@@ -42,8 +42,12 @@ function Menu({ menu, reverse = false, addTocartHandler }) {
 					</span>{" "}
 					<span className="">{menu?.cook_time} mins</span>
 				</div>
+				<div className="">
+					<span className="text-md font-semibold text-gray-700">Category:</span>{" "}
+					<span className="">{menu?.category?.name}</span>
+				</div>
 
-				<div className="flex gap-2">
+				<div className="flex gap-2 my-2">
 					<Rating
 						start={0}
 						stop={5}
