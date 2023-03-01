@@ -89,7 +89,11 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 		if (isSuccess || editSuccess) {
 			closeModal();
 
-			// TODO: toast alert
+			if (edit) {
+				toast.success("New menu updated successfully");
+			} else {
+				toast.success("New menu added successfully");
+			}
 		}
 	}, [isSuccess, editSuccess]);
 

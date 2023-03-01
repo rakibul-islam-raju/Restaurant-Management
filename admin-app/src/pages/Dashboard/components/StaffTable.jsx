@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Alert, Button, ButtonGroup, Tooltip } from "@mui/material";
@@ -43,7 +44,7 @@ export default function StaffTable({ data, staffEditHandler }) {
 									{row.is_active ? (
 										<DoneIcon color="success" />
 									) : (
-										<CloseIconCloseIcon color="error" />
+										<CloseIcon color="error" />
 									)}
 								</TableCell>
 
