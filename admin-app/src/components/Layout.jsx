@@ -1,7 +1,9 @@
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Menu, MenuItem } from "@mui/material";
+import NightlightIcon from "@mui/icons-material/Nightlight";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
+import { Menu, MenuItem, Stack } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,10 +12,11 @@ import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { drawerWidth } from "../config/dashboardConfigs";
 import { userLoggedOut } from "../features/auth/authSlice";
+import { toggleLightMode } from "../features/theme/themeSlice";
 import useAuth from "../hooks/useAuth";
 import LeftSidebar, { DrawerHeader } from "./LeftSidebar";
 
@@ -38,6 +41,8 @@ const AppBar = styled(MuiAppBar, {
 export default function Layout() {
 	const dispatch = useDispatch();
 	const isLoggedIn = useAuth();
+
+	const { lightMode } = useSelector((state) => state.theme);
 
 	const [open, setOpen] = useState(true);
 	const [anchorElNav, setAnchorElNav] = useState(null);
@@ -93,32 +98,44 @@ export default function Layout() {
 					<Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
 						Take My Order
 					</Typography>
-					<Box>
-						<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-							<AccountCircle style={{ color: "white" }} />
-						</IconButton>
-						<Menu
-							sx={{ mt: "45px" }}
-							id="menu-appbar"
-							anchorEl={anchorElUser}
-							anchorOrigin={{
-								vertical: "top",
-								horizontal: "right",
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: "top",
-								horizontal: "right",
-							}}
-							open={Boolean(anchorElUser)}
-							onClose={handleCloseUserMenu}
+					<Stack direction={"row"} gap={4} alignItems={"center"}>
+						<IconButton
+							sx={{ p: 0 }}
+							onClick={() => dispatch(toggleLightMode())}
 						>
-							<MenuItem onClick={handleLogout}>
-								<LogoutIcon />
-								<Typography textAlign="center">Logout</Typography>
-							</MenuItem>
-						</Menu>
-					</Box>
+							{lightMode ? (
+								<NightlightIcon style={{ color: "white" }} />
+							) : (
+								<WbSunnyIcon style={{ color: "white" }} />
+							)}
+						</IconButton>
+						<Box>
+							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+								<AccountCircle style={{ color: "white" }} />
+							</IconButton>
+							<Menu
+								sx={{ mt: "45px" }}
+								id="menu-appbar"
+								anchorEl={anchorElUser}
+								anchorOrigin={{
+									vertical: "top",
+									horizontal: "right",
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: "top",
+									horizontal: "right",
+								}}
+								open={Boolean(anchorElUser)}
+								onClose={handleCloseUserMenu}
+							>
+								<MenuItem onClick={handleLogout}>
+									<LogoutIcon />
+									<Typography textAlign="center">Logout</Typography>
+								</MenuItem>
+							</Menu>
+						</Box>
+					</Stack>
 				</Toolbar>
 			</AppBar>
 			<>

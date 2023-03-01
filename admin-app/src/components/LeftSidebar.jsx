@@ -7,7 +7,7 @@ import FastfoodIcon from "@mui/icons-material/Fastfood";
 import GroupIcon from "@mui/icons-material/Group";
 import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
-import { Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
@@ -16,7 +16,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled, useTheme } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { drawerWidth } from "../config/dashboardConfigs";
 
@@ -67,6 +69,15 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
 	...theme.mixins.toolbar,
 }));
 
+const useStyles = makeStyles((theme) => ({
+	bottomStatus: {
+		position: "fixed",
+		bottom: "10px",
+		left: "10px",
+		width: "100%",
+	},
+}));
+
 const MENUS = [
 	{
 		id: 1,
@@ -115,6 +126,11 @@ const MENUS = [
 export default function LeftSidebar({ open, handleDrawerClose }) {
 	const theme = useTheme();
 	const navigate = useNavigate();
+	const classes = useStyles();
+
+	const { user } = useSelector((state) => state.auth);
+
+	console.log(user);
 
 	return (
 		<Drawer variant="permanent" open={open}>
@@ -160,6 +176,14 @@ export default function LeftSidebar({ open, handleDrawerClose }) {
 					</ListItem>
 				))}
 			</List>
+			<Box className={classes.bottomStatus}>
+				<Typography variant="h6">
+					{user?.first_name} {user?.last_name}
+				</Typography>
+				<Typography variant="body2">
+					({user?.is_superuser ? "Super Admin" : user?.is_staff ? "Staff" : ""})
+				</Typography>
+			</Box>
 		</Drawer>
 	);
 }
