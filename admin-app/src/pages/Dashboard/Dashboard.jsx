@@ -3,7 +3,6 @@ import {
 	Box,
 	Button,
 	Card,
-	CardActions,
 	CardContent,
 	Divider,
 	Grid,
@@ -12,6 +11,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import { Stack } from "@mui/system";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
 import { useGetOrdersQuery } from "../../features/orders/orderApi";
@@ -22,15 +22,15 @@ import StaffDetails from "./components/StaffDetails";
 import StaffTable from "./components/StaffTable";
 
 const useStyles = makeStyles((theme) => ({
-	card: {
-		backgroundColor: theme.palette.gray.light,
-		color: "#fff",
-	},
-	cardBottom: {
-		backgroundColor: theme.palette.primary.dark,
+	card: () => ({
+		backgroundColor: theme.palette.primary.main,
 		textAlign: "center",
-		display: "block",
-	},
+		color: "white",
+	}),
+	cardContent: () => ({
+		display: "flex",
+		justifyContent: "space-between",
+	}),
 }));
 
 export default function Dashboard() {
@@ -84,58 +84,42 @@ export default function Dashboard() {
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={6} lg={3}>
 								<Card className={classes.card}>
-									<CardContent>
-										<Typography variant="h3" align="center">
+									<CardContent className={classes.cardContent}>
+										<Typography variant="h5">Pending Orders</Typography>
+										<Typography variant="h3">
 											{summary?.results?.pending_orders}
 										</Typography>
 									</CardContent>
-									<CardActions className={classes.cardBottom}>
-										<Typography variant="h5" align="center" mt={1}>
-											Pending Orders
-										</Typography>
-									</CardActions>
 								</Card>
 							</Grid>
 							<Grid item xs={12} sm={6} lg={3}>
 								<Card className={classes.card}>
-									<CardContent>
-										<Typography variant="h3" align="center">
+									<CardContent className={classes.cardContent}>
+										<Typography variant="h5">Pending Reservations</Typography>
+										<Typography variant="h3">
 											{summary?.results?.pending_reservations}
 										</Typography>
 									</CardContent>
-									<CardActions className={classes.cardBottom}>
-										<Typography variant="h5" align="center" mt={1}>
-											Pending Reservations
-										</Typography>
-									</CardActions>
 								</Card>
 							</Grid>
 							<Grid item xs={12} sm={6} lg={3}>
 								<Card className={classes.card}>
-									<CardContent>
-										<Typography variant="h3" align="center">
+									<CardContent className={classes.cardContent}>
+										<Typography variant="h5">Active Clients</Typography>
+										<Typography variant="h3">
 											{summary?.results?.registered_users}
 										</Typography>
 									</CardContent>
-									<CardActions className={classes.cardBottom}>
-										<Typography variant="h5" align="center" mt={1}>
-											Active Clients
-										</Typography>
-									</CardActions>
 								</Card>
 							</Grid>
 							<Grid item xs={12} sm={6} lg={3}>
 								<Card className={classes.card}>
-									<CardContent>
-										<Typography variant="h3" align="center">
+									<CardContent className={classes.cardContent}>
+										<Typography variant="h5">Running Campaigns</Typography>
+										<Typography variant="h3">
 											{summary?.results?.runnig_campaigns}
 										</Typography>
 									</CardContent>
-									<CardActions className={classes.cardBottom}>
-										<Typography variant="h5" align="center" mt={1}>
-											Running Campaigns
-										</Typography>
-									</CardActions>
 								</Card>
 							</Grid>
 						</Grid>
@@ -150,7 +134,12 @@ export default function Dashboard() {
 					<Grid item xs={12} sm={6}>
 						<Stack direction={"row"} justifyContent="space-between" mb={2}>
 							<Typography variant="h4">Recent Orders</Typography>
-							<Button variant="outlined" color="primary">
+							<Button
+								component={Link}
+								to="/orders"
+								variant="outlined"
+								color="primary"
+							>
 								View All
 							</Button>
 						</Stack>
