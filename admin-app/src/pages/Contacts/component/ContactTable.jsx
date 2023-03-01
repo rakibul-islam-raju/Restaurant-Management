@@ -23,7 +23,6 @@ export default function ContactTable({
 						<TableCell align="left">Subject</TableCell>
 						<TableCell align="left">Email</TableCell>
 						<TableCell align="left">Created At</TableCell>
-						<TableCell align="left">Updated At</TableCell>
 						<TableCell align="left">Action</TableCell>
 					</TableRow>
 				</TableHead>
@@ -48,9 +47,6 @@ export default function ContactTable({
 								<TableCell align="left">{row.email}</TableCell>
 								<TableCell align="left">
 									{new Date(row.created_at).toLocaleString()}
-								</TableCell>
-								<TableCell align="left">
-									{new Date(row.updated_at).toLocaleString()}
 								</TableCell>
 								<TableCell align="left">
 									<ButtonGroup>

@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { Alert, Button, ButtonGroup, Tooltip } from "@mui/material";
@@ -47,7 +48,7 @@ export default function UsersTable({ data }) {
 									{row.is_active ? (
 										<DoneIcon color="success" />
 									) : (
-										<CloseIconCloseIcon color="error" />
+										<CloseIcon color="error" />
 									)}
 								</TableCell>
 

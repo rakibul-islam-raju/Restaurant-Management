@@ -10,6 +10,7 @@ import PublicLayout from "../components/PublicLayout";
 import useAuthCheck from "../hooks/useAuthCheck";
 import Campaigns from "../pages/Campaigns/Campaigns";
 import Categories from "../pages/categories/Categories";
+import Chefs from "../pages/Chefs/Chefs";
 import Contacts from "../pages/Contacts/Contacts";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login/Login";
@@ -54,6 +55,7 @@ export default function App() {
 							<Route path="/categories" element={<Categories />} />
 							<Route path="/reservations" element={<Reservations />} />
 							<Route path="/campaigns" element={<Campaigns />} />
+							<Route path="/chefs" element={<Chefs />} />
 							<Route path="/contacts" element={<Contacts />} />
 							<Route path="/users" element={<Users />} />
 							<Route path="*" element={<NotFound />} />

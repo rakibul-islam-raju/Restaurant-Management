@@ -6,6 +6,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import GroupIcon from "@mui/icons-material/Group";
 import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import { Box, Divider, Typography } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
@@ -111,12 +112,18 @@ const MENUS = [
 	},
 	{
 		id: 6,
+		text: "Chefs",
+		path: "/chefs",
+		icon: <SupervisedUserCircleIcon color="primary" />,
+	},
+	{
+		id: 7,
 		text: "Contacts",
 		path: "/contacts",
 		icon: <MarkUnreadChatAltIcon color="primary" />,
 	},
 	{
-		id: 7,
+		id: 8,
 		text: "Users",
 		path: "/users",
 		icon: <GroupIcon color="primary" />,
@@ -129,8 +136,6 @@ export default function LeftSidebar({ open, handleDrawerClose }) {
 	const classes = useStyles();
 
 	const { user } = useSelector((state) => state.auth);
-
-	console.log(user);
 
 	return (
 		<Drawer variant="permanent" open={open}>
@@ -176,14 +181,19 @@ export default function LeftSidebar({ open, handleDrawerClose }) {
 					</ListItem>
 				))}
 			</List>
-			<Box className={classes.bottomStatus}>
-				<Typography variant="h6">
-					{user?.first_name} {user?.last_name}
-				</Typography>
-				<Typography variant="body2">
-					({user?.is_superuser ? "Super Admin" : user?.is_staff ? "Staff" : ""})
-				</Typography>
-			</Box>
+
+			{open && (
+				<Box className={classes.bottomStatus}>
+					<Typography variant="h6">
+						{user?.first_name} {user?.last_name}
+					</Typography>
+					<Typography variant="body2">
+						(
+						{user?.is_superuser ? "Super Admin" : user?.is_staff ? "Staff" : ""}
+						)
+					</Typography>
+				</Box>
+			)}
 		</Drawer>
 	);
 }

@@ -1,6 +1,7 @@
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DoneIcon from "@mui/icons-material/Done";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
 import { Alert, Button, ButtonGroup, Tooltip } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -10,18 +11,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-export default function OrderTable({ data, editMenuHandler }) {
+export default function ChefsTable({ data, editChefHandler, deleteHandler }) {
 	return (
 		<TableContainer component={Paper}>
-			<Table sx={{ minWidth: 650 }} aria-label="simple table">
+			<Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
 				<TableHead>
 					<TableRow>
-						<TableCell align="left">Customer Name</TableCell>
-						<TableCell align="left">Customer Email</TableCell>
-						<TableCell align="left">Total</TableCell>
-						<TableCell align="left">Tax</TableCell>
-						<TableCell align="left">Paid</TableCell>
-						<TableCell align="left">Served</TableCell>
+						<TableCell align="left"></TableCell>
+						<TableCell align="left">Name</TableCell>
+						<TableCell align="left">Short Description</TableCell>
 						<TableCell align="left">Created At</TableCell>
 						<TableCell align="left">Updated At</TableCell>
 						<TableCell align="left">Active</TableCell>
@@ -30,36 +28,25 @@ export default function OrderTable({ data, editMenuHandler }) {
 				</TableHead>
 				<TableBody>
 					{data?.results?.length > 0 ? (
-						data?.results.map((row) => (
+						data?.results.map((row, i) => (
 							<TableRow
-								key={row.id}
+								key={i}
 								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
 							>
 								<TableCell component="th" scope="row">
-									{`${row.user.first_name} ${row.user.last_name}`}
+									<img
+										src={row?.image}
+										alt={row?.name}
+										style={{ maxWidth: "80px" }}
+									/>
 								</TableCell>
-								<TableCell align="left">{row.user.email}</TableCell>
-								<TableCell align="left">{row.total_price}</TableCell>
-								<TableCell align="left">{row.tax}</TableCell>
+								<TableCell align="left">{row?.name}</TableCell>
+								<TableCell align="left">{row?.short_description}</TableCell>
 								<TableCell align="left">
-									{row.is_paid ? (
-										<DoneIcon color="success" />
-									) : (
-										<CloseIcon color="error" />
-									)}
-								</TableCell>
-								<TableCell align="left">
-									{row.is_served ? (
-										<DoneIcon color="success" />
-									) : (
-										<CloseIcon color="error" />
-									)}
+									{new Date(row?.created_at).toLocaleString()}
 								</TableCell>
 								<TableCell align="left">
-									{new Date(row.created_at).toLocaleString()}
-								</TableCell>
-								<TableCell align="left">
-									{new Date(row.updated_at).toLocaleString()}
+									{new Date(row?.updated_at).toLocaleString()}
 								</TableCell>
 								<TableCell align="left">
 									{row.is_active ? (
@@ -70,14 +57,22 @@ export default function OrderTable({ data, editMenuHandler }) {
 								</TableCell>
 								<TableCell align="left">
 									<ButtonGroup>
-										<Tooltip title="View Details">
+										<Tooltip title="Edit">
 											<Button
 												color="primary"
 												size="small"
-												type="button"
-												onClick={() => editMenuHandler(row)}
+												onClick={() => editChefHandler(row)}
 											>
-												<VisibilityIcon />
+												<EditIcon />
+											</Button>
+										</Tooltip>
+										<Tooltip title="Delete">
+											<Button
+												color="error"
+												size="small"
+												onClick={() => deleteHandler(row.id)}
+											>
+												<DeleteForeverIcon />
 											</Button>
 										</Tooltip>
 									</ButtonGroup>

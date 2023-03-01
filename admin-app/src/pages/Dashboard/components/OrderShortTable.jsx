@@ -59,7 +59,7 @@ export default function OrderShortTable({ data }) {
 									{row.is_active ? (
 										<DoneIcon color="success" />
 									) : (
-										<CloseIconCloseIcon color="error" />
+										<CloseIcon color="error" />
 									)}
 								</TableCell>
 							</TableRow>
