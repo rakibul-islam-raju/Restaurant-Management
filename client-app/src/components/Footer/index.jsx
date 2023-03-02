@@ -26,27 +26,27 @@ function Footer() {
 							<small>9:00 - 24:00</small>
 						</div>
 						<div className="flex-center ">
-							<small>Saturday</small>
+							<small>Sunday</small>
 							<small>9:00 - 24:00</small>
 						</div>
 						<div className="flex-center ">
-							<small>Saturday</small>
+							<small>Monday</small>
 							<small>9:00 - 24:00</small>
 						</div>
 						<div className="flex-center ">
-							<small>Saturday</small>
+							<small>Tuesday</small>
 							<small>9:00 - 24:00</small>
 						</div>
 						<div className="flex-center ">
-							<small>Saturday</small>
+							<small>Wednesday</small>
 							<small>9:00 - 24:00</small>
 						</div>
 						<div className="flex-center ">
-							<small>Saturday</small>
+							<small>Thursday</small>
 							<small>9:00 - 24:00</small>
 						</div>
 						<div className="flex-center ">
-							<small>Saturday</small>
+							<small>Friday</small>
 							<small>9:00 - 24:00</small>
 						</div>
 					</div>
