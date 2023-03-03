@@ -71,10 +71,12 @@ export default function LoginForm() {
 			)}
 
 			<TextField
+				data-testid="email"
 				variant="standard"
 				margin="normal"
 				required
 				fullWidth
+				id="email"
 				label="Email Address"
 				autoComplete="email"
 				{...register("email")}
@@ -83,10 +85,12 @@ export default function LoginForm() {
 				helperText={errors.email?.message || responseError?.data?.email}
 			/>
 			<TextField
+				data-testid="password"
 				variant="standard"
 				margin="normal"
 				required
 				fullWidth
+				id="password"
 				label="Password"
 				type={showPassword ? "text" : "password"}
 				autoComplete="current-password"
