@@ -43,7 +43,7 @@ export default function ReviewForm({ item, handleClose }) {
 		} catch (err) {
 			console.log(err);
 			setResponseError(err?.response?.data);
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}

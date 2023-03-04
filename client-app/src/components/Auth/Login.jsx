@@ -1,10 +1,10 @@
-import { AuthContext } from "@/contexts/AuthContext";
-import authService from "@/services/authService";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { AuthContext } from "../../contexts/AuthContext";
+import authService from "../../services/authService";
 import Divider from "../Divider";
 import { ErrorMessage } from "../Messages";
 import Buttton from "../utils/Button";
@@ -13,12 +13,12 @@ import Input from "../utils/Input";
 
 const loginSchema = yup.object({
 	email: yup.string().email().required(),
-	password: yup.string().required().min(4).max(100),
+	password: yup.string().required().min(4),
 });
 
 export default function Login({ handleClose }) {
 	const router = useRouter();
-	const { isAuthenticated, login } = useContext(AuthContext);
+	const authContext = useContext(AuthContext);
 	const {
 		register,
 		handleSubmit,
@@ -41,14 +41,14 @@ export default function Login({ handleClose }) {
 			const res = await authService.login(data);
 			const { access, refresh } = res;
 			if (access && refresh) {
-				login(access, refresh);
+				authContext?.login(access, refresh);
 				router.push(redirectUrl);
 				handleClose();
 				// window.location.href = "/";
 			}
 		} catch (error) {
 			console.error(error);
-			setErrorMessage(error?.data?.details || "Something went wrong!");
+			setErrorMessage(error?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}
@@ -56,16 +56,22 @@ export default function Login({ handleClose }) {
 
 	return (
 		<div>
-			<h2 className="text-4xl font-semibold leading-loose tracking-wide text-gray-700">
+			<h2
+				data-testid="login-heading"
+				className="text-4xl font-semibold leading-loose tracking-wide text-gray-700"
+			>
 				Login
 			</h2>
 			<Divider />
-			{errorMessage && <ErrorMessage text={errorMessage} />}
+			{errorMessage && (
+				<ErrorMessage text={errorMessage} data-testid="errorMsg" />
+			)}
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<Input
 					labelText={"Email"}
 					type="email"
 					placeholder="Email Address"
+					data-testid="emailInput"
 					required
 					register={register}
 					name="email"
@@ -88,7 +94,12 @@ export default function Login({ handleClose }) {
 					value={showPassword}
 					onChange={() => setShowPassword((prevState) => !prevState)}
 				/>
-				<Buttton text="Login" type="submit" width={"w-full"} />
+				<Buttton
+					text="Login"
+					type="submit"
+					width={"w-full"}
+					data-testid="loginSubmitBtn"
+				/>
 			</form>
 		</div>
 	);

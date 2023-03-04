@@ -37,7 +37,7 @@ export default function Profile() {
 			const res = await orderService.getOrders(email);
 			setOrders(res);
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}
@@ -52,7 +52,7 @@ export default function Profile() {
 			});
 			setReservations(res);
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}
@@ -65,7 +65,7 @@ export default function Profile() {
 			const res = await reviewService.getReviewsByUser({}, email);
 			setReviews(res);
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}
@@ -118,14 +118,6 @@ export default function Profile() {
 									/>
 								</div>
 								<div className="grow">
-									<div className="flex justify-end">
-										<button
-											type="button"
-											className="border border-golden px-2 py-1  text-golden font-semibold text-sm hover:bg-golden hover:text-white transition"
-										>
-											Edit Profile
-										</button>
-									</div>
 									<h4>
 										{user?.first_name} {user?.last_name}
 									</h4>

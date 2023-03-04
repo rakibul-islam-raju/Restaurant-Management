@@ -17,8 +17,25 @@ function Header() {
 					/>
 				</div>
 				<div className="absolute text-center right-0 left-0  top-[40%] md:top-[35%] text-white">
-					<p className="text-[80px] great-font ">Take Order</p>
-					<h1 className="">Best Restraurant</h1>
+					<p className="text-[80px] great-font ">Slice of Spice</p>
+					<h1 className="uppercase">Slice of Spice</h1>
+
+					<div className="flex justify-center text-golden mt-24">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="w-12 h-12 animate-bounce"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
+							/>
+						</svg>
+					</div>
 				</div>
 			</section>
 		</div>

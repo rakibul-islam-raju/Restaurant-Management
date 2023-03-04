@@ -36,7 +36,7 @@ export default function menus() {
 				setMenus(res);
 			}
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}
@@ -54,7 +54,7 @@ export default function menus() {
 					setTabState(res.results[0].id);
 			}
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}
@@ -93,7 +93,7 @@ export default function menus() {
 						<h6 className="text-center">Loading...</h6>
 					) : (
 						<>
-							<div className="w-full flex items-center justify-evenly border rounded mb-28 overflow-x-scroll md:overflow-x-auto">
+							<div className="w-full flex flex-col md:flex-row items-center justify-evenly border rounded mb-28">
 								{categories?.results?.length > 0 ? (
 									categories?.results?.map((item) => (
 										<div className="w-full text-center min-w-[100px]">
