@@ -17,7 +17,7 @@ export default function Campaigns() {
 			const res = await campaignService.getCampaigns();
 			setData(res?.results);
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}

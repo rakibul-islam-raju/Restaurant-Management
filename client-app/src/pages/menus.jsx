@@ -36,7 +36,7 @@ export default function menus() {
 				setMenus(res);
 			}
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}
@@ -54,7 +54,7 @@ export default function menus() {
 					setTabState(res.results[0].id);
 			}
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}

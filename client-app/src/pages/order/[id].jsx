@@ -42,7 +42,7 @@ export default function SingleOrder() {
 			const response = await orderService.getOrder(id);
 			setOrder(response);
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}

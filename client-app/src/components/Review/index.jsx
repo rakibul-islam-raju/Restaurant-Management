@@ -19,7 +19,7 @@ export default function Review() {
 			const res = await reviewService.getTopRatedReviews({ limit: 10 });
 			setReviews(res);
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}

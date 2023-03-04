@@ -39,7 +39,7 @@ export default function Registration({ setRegisterTab }) {
 			}
 		} catch (error) {
 			console.error(error);
-			setErrorMessage(error?.data?.details || "Something went wrong!");
+			setErrorMessage(error?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}

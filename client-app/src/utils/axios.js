@@ -1,9 +1,10 @@
 import axios from "axios";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 
-const BASE_URL =
-	"https://restaurant-management-api-production.up.railway.app/api";
-console.log("process.env.BASE_URL =>", process.env.NEXT_PUBLIC_BASE_URL);
+function logout() {
+	destroyCookie(null, "access");
+	destroyCookie(null, "refresh");
+}
 
 const axiosInstance = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -39,7 +40,7 @@ axiosInstance.interceptors.response.use(
 
 		if (
 			error.response.status === 401 &&
-			!originalRequest._retry &&
+			!originalRequest?._retry &&
 			!isRefreshing
 		) {
 			originalRequest._retry = true;
@@ -51,13 +52,14 @@ axiosInstance.interceptors.response.use(
 					refresh,
 				});
 				const access = response.data.access;
+				const refreshToken = response.data.access;
 				setCookie(null, "access", access);
+				setCookie(null, "refresh", refreshToken);
 				axiosInstance.defaults.headers.Authorization = `Bearer ${access}`;
 				processQueue(null, access);
 				return axiosInstance(originalRequest);
 			} catch (error) {
-				destroyCookie(null, "access");
-				destroyCookie(null, "refresh");
+				logout();
 				processQueue(error, null);
 				return Promise.reject(error);
 			} finally {

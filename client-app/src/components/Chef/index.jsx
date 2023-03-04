@@ -19,7 +19,7 @@ function Chef() {
 			const res = await chefService.getChefs();
 			setChefs(res?.results);
 		} catch (err) {
-			setErrorMessage(err?.data?.details || "Something went wrong!");
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
 		} finally {
 			setLoading(false);
 		}
