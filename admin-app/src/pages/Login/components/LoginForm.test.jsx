@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/react";
 import { describe, test } from "vitest";
 import { render } from "../../../utils/testUtils";
