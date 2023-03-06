@@ -1,3 +1,4 @@
+import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -13,7 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { drawerWidth } from "../config/dashboardConfigs";
 import { userLoggedOut } from "../features/auth/authSlice";
 import { toggleLightMode } from "../features/theme/themeSlice";
@@ -39,6 +40,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function Layout() {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const isLoggedIn = useAuth();
 
@@ -129,8 +131,12 @@ export default function Layout() {
 								open={Boolean(anchorElUser)}
 								onClose={handleCloseUserMenu}
 							>
+								<MenuItem onClick={() => navigate("/profile")}>
+									<AccountBoxOutlinedIcon sx={{ mr: 1 }} />
+									<Typography textAlign="center">Profile</Typography>
+								</MenuItem>
 								<MenuItem onClick={handleLogout}>
-									<LogoutIcon />
+									<LogoutIcon sx={{ mr: 1 }} />
 									<Typography textAlign="center">Logout</Typography>
 								</MenuItem>
 							</Menu>

@@ -14,8 +14,27 @@ export const usersApi = apiSlice.injectEndpoints({
 				params,
 			}),
 		}),
+		getLoggedInUser: builder.query({
+			query: (email) => ({
+				url: `/accounts/me/${email}`,
+			}),
+			providesTags: ["GetLoggedInUser"],
+		}),
+		editLoggedInUser: builder.mutation({
+			query: ({ data, email }) => ({
+				url: `/accounts/me/${email}`,
+				method: "PATCH",
+				body: data,
+			}),
+			invalidatesTags: ["GetLoggedInUser"],
+		}),
 	}),
 });
 
-export const { useGetStaffsQuery, useGetUsersQuery, useLazyGetUsersQuery } =
-	usersApi;
+export const {
+	useGetStaffsQuery,
+	useGetUsersQuery,
+	useLazyGetUsersQuery,
+	useGetLoggedInUserQuery,
+	useEditLoggedInUserMutation,
+} = usersApi;

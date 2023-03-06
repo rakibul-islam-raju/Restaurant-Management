@@ -13,8 +13,10 @@ import debounce from "lodash/debounce";
 import { useCallback, useEffect, useState } from "react";
 import CustomPagination from "../../components/CustomPagination";
 import Loader from "../../components/Loader";
+import Modal from "../../components/Modal";
 import { PAGINATION_LIMIT } from "../../config";
 import { useLazyGetUsersQuery } from "../../features/users/usersApi";
+import StaffDetails from "../Dashboard/components/StaffDetails";
 import UsersTable from "./components/UsersTable";
 
 export default function Users() {
@@ -27,6 +29,7 @@ export default function Users() {
 		offset: 0,
 	});
 	const [searchTerm, setSearchTerm] = useState("");
+	const [userDetail, setUserDetail] = useState(null);
 
 	const debouncedSearch = useCallback(
 		debounce((value) => {
@@ -34,6 +37,10 @@ export default function Users() {
 		}, 1000),
 		[]
 	);
+
+	const showUserDetails = (data) => setUserDetail(data);
+
+	const hideUserDetails = () => setUserDetail(null);
 
 	const handleSearch = (event) => {
 		const value = event.target.value;
@@ -98,7 +105,7 @@ export default function Users() {
 				</Alert>
 			) : (
 				<>
-					<UsersTable data={users} />
+					<UsersTable data={users} showUserDetails={showUserDetails} />
 
 					<CustomPagination
 						totalPages={Math.ceil(users?.count / params.limit)}
@@ -107,6 +114,11 @@ export default function Users() {
 					/>
 				</>
 			)}
+
+			{/* user detail modal */}
+			<Modal open={userDetail} title="Details" closeModal={hideUserDetails}>
+				<StaffDetails data={userDetail} />
+			</Modal>
 		</>
 	);
 }

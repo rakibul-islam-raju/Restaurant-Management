@@ -17,6 +17,7 @@ import Login from "../pages/Login/Login";
 import Menus from "../pages/Menus/Menus";
 import NotFound from "../pages/NotFound/NotFound";
 import Orders from "../pages/Orders/Orders";
+import Profile from "../pages/Profile/Profile";
 import Register from "../pages/Register/Register";
 import Reservations from "../pages/Reservations/Reservations";
 import UserOrders from "../pages/Users/UserOrders";
@@ -58,6 +59,7 @@ export default function App() {
 							<Route path="/chefs" element={<Chefs />} />
 							<Route path="/contacts" element={<Contacts />} />
 							<Route path="/users" element={<Users />} />
+							<Route path="/profile" element={<Profile />} />
 							<Route path="*" element={<NotFound />} />
 						</Route>
 					</Routes>
