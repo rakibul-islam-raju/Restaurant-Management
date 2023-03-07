@@ -11,12 +11,14 @@ function Input({
 }) {
 	return (
 		<div className="pb-5">
-			<label
-				htmlFor={forId}
-				className="block text-lg leading-loose font-semibold text-gray-600"
-			>
-				{labelText}
-			</label>
+			{labelText && (
+				<label
+					htmlFor={forId}
+					className="block text-lg leading-loose font-semibold text-gray-600"
+				>
+					{labelText}
+				</label>
+			)}
 
 			<input
 				type={`${type}`}

@@ -65,7 +65,7 @@ export default function Layout() {
 	const handleLogout = () => {
 		dispatch(userLoggedOut());
 		localStorage.removeItem("takeMyOrder_auth");
-		setAnchorElUser(null);
+		handleCloseUserMenu(null);
 	};
 
 	const handleOpenUserMenu = (event) => {
@@ -131,7 +131,12 @@ export default function Layout() {
 								open={Boolean(anchorElUser)}
 								onClose={handleCloseUserMenu}
 							>
-								<MenuItem onClick={() => navigate("/profile")}>
+								<MenuItem
+									onClick={() => {
+										navigate("/profile");
+										handleCloseUserMenu();
+									}}
+								>
 									<AccountBoxOutlinedIcon sx={{ mr: 1 }} />
 									<Typography textAlign="center">Profile</Typography>
 								</MenuItem>

@@ -1,7 +1,36 @@
 import FooterImage from "@/components/Footer/FooterImage";
 import Icons from "@/components/utils/Icons";
+import subscriberService from "@/services/subscriberService";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import Input from "../utils/Input";
 
 function Footer() {
+	const [email, setEmail] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState(null);
+	const [responseError, setResponseError] = useState(null);
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			if (!email) return false;
+
+			setLoading(true);
+			setErrorMessage(null);
+
+			await subscriberService.subscribe({ email });
+			toast.success("Successfully Subscribed!");
+			setEmail(null);
+		} catch (err) {
+			setResponseError(err?.response?.data);
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return (
 		<footer className="bg-footer  ">
 			<div className="grid grid-cols-1 gap-x-8 gap-y-10  md:grid-cols-4  text-white   container p-4 py-20  ">
@@ -69,25 +98,38 @@ function Footer() {
 				<div className=" space-y-6">
 					<h6 className="text-white">Newsletter</h6>
 
-					<div className="  ">
+					<form className="" onSubmit={handleSubmit}>
 						<small>Lorem ipsum dolor, sit amet consectetur adipisicing</small>
 
 						<div className="form-group pt-4 space-y-3">
-							<input
-								type="text"
+							{/* <input
+								type="email"
 								name="mail"
 								placeholder="Enter email address"
 								className=" w-full p-4 py-3 text-black text-center rounded-sm text-base  bg-slate-200 focus:outline-none"
 								required
-							></input>
-
-							<input
-								type="submit"
-								value="Subscribe"
-								className="px-8 py-3  text-center rounded-sm text-base w-full bg-golden"
+							/> */}
+							<Input
+								id="email"
+								name="email"
+								type="email"
+								placeholder="Email Address"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								required
+								error={responseError?.email}
+								helperText={responseError?.email}
 							/>
+
+							<button
+								disabled={loading}
+								type="submit"
+								className="px-8 py-3  text-center rounded-sm text-base w-full bg-golden cursor-pointer"
+							>
+								Subscribe
+							</button>
 						</div>
-					</div>
+					</form>
 				</div>
 
 				<small className="text-center col-span-1 md:col-span-4  md:pt-6 pb-6 md:pb-0 ">
@@ -95,7 +137,7 @@ function Footer() {
 					<span className="pt-1">
 						<i className="bx bxs-heart "> </i>{" "}
 					</span>
-					Take Order
+					Take My Order
 				</small>
 			</div>
 		</footer>

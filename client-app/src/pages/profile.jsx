@@ -4,19 +4,23 @@ import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
 import Loader from "@/components/Loader";
 import { ErrorMessage, WarningMessage } from "@/components/Messages";
+import Modal from "@/components/Modal";
 import OrderTable from "@/components/Order/OrderTable";
+import PasswordChangeForm from "@/components/profile/PasswordChangeForm";
+import ProfileEditForm from "@/components/profile/ProfileEditForm";
 import ReservationTable from "@/components/reservations/ReservationTable";
 import ReviewsTable from "@/components/Review/ReviewsTable";
 import SectionHeader from "@/components/SectionHeader";
+import Buttton from "@/components/utils/Button";
 import { AuthContext } from "@/contexts/AuthContext";
 import orderService from "@/services/orderService";
 import reservationService from "@/services/reservationService";
 import reviewService from "@/services/reviewService";
+import userService from "@/services/userService";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import profilePic from "../assets/images/profile-picture.jpeg";
 
 export default function Profile() {
 	const router = useRouter();
@@ -27,8 +31,20 @@ export default function Profile() {
 	const [reservations, setReservations] = useState(null);
 	const [orders, setOrders] = useState(null);
 	const [reviews, setReviews] = useState(null);
+	const [userData, setUserData] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
+	const [openModal, setOpenModal] = useState(false);
+	const [passEdit, setPassEdit] = useState(false);
+
+	const togglePassEdit = () => setPassEdit((prevState) => !prevState);
+
+	const modalOpenHandler = () => {
+		setOpenModal(true);
+		setPassEdit(false);
+	};
+
+	const modalCloseHandler = () => setOpenModal(false);
 
 	const fetchOrders = async (email) => {
 		try {
@@ -71,8 +87,22 @@ export default function Profile() {
 		}
 	};
 
+	const fetchUserInfo = async (email) => {
+		try {
+			setLoading(true);
+			setErrorMessage(null);
+			const res = await userService.getLoggedInUserData(email);
+			setUserData(res);
+		} catch (err) {
+			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
 		if (user?.email) {
+			fetchUserInfo(user.email);
 			fetchOrders(user.email);
 			fetchReservations(user.email);
 			fetchReviews(user.email);
@@ -107,15 +137,22 @@ export default function Profile() {
 
 					<div className="">
 						{/* user info */}
-						<div className="p-2 rounded shadow w-full">
+						<div className="p-2 rounded shadow w-full flex justify-between">
 							<div className="flex gap-3 items-center">
 								<div className="relative w-32 h-32">
-									<Image
-										src={profilePic}
-										alt={`${user?.first_name} ${user?.last_name}`}
-										fill
-										className="object-cover object-center md:object-center rounded-full"
-									/>
+									{userData?.image ? (
+										<Image
+											src={userData.image}
+											alt={`${user?.full_name}`}
+											fill
+											className="object-cover object-center md:object-center rounded-full"
+										/>
+									) : (
+										<div className="bg-golden rounded-full w-full p-2">
+											{userData?.first_name?.charAt(0)}
+											{userData?.last_name?.charAt(0)}
+										</div>
+									)}
 								</div>
 								<div className="grow">
 									<h4>
@@ -123,6 +160,13 @@ export default function Profile() {
 									</h4>
 									<div className="text-md text-gray-500">{user?.email}</div>
 								</div>
+							</div>
+							<div className="">
+								<Buttton
+									text="Edit Profile"
+									onClickHandler={modalOpenHandler}
+									type="button"
+								/>
 							</div>
 						</div>
 
@@ -177,6 +221,25 @@ export default function Profile() {
 						)}
 					</div>
 				</div>
+
+				{/* edit form modal */}
+				{openModal && (
+					<Modal handleClose={modalCloseHandler}>
+						{passEdit ? (
+							<PasswordChangeForm
+								togglePassEdit={togglePassEdit}
+								handleClose={modalCloseHandler}
+							/>
+						) : (
+							<ProfileEditForm
+								togglePassEdit={togglePassEdit}
+								editData={userData}
+								handleClose={modalCloseHandler}
+								fetchUserInfo={fetchUserInfo}
+							/>
+						)}
+					</Modal>
+				)}
 
 				<Footer />
 			</section>

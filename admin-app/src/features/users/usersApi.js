@@ -28,6 +28,13 @@ export const usersApi = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ["GetLoggedInUser"],
 		}),
+		changePassword: builder.mutation({
+			query: (data) => ({
+				url: `/accounts/change-password`,
+				method: "POST",
+				body: data,
+			}),
+		}),
 	}),
 });
 
@@ -37,4 +44,5 @@ export const {
 	useLazyGetUsersQuery,
 	useGetLoggedInUserQuery,
 	useEditLoggedInUserMutation,
+	useChangePasswordMutation,
 } = usersApi;

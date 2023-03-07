@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
 import { useGetLoggedInUserQuery } from "../../features/users/usersApi";
+import PasswordChangeForm from "./components/PasswordChangeForm";
 import ProfileEditForm from "./components/ProfileEditForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,8 +33,14 @@ export default function Profile() {
 	const { user } = useSelector((state) => state.auth);
 
 	const [editModal, setEditModal] = useState(false);
+	const [passwordForm, setPasswordForm] = useState(false);
 
-	const hideEditModal = () => setEditModal(false);
+	const toggoleContent = () => setPasswordForm((prevState) => !prevState);
+
+	const hideEditModal = () => {
+		setEditModal(false);
+		setPasswordForm(false);
+	};
 
 	const {
 		data,
@@ -131,8 +138,24 @@ export default function Profile() {
 
 			{/* edit form modal */}
 			{editModal && (
-				<Modal title="Edit Profile" open={editModal} closeModal={hideEditModal}>
-					<ProfileEditForm closeModal={hideEditModal} edit editData={data} />
+				<Modal
+					title={passwordForm ? "Change Password" : "Edit Profile"}
+					open={editModal}
+					closeModal={hideEditModal}
+				>
+					{passwordForm ? (
+						<PasswordChangeForm
+							toggoleContent={toggoleContent}
+							closeModal={hideEditModal}
+						/>
+					) : (
+						<ProfileEditForm
+							closeModal={hideEditModal}
+							edit
+							editData={data}
+							toggoleContent={toggoleContent}
+						/>
+					)}
 				</Modal>
 			)}
 		</Box>

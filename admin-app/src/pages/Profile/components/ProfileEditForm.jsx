@@ -19,7 +19,12 @@ const profileForm = yup
 	})
 	.required();
 
-export default function ProfileEditForm({ closeModal, edit, editData }) {
+export default function ProfileEditForm({
+	closeModal,
+	edit,
+	editData,
+	toggoleContent,
+}) {
 	const dispatch = useDispatch();
 
 	const [
@@ -71,8 +76,6 @@ export default function ProfileEditForm({ closeModal, edit, editData }) {
 				<Avatar
 					sx={{
 						bgcolor: blue[500],
-						width: 100,
-						height: 100,
 						position: "relative",
 						width: 120,
 						height: 120,
@@ -182,6 +185,9 @@ export default function ProfileEditForm({ closeModal, edit, editData }) {
 			>
 				Save
 			</Button>
+			<Box display={"flex"} justifyContent={"center"} mt={2}>
+				<Button onClick={toggoleContent}>Change Password</Button>
+			</Box>
 		</Box>
 	);
 }
