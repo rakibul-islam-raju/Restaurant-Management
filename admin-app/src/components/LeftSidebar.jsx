@@ -6,9 +6,10 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import GroupIcon from "@mui/icons-material/Group";
 import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
+import ScheduleSendIcon from "@mui/icons-material/ScheduleSend";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Tooltip, Typography } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
@@ -128,6 +129,12 @@ const MENUS = [
 		path: "/users",
 		icon: <GroupIcon color="primary" />,
 	},
+	{
+		id: 9,
+		text: "Subscribers",
+		path: "/subscribers",
+		icon: <ScheduleSendIcon color="primary" />,
+	},
 ];
 
 export default function LeftSidebar({ open, handleDrawerClose }) {
@@ -156,28 +163,30 @@ export default function LeftSidebar({ open, handleDrawerClose }) {
 			<List>
 				{MENUS.map((menu, index) => (
 					<ListItem key={menu.id} disablePadding sx={{ display: "block" }}>
-						<ListItemButton
-							sx={{
-								minHeight: 48,
-								justifyContent: open ? "initial" : "center",
-								px: 2.5,
-							}}
-							onClick={() => navigate(`${menu.path}`)}
-						>
-							<ListItemIcon
+						<Tooltip title={!open ? menu.text : ""} placement="right">
+							<ListItemButton
 								sx={{
-									minWidth: 0,
-									mr: open ? 3 : "auto",
-									justifyContent: "center",
+									minHeight: 48,
+									justifyContent: open ? "initial" : "center",
+									px: 2.5,
 								}}
+								onClick={() => navigate(`${menu.path}`)}
 							>
-								{menu.icon}
-							</ListItemIcon>
-							<ListItemText
-								primary={menu.text}
-								sx={{ opacity: open ? 1 : 0 }}
-							/>
-						</ListItemButton>
+								<ListItemIcon
+									sx={{
+										minWidth: 0,
+										mr: open ? 3 : "auto",
+										justifyContent: "center",
+									}}
+								>
+									{menu.icon}
+								</ListItemIcon>
+								<ListItemText
+									primary={menu.text}
+									sx={{ opacity: open ? 1 : 0 }}
+								/>
+							</ListItemButton>
+						</Tooltip>
 					</ListItem>
 				))}
 			</List>

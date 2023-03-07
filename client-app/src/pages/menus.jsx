@@ -12,12 +12,12 @@ import { WarningMessage } from "../components/Messages";
 
 const SELECT_OPTIONS = [
 	{ value: "", label: "Latest" },
-	{ value: "price", label: "From Low To High Price" },
-	{ value: "-price", label: "From High To Low Price" },
-	{ value: "avg_rating", label: "From Low To High Rating" },
-	{ value: "-avg_rating", label: "From High To Low Rating" },
-	{ value: "cook_time", label: "From Low To High Cooking Time" },
-	{ value: "-cook_time", label: "From High To Low Cooking Time" },
+	{ value: "price", label: "Price (Low > High)" },
+	{ value: "-price", label: "Price (High > Low)" },
+	{ value: "avg_rating", label: "Rating (Low > High)" },
+	{ value: "-avg_rating", label: "Rating (High > Low)" },
+	{ value: "cook_time", label: "Cooking Time (Low > High)" },
+	{ value: "-cook_time", label: "Cooking Time (High > Low)" },
 ];
 
 export default function menus() {

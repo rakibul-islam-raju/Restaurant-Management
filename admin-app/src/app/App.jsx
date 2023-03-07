@@ -20,6 +20,7 @@ import Orders from "../pages/Orders/Orders";
 import Profile from "../pages/Profile/Profile";
 import Register from "../pages/Register/Register";
 import Reservations from "../pages/Reservations/Reservations";
+import Subscribers from "../pages/Subscribers/Subscribers";
 import UserOrders from "../pages/Users/UserOrders";
 import Users from "../pages/Users/Users";
 
@@ -59,6 +60,7 @@ export default function App() {
 							<Route path="/chefs" element={<Chefs />} />
 							<Route path="/contacts" element={<Contacts />} />
 							<Route path="/users" element={<Users />} />
+							<Route path="/subscribers" element={<Subscribers />} />
 							<Route path="/profile" element={<Profile />} />
 							<Route path="*" element={<NotFound />} />
 						</Route>
