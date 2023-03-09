@@ -3,6 +3,7 @@ import Buttton from "../utils/Button";
 
 const COLUMNS = [
 	"",
+	"Order ID",
 	"Date",
 	"Price",
 	"Tax",
@@ -38,6 +39,10 @@ export default function OrderTable({ orders }) {
 							{i + 1}
 						</td>
 						<td className="order-table-td">
+							<span className="inline-block w-1/3 md:hidden font-bold"></span>
+							{item?.order_id}
+						</td>
+						<td className="order-table-td">
 							<span className="inline-block w-1/3 md:hidden font-bold">
 								Date
 							</span>
@@ -65,13 +70,13 @@ export default function OrderTable({ orders }) {
 							<span className="inline-block w-1/3 md:hidden font-bold">
 								Paid
 							</span>
-							{item?.id_paid ? "Yes" : "No"}
+							{item?.is_paid ? "Yes" : "No"}
 						</td>
 						<td className="order-table-td">
 							<span className="inline-block w-1/3 md:hidden font-bold">
 								Served
 							</span>
-							{item?.id_served ? "Yes" : "No"}
+							{item?.is_served ? "Yes" : "No"}
 						</td>
 						<td className="order-table-td">
 							<span className="inline-block w-1/3 md:hidden font-bold"></span>
@@ -79,7 +84,7 @@ export default function OrderTable({ orders }) {
 								<Link href={`/order/${item?.id}`}>
 									<Buttton text="View" />
 								</Link>
-								{!item?.id_paid && <Buttton text="Pay" />}
+								{!item?.is_paid && <Buttton text="Pay" />}
 							</div>
 						</td>
 					</tr>

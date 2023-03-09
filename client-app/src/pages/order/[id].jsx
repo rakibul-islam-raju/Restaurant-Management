@@ -60,7 +60,7 @@ export default function SingleOrder() {
 		}
 	}, [isAuthenticated, id]);
 
-	return !authChecked ? (
+	return !authChecked || loading ? (
 		<h4>Loading</h4>
 	) : (
 		<>
@@ -154,12 +154,14 @@ export default function SingleOrder() {
 														: price * quantity}{" "}
 													৳
 												</div>
-												<button
-													onClick={() => handleReview(item)}
-													className="mt-3 text-blue-500 bg-blue-100 px-2 py-1 rounded text-sm font-semibold hover:bg-blue-500 hover:text-white transition"
-												>
-													Review
-												</button>
+												{order?.is_paid && order?.is_served && (
+													<button
+														onClick={() => handleReview(item)}
+														className="mt-3 text-blue-500 bg-blue-100 px-2 py-1 rounded text-sm font-semibold hover:bg-blue-500 hover:text-white transition"
+													>
+														Review
+													</button>
+												)}
 											</div>
 										</div>
 									);

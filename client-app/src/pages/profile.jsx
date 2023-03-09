@@ -9,6 +9,7 @@ import OrderTable from "@/components/Order/OrderTable";
 import PasswordChangeForm from "@/components/profile/PasswordChangeForm";
 import ProfileEditForm from "@/components/profile/ProfileEditForm";
 import ReservationTable from "@/components/reservations/ReservationTable";
+import ReviewForm from "@/components/Review/ReviewForm";
 import ReviewsTable from "@/components/Review/ReviewsTable";
 import SectionHeader from "@/components/SectionHeader";
 import Buttton from "@/components/utils/Button";
@@ -36,6 +37,7 @@ export default function Profile() {
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [openModal, setOpenModal] = useState(false);
 	const [passEdit, setPassEdit] = useState(false);
+	const [editReview, setEditReview] = useState(null);
 
 	const togglePassEdit = () => setPassEdit((prevState) => !prevState);
 
@@ -214,7 +216,10 @@ export default function Profile() {
 										(reviews?.results?.length < 1 ? (
 											<WarningMessage text={"No data found!"} />
 										) : (
-											<ReviewsTable reviews={reviews} />
+											<ReviewsTable
+												reviews={reviews}
+												setEditReview={setEditReview}
+											/>
 										))}
 								</div>
 							</div>
@@ -238,6 +243,17 @@ export default function Profile() {
 								setUserData={setUserData}
 							/>
 						)}
+					</Modal>
+				)}
+
+				{/* review edit modal */}
+				{editReview && (
+					<Modal handleClose={() => setEditReview(null)}>
+						<ReviewForm
+							item={editReview}
+							editData={editReview}
+							handleClose={() => setEditReview(null)}
+						/>
 					</Modal>
 				)}
 

@@ -1,6 +1,8 @@
-const COLUMNS = ["", "Menu", "Category", "Rating", "Comment", "Date"];
+import Buttton from "../utils/Button";
 
-export default function ReviewsTable({ reviews }) {
+const COLUMNS = ["", "Menu", "Category", "Rating", "Comment", "Date", "Action"];
+
+export default function ReviewsTable({ reviews, setEditReview }) {
 	return (
 		<table className="min-w-full border-collapse block md:table">
 			<thead className="block md:table-header-group">
@@ -55,6 +57,9 @@ export default function ReviewsTable({ reviews }) {
 								Date
 							</span>
 							{new Date(item?.created_at).toLocaleString()}
+						</td>
+						<td className="order-table-td">
+							<Buttton text="Edit" onClickHandler={() => setEditReview(item)} />
 						</td>
 					</tr>
 				))}
