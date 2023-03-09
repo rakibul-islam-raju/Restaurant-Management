@@ -14,7 +14,6 @@ export function AuthProvider({ children }) {
 	const [authChecked, setAuthChecked] = useState(false);
 
 	useEffect(() => {
-		console.log("start");
 		const cookies = parseCookies();
 		const token = cookies["access"];
 		if (token) {
@@ -22,12 +21,14 @@ export function AuthProvider({ children }) {
 			setUser(userData);
 			setIsAuthenticated(true);
 		}
-		console.log("end");
 
 		setAuthChecked(true);
 	}, []);
 
 	const login = (access, refresh) => {
+		console.log("access =>", access);
+		console.log("refresh =>", refresh);
+
 		if (access && refresh) {
 			setCookie(null, "access", access);
 			setCookie(null, "refresh", refresh);

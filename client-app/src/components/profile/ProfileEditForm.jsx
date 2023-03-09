@@ -1,9 +1,10 @@
+import { AuthContext } from "@/contexts/AuthContext";
 import userService from "@/services/userService";
 import { getFormData } from "@/utils/getFormData";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { parseCookies } from "nookies";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -24,9 +25,13 @@ export default function ProfileEditForm({
 	togglePassEdit,
 	handleClose,
 	editData,
-	fetchUserInfo,
+	setUserData,
 }) {
-	const router = useRouter();
+	const cookies = parseCookies();
+	const refresh = cookies["refresh"];
+
+	const { login } = useContext(AuthContext);
+
 	const {
 		register,
 		handleSubmit,
@@ -56,10 +61,12 @@ export default function ProfileEditForm({
 				data: formData,
 				email: editData.email,
 			});
-			toast.success("Profile Updated");
-			handleClose();
-			// refetch user info
-			fetchUserInfo(editData.email);
+			if (res?.access && res?.refresh && res?.user) {
+				login(res.access, res.refresh);
+				toast.success("Profile Updated");
+				handleClose();
+				setUserData(res.user);
+			}
 		} catch (err) {
 			setResponseError(err?.response?.data);
 			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");

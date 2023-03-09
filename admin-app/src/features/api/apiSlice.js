@@ -41,15 +41,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 				if (refreshResult?.data) {
 					const decodedUserData = jwt_decode(refreshResult.data.access);
 
-					localStorage.setItem(
-						"takeMyOrder_auth",
-						JSON.stringify({
-							access: refreshResult.data.access,
-							refresh: refreshResult.data.refresh,
-							user: decodedUserData,
-						})
-					);
-
 					api.dispatch(
 						userLoggedIn({
 							access: refreshResult.data.access,

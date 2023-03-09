@@ -235,7 +235,7 @@ export default function Profile() {
 								togglePassEdit={togglePassEdit}
 								editData={userData}
 								handleClose={modalCloseHandler}
-								fetchUserInfo={fetchUserInfo}
+								setUserData={setUserData}
 							/>
 						)}
 					</Modal>
