@@ -17,7 +17,9 @@ import Modal from "../../components/Modal";
 import { useGetOrdersQuery } from "../../features/orders/orderApi";
 import { useGetSummaryQuery } from "../../features/statistics/statisticsApi";
 import { useGetStaffsQuery } from "../../features/users/usersApi";
+import OrderPieChart from "./components/OrderPieChart";
 import OrderShortTable from "./components/OrderShortTable";
+import ServedOrderLineChart from "./components/ServedOrderLineChart";
 import StaffDetails from "./components/StaffDetails";
 import StaffTable from "./components/StaffTable";
 
@@ -125,6 +127,17 @@ export default function Dashboard() {
 						</Grid>
 					</>
 				)}
+			</Box>
+
+			<Box my={5}>
+				<Grid container spacing={2}>
+					<Grid item xs={12} lg={4}>
+						<OrderPieChart />
+					</Grid>
+					<Grid item xs={12} lg={8}>
+						<ServedOrderLineChart />
+					</Grid>
+				</Grid>
 			</Box>
 
 			<Divider />
