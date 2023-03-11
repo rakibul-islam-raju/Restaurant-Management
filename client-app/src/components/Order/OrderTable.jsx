@@ -103,7 +103,9 @@ export default function OrderTable() {
 								{i + 1}
 							</td>
 							<td className="order-table-td">
-								<span className="inline-block w-1/3 md:hidden font-bold"></span>
+								<span className="inline-block w-1/3 md:hidden font-bold">
+									Order ID
+								</span>
 								{item?.order_id}
 							</td>
 							<td className="order-table-td">

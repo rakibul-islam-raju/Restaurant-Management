@@ -2,6 +2,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
+import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import ReviewForm from "@/components/Review/ReviewForm";
 import SectionHeader from "@/components/SectionHeader";
@@ -61,7 +62,7 @@ export default function SingleOrder() {
 	}, [isAuthenticated, id]);
 
 	return !authChecked || loading ? (
-		<h4>Loading</h4>
+		<Loader />
 	) : (
 		<>
 			<Head>
@@ -86,7 +87,7 @@ export default function SingleOrder() {
 					</Link>
 					<div className="p-4 w-full shadow rounded mt-4">
 						{/* order short info */}
-						<div className="flex justify-between">
+						<div className="flex flex-col md:flex-row gap-y-5 justify-between">
 							<div className="">
 								<h4 className="capitalize">
 									{order?.user?.first_name} {order?.user?.last_name}

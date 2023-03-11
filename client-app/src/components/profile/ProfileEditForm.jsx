@@ -144,31 +144,37 @@ export default function ProfileEditForm({
 					</div>
 				</div>
 
-				<div className="flex w-full justify-between">
-					<Input
-						forId={"first_name"}
-						type="text"
-						labelText={"First Name"}
-						required
-						defaultValue={editData?.first_name || ""}
-						register={register}
-						name="first_name"
-						error={errors?.first_name?.message || responseError?.first_name}
-						helperText={
-							errors?.first_name?.message || responseError?.first_name
-						}
-					/>
-					<Input
-						forId={"last_name"}
-						type="text"
-						labelText={"Last Name"}
-						required
-						defaultValue={editData?.last_name || ""}
-						register={register}
-						name="last_name"
-						error={errors?.last_name?.message || responseError?.last_name}
-						helperText={errors?.last_name?.message || responseError?.last_name}
-					/>
+				<div className="flex flex-col md:flex-row w-full justify-between gap-x-0 md:gap-x-4">
+					<div className="w-full">
+						<Input
+							forId={"first_name"}
+							type="text"
+							labelText={"First Name"}
+							required
+							defaultValue={editData?.first_name || ""}
+							register={register}
+							name="first_name"
+							error={errors?.first_name?.message || responseError?.first_name}
+							helperText={
+								errors?.first_name?.message || responseError?.first_name
+							}
+						/>
+					</div>
+					<div className="w-full">
+						<Input
+							forId={"last_name"}
+							type="text"
+							labelText={"Last Name"}
+							required
+							defaultValue={editData?.last_name || ""}
+							register={register}
+							name="last_name"
+							error={errors?.last_name?.message || responseError?.last_name}
+							helperText={
+								errors?.last_name?.message || responseError?.last_name
+							}
+						/>
+					</div>
 				</div>
 				<Input
 					forId={"email"}

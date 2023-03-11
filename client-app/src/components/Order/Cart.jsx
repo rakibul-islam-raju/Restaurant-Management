@@ -1,9 +1,9 @@
 import { CartContext } from "@/contexts/CartContext";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Buttton from "../utils/Button";
 
-export default function Cart({ orderPage = false }) {
+export default function Cart({ orderPage = false, modalCloser }) {
 	const {
 		cartItems,
 		removeItem,
@@ -39,6 +39,10 @@ export default function Cart({ orderPage = false }) {
 		});
 		return total;
 	};
+
+	useEffect(() => {
+		if (cartItems < 1) modalCloser();
+	}, [cartItems]);
 
 	return (
 		<div className="flex flex-col gap-3 mt-4">
@@ -137,7 +141,7 @@ export default function Cart({ orderPage = false }) {
 			</div>
 
 			{!orderPage && (
-				<div className="flex justify-between mt-4">
+				<div className="flex flex-col md:flex-row justify-between mt-4 gap-2">
 					<button
 						onClick={handleClearCart}
 						className="py-3 px-3 text-red-500 border border-red-500 hover:text-white bg-white hover:bg-red-500 rounded hover:duration-300"
@@ -145,7 +149,11 @@ export default function Cart({ orderPage = false }) {
 						Clear Tray
 					</button>
 					<Link href={"/orders"}>
-						<Buttton onClickHandler={orderHandler} text="Continue Order" />
+						<Buttton
+							onClickHandler={orderHandler}
+							text="Continue Order"
+							width={`w-full`}
+						/>
 					</Link>
 				</div>
 			)}
