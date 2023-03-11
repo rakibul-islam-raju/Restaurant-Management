@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { userLoggedIn } from "../auth/authSlice";
 
 export const usersApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
@@ -27,6 +28,14 @@ export const usersApi = apiSlice.injectEndpoints({
 				body: data,
 			}),
 			invalidatesTags: ["GetLoggedInUser"],
+
+			async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+				try {
+					const res = await queryFulfilled;
+					console.log("res =>", res.data);
+					dispatch(userLoggedIn(res.data));
+				} catch (err) {}
+			},
 		}),
 		changePassword: builder.mutation({
 			query: (data) => ({

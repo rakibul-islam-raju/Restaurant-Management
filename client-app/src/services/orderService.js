@@ -5,9 +5,9 @@ export const createOrder = async (data) => {
 	return response.data;
 };
 
-export const getOrders = async (email) => {
+export const getOrders = async (email, params) => {
 	const response = await axiosInstance.get(`orders`, {
-		params: { user__email: email },
+		params: { ...params, user__email: email },
 	});
 	return response.data;
 };
@@ -17,4 +17,9 @@ export const getOrder = async (id) => {
 	return response.data;
 };
 
-export default { createOrder, getOrder, getOrders };
+export const makePayment = async (id) => {
+	const response = await axiosInstance.patch(`orders/${id}`, { is_paid: true });
+	return response.data;
+};
+
+export default { createOrder, getOrder, getOrders, makePayment };

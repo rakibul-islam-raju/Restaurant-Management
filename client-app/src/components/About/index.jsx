@@ -30,7 +30,7 @@ function About() {
 					<SectionHeader
 						upperText={"About"}
 						textPosition={"text-left"}
-						lowerText={"TAKE ORDER RESTRAURANT"}
+						lowerText={"Slice of Spice"}
 						left={"left-0"}
 						right={"right-0"}
 						pB={"mb-0"}

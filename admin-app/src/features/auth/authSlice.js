@@ -14,6 +14,15 @@ const authSlice = createSlice({
 			state.access = payload.access;
 			state.refresh = payload.refresh;
 			state.user = payload.user;
+
+			localStorage.setItem(
+				"takeMyOrder_auth",
+				JSON.stringify({
+					access: payload.access,
+					refresh: payload.refresh,
+					user: payload.user,
+				})
+			);
 		},
 		userLoggedOut: (state) => {
 			state.access = undefined;

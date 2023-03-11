@@ -5,8 +5,11 @@ export const createReservation = async (data) => {
 	return res.data;
 };
 
-export const getReservations = async (params) => {
-	const res = await axiosInstance.get("/resarvations", { params });
+export const getReservations = async (email, params) => {
+	const res = await axiosInstance.get("/resarvations", {
+		...params,
+		user__email: email,
+	});
 	return res.data;
 };
 

@@ -2,12 +2,14 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
+import Loader from "@/components/Loader";
 import SectionHeader from "@/components/SectionHeader";
 import Menu from "@/components/Sepcialities/Menu";
+import { CartContext } from "@/contexts/CartContext";
 import categoryService from "@/services/categoryService";
 import menuService from "@/services/menuService";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { WarningMessage } from "../components/Messages";
 
 const SELECT_OPTIONS = [
@@ -21,6 +23,8 @@ const SELECT_OPTIONS = [
 ];
 
 export default function menus() {
+	const { addItem } = useContext(CartContext);
+
 	const [menus, setMenus] = useState(null);
 	const [categories, setCategories] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -29,8 +33,9 @@ export default function menus() {
 	const [ordering, setOrdering] = useState("");
 
 	const fetchMenus = async (params) => {
-		setErrorMessage(null);
 		try {
+			setLoading(true);
+			setErrorMessage(null);
 			const res = await menuService.getMenus(params);
 			if (res?.results) {
 				setMenus(res);
@@ -58,6 +63,10 @@ export default function menus() {
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	const handleAddToCart = (item) => {
+		addItem(item);
 	};
 
 	useEffect(() => {
@@ -90,7 +99,7 @@ export default function menus() {
 				<div className="wrapper">
 					<SectionHeader upperText={"Menus"} lowerText={"Menu"} />
 					{loading ? (
-						<h6 className="text-center">Loading...</h6>
+						<Loader />
 					) : (
 						<>
 							<div className="w-full flex flex-col md:flex-row items-center justify-evenly border rounded mb-28">
@@ -131,7 +140,12 @@ export default function menus() {
 							<div className="grid grid-cols-1 gap-3">
 								{menus?.results?.length > 0 ? (
 									menus?.results?.map((item) => (
-										<Menu menu={item} key={item.id} reverse />
+										<Menu
+											menu={item}
+											key={item.id}
+											addTocartHandler={handleAddToCart}
+											reverse
+										/>
 									))
 								) : (
 									<WarningMessage text="No data found!" />

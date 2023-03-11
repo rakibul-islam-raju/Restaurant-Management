@@ -15,14 +15,6 @@ export const authApi = apiSlice.injectEndpoints({
 					const { data } = await queryFulfilled;
 
 					const decodedUserData = jwt_decode(data.access);
-					localStorage.setItem(
-						"takeMyOrder_auth",
-						JSON.stringify({
-							access: data.access,
-							refresh: data.refresh,
-							user: decodedUserData,
-						})
-					);
 
 					dispatch(
 						userLoggedIn({
@@ -48,15 +40,6 @@ export const authApi = apiSlice.injectEndpoints({
 					const { data } = await queryFulfilled;
 
 					const decodedUserData = jwt_decode(data.access);
-
-					localStorage.setItem(
-						"takeMyOrder_auth",
-						JSON.stringify({
-							access: data.access,
-							refresh: data.refresh,
-							user: decodedUserData,
-						})
-					);
 
 					dispatch(
 						userLoggedIn({

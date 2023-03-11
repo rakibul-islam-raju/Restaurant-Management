@@ -35,7 +35,7 @@ function Footer() {
 		<footer className="bg-footer  ">
 			<div className="grid grid-cols-1 gap-x-8 gap-y-10  md:grid-cols-4  text-white   container p-4 py-20  ">
 				<div className="space-y-6  ">
-					<h6 className="text-white">Take Order</h6>
+					<h6 className="text-white uppercase">Slice of Spice</h6>
 
 					<div className="space-y-4">
 						<small>

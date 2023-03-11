@@ -2,6 +2,7 @@ import SectionHeader from "@/components/SectionHeader";
 import { CartContext } from "@/contexts/CartContext";
 import menuService from "@/services/menuService";
 import { useContext, useEffect, useState } from "react";
+import Loader from "../Loader";
 import { ErrorMessage } from "../Messages";
 import Menu from "./Menu";
 
@@ -42,7 +43,7 @@ function Specialities() {
 
 			<div className="grid grid-cols-1 md:grid-cols-2 border-2">
 				{loading ? (
-					<h4>Loading...</h4>
+					<Loader />
 				) : (
 					menus?.length > 0 &&
 					menus?.map((item, i) => {

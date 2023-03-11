@@ -1,9 +1,10 @@
+import { AuthContext } from "@/contexts/AuthContext";
 import userService from "@/services/userService";
 import { getFormData } from "@/utils/getFormData";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { parseCookies } from "nookies";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -24,9 +25,13 @@ export default function ProfileEditForm({
 	togglePassEdit,
 	handleClose,
 	editData,
-	fetchUserInfo,
+	setUserData,
 }) {
-	const router = useRouter();
+	const cookies = parseCookies();
+	const refresh = cookies["refresh"];
+
+	const { login } = useContext(AuthContext);
+
 	const {
 		register,
 		handleSubmit,
@@ -56,10 +61,12 @@ export default function ProfileEditForm({
 				data: formData,
 				email: editData.email,
 			});
-			toast.success("Profile Updated");
-			handleClose();
-			// refetch user info
-			fetchUserInfo(editData.email);
+			if (res?.access && res?.refresh && res?.user) {
+				login(res.access, res.refresh);
+				toast.success("Profile Updated");
+				handleClose();
+				setUserData(res.user);
+			}
 		} catch (err) {
 			setResponseError(err?.response?.data);
 			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
@@ -137,31 +144,37 @@ export default function ProfileEditForm({
 					</div>
 				</div>
 
-				<div className="flex w-full justify-between">
-					<Input
-						forId={"first_name"}
-						type="text"
-						labelText={"First Name"}
-						required
-						defaultValue={editData?.first_name || ""}
-						register={register}
-						name="first_name"
-						error={errors?.first_name?.message || responseError?.first_name}
-						helperText={
-							errors?.first_name?.message || responseError?.first_name
-						}
-					/>
-					<Input
-						forId={"last_name"}
-						type="text"
-						labelText={"Last Name"}
-						required
-						defaultValue={editData?.last_name || ""}
-						register={register}
-						name="last_name"
-						error={errors?.last_name?.message || responseError?.last_name}
-						helperText={errors?.last_name?.message || responseError?.last_name}
-					/>
+				<div className="flex flex-col md:flex-row w-full justify-between gap-x-0 md:gap-x-4">
+					<div className="w-full">
+						<Input
+							forId={"first_name"}
+							type="text"
+							labelText={"First Name"}
+							required
+							defaultValue={editData?.first_name || ""}
+							register={register}
+							name="first_name"
+							error={errors?.first_name?.message || responseError?.first_name}
+							helperText={
+								errors?.first_name?.message || responseError?.first_name
+							}
+						/>
+					</div>
+					<div className="w-full">
+						<Input
+							forId={"last_name"}
+							type="text"
+							labelText={"Last Name"}
+							required
+							defaultValue={editData?.last_name || ""}
+							register={register}
+							name="last_name"
+							error={errors?.last_name?.message || responseError?.last_name}
+							helperText={
+								errors?.last_name?.message || responseError?.last_name
+							}
+						/>
+					</div>
 				</div>
 				<Input
 					forId={"email"}

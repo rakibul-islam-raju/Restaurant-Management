@@ -16,6 +16,7 @@ export default function OrderTable({ data, editMenuHandler }) {
 			<Table sx={{ minWidth: 650 }} aria-label="simple table">
 				<TableHead>
 					<TableRow>
+						<TableCell align="left">Order ID</TableCell>
 						<TableCell align="left">Customer Name</TableCell>
 						<TableCell align="left">Customer Email</TableCell>
 						<TableCell align="left">Total</TableCell>
@@ -35,6 +36,9 @@ export default function OrderTable({ data, editMenuHandler }) {
 								key={row.id}
 								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
 							>
+								<TableCell component="th" scope="row">
+									{`${row.order_id}`}
+								</TableCell>
 								<TableCell component="th" scope="row">
 									{`${row.user.first_name} ${row.user.last_name}`}
 								</TableCell>

@@ -2,6 +2,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
+import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import ReviewForm from "@/components/Review/ReviewForm";
 import SectionHeader from "@/components/SectionHeader";
@@ -60,8 +61,8 @@ export default function SingleOrder() {
 		}
 	}, [isAuthenticated, id]);
 
-	return !authChecked ? (
-		<h4>Loading</h4>
+	return !authChecked || loading ? (
+		<Loader />
 	) : (
 		<>
 			<Head>
@@ -86,7 +87,7 @@ export default function SingleOrder() {
 					</Link>
 					<div className="p-4 w-full shadow rounded mt-4">
 						{/* order short info */}
-						<div className="flex justify-between">
+						<div className="flex flex-col md:flex-row gap-y-5 justify-between">
 							<div className="">
 								<h4 className="capitalize">
 									{order?.user?.first_name} {order?.user?.last_name}
@@ -154,12 +155,14 @@ export default function SingleOrder() {
 														: price * quantity}{" "}
 													৳
 												</div>
-												<button
-													onClick={() => handleReview(item)}
-													className="mt-3 text-blue-500 bg-blue-100 px-2 py-1 rounded text-sm font-semibold hover:bg-blue-500 hover:text-white transition"
-												>
-													Review
-												</button>
+												{order?.is_paid && order?.is_served && (
+													<button
+														onClick={() => handleReview(item)}
+														className="mt-3 text-blue-500 bg-blue-100 px-2 py-1 rounded text-sm font-semibold hover:bg-blue-500 hover:text-white transition"
+													>
+														Review
+													</button>
+												)}
 											</div>
 										</div>
 									);

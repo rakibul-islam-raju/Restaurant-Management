@@ -3,6 +3,7 @@ import Divider from "@/components/Divider";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
+import Loader from "@/components/Loader";
 import { ErrorMessage } from "@/components/Messages";
 import Cart from "@/components/Order/Cart";
 import SectionHeader from "@/components/SectionHeader";
@@ -71,7 +72,7 @@ export default function Orders() {
 	}, []);
 
 	return !authChecked ? (
-		<h4>Loading</h4>
+		<Loader />
 	) : (
 		<>
 			<Head>

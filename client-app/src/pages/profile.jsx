@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Header/Navbar";
 import Topbar from "@/components/Header/Topbar";
 import Loader from "@/components/Loader";
-import { ErrorMessage, WarningMessage } from "@/components/Messages";
+import { ErrorMessage } from "@/components/Messages";
 import Modal from "@/components/Modal";
 import OrderTable from "@/components/Order/OrderTable";
 import PasswordChangeForm from "@/components/profile/PasswordChangeForm";
@@ -13,9 +13,6 @@ import ReviewsTable from "@/components/Review/ReviewsTable";
 import SectionHeader from "@/components/SectionHeader";
 import Buttton from "@/components/utils/Button";
 import { AuthContext } from "@/contexts/AuthContext";
-import orderService from "@/services/orderService";
-import reservationService from "@/services/reservationService";
-import reviewService from "@/services/reviewService";
 import userService from "@/services/userService";
 import Head from "next/head";
 import Image from "next/image";
@@ -28,9 +25,6 @@ export default function Profile() {
 	const { user, isAuthenticated, authChecked } = useContext(AuthContext);
 
 	const [tabState, setTabState] = useState("orders");
-	const [reservations, setReservations] = useState(null);
-	const [orders, setOrders] = useState(null);
-	const [reviews, setReviews] = useState(null);
 	const [userData, setUserData] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -45,47 +39,6 @@ export default function Profile() {
 	};
 
 	const modalCloseHandler = () => setOpenModal(false);
-
-	const fetchOrders = async (email) => {
-		try {
-			setLoading(true);
-			setErrorMessage(null);
-			const res = await orderService.getOrders(email);
-			setOrders(res);
-		} catch (err) {
-			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
-		} finally {
-			setLoading(false);
-		}
-	};
-
-	const fetchReservations = async (email) => {
-		try {
-			setLoading(true);
-			setErrorMessage(null);
-			const res = await reservationService.getReservations({
-				user__email: email,
-			});
-			setReservations(res);
-		} catch (err) {
-			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
-		} finally {
-			setLoading(false);
-		}
-	};
-
-	const fetchReviews = async (email) => {
-		try {
-			setLoading(true);
-			setErrorMessage(null);
-			const res = await reviewService.getReviewsByUser({}, email);
-			setReviews(res);
-		} catch (err) {
-			setErrorMessage(err?.response?.data?.detail || "Something went wrong!");
-		} finally {
-			setLoading(false);
-		}
-	};
 
 	const fetchUserInfo = async (email) => {
 		try {
@@ -103,9 +56,6 @@ export default function Profile() {
 	useEffect(() => {
 		if (user?.email) {
 			fetchUserInfo(user.email);
-			fetchOrders(user.email);
-			fetchReservations(user.email);
-			fetchReviews(user.email);
 		}
 	}, [user]);
 
@@ -116,7 +66,7 @@ export default function Profile() {
 	}, [isAuthenticated]);
 
 	return !authChecked ? (
-		<h4>Loading</h4>
+		<Loader />
 	) : (
 		<>
 			<Head>
@@ -162,11 +112,33 @@ export default function Profile() {
 								</div>
 							</div>
 							<div className="">
-								<Buttton
-									text="Edit Profile"
-									onClickHandler={modalOpenHandler}
+								<button
 									type="button"
-								/>
+									onClick={modalOpenHandler}
+									className="block md:hidden"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										strokeWidth={1.5}
+										stroke="currentColor"
+										className="w-6 h-6 text-golden"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+										/>
+									</svg>
+								</button>
+								<div className="hidden md:block">
+									<Buttton
+										text="Edit Profile"
+										onClickHandler={modalOpenHandler}
+										type="button"
+									/>
+								</div>
 							</div>
 						</div>
 
@@ -194,28 +166,13 @@ export default function Profile() {
 
 								<div className="mt-12">
 									{/* orders */}
-									{tabState === "orders" &&
-										(orders?.results?.length < 1 ? (
-											<WarningMessage text={"No data found!"} />
-										) : (
-											<OrderTable orders={orders} />
-										))}
+									{tabState === "orders" && <OrderTable />}
 
 									{/* Reservations */}
-									{tabState === "reservations" &&
-										(reservations?.results?.length < 1 ? (
-											<WarningMessage text={"No data found!"} />
-										) : (
-											<ReservationTable reservations={reservations} />
-										))}
+									{tabState === "reservations" && <ReservationTable />}
 
 									{/* Reviews */}
-									{tabState === "reviews" &&
-										(reviews?.results?.length < 1 ? (
-											<WarningMessage text={"No data found!"} />
-										) : (
-											<ReviewsTable reviews={reviews} />
-										))}
+									{tabState === "reviews" && <ReviewsTable />}
 								</div>
 							</div>
 						)}
@@ -235,7 +192,7 @@ export default function Profile() {
 								togglePassEdit={togglePassEdit}
 								editData={userData}
 								handleClose={modalCloseHandler}
-								fetchUserInfo={fetchUserInfo}
+								setUserData={setUserData}
 							/>
 						)}
 					</Modal>

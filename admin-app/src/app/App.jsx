@@ -2,6 +2,8 @@ import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider as ThemeProviderLegacy } from "@mui/styles";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Layout from "../components/Layout";
@@ -37,35 +39,37 @@ export default function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<ThemeProviderLegacy theme={theme}>
-				<CssBaseline />
-				{!authChecked ? (
-					<Loader />
-				) : (
-					<Routes>
-						{/* public route */}
-						<Route element={<PublicLayout />}>
-							<Route path="/login" element={<Login />} />
-							<Route path="/register" element={<Register />} />
-						</Route>
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<CssBaseline />
+					{!authChecked ? (
+						<Loader />
+					) : (
+						<Routes>
+							{/* public route */}
+							<Route element={<PublicLayout />}>
+								<Route path="/login" element={<Login />} />
+								<Route path="/register" element={<Register />} />
+							</Route>
 
-						{/* private route */}
-						<Route element={<Layout />}>
-							<Route index element={<Dashboard />} />
-							<Route path="/orders" element={<Orders />} />
-							<Route path="/orders/user/:userId" element={<UserOrders />} />
-							<Route path="/menus" element={<Menus />} />
-							<Route path="/categories" element={<Categories />} />
-							<Route path="/reservations" element={<Reservations />} />
-							<Route path="/campaigns" element={<Campaigns />} />
-							<Route path="/chefs" element={<Chefs />} />
-							<Route path="/contacts" element={<Contacts />} />
-							<Route path="/users" element={<Users />} />
-							<Route path="/subscribers" element={<Subscribers />} />
-							<Route path="/profile" element={<Profile />} />
-							<Route path="*" element={<NotFound />} />
-						</Route>
-					</Routes>
-				)}
+							{/* private route */}
+							<Route element={<Layout />}>
+								<Route index element={<Dashboard />} />
+								<Route path="/orders" element={<Orders />} />
+								<Route path="/orders/user/:userId" element={<UserOrders />} />
+								<Route path="/menus" element={<Menus />} />
+								<Route path="/categories" element={<Categories />} />
+								<Route path="/reservations" element={<Reservations />} />
+								<Route path="/campaigns" element={<Campaigns />} />
+								<Route path="/chefs" element={<Chefs />} />
+								<Route path="/contacts" element={<Contacts />} />
+								<Route path="/users" element={<Users />} />
+								<Route path="/subscribers" element={<Subscribers />} />
+								<Route path="/profile" element={<Profile />} />
+								<Route path="*" element={<NotFound />} />
+							</Route>
+						</Routes>
+					)}
+				</LocalizationProvider>
 			</ThemeProviderLegacy>
 		</ThemeProvider>
 	);

@@ -56,10 +56,10 @@ export default function Navbar() {
 					<Link
 						className={`${
 							navbar ? "md:text-black " : "md:text-white"
-						} font-semibold text-2xl text-white`}
+						} font-semibold text-2xl text-white uppercase`}
 						href="/"
 					>
-						Take My Order
+						Slice of Spice
 					</Link>
 
 					<div className="flex items-center">
@@ -145,7 +145,11 @@ export default function Navbar() {
 			</nav>
 			{open && (
 				<Modal handleClose={modalCloser}>
-					{open === "auth" ? <Auth handleClose={modalCloser} /> : <Cart />}
+					{open === "auth" ? (
+						<Auth handleClose={modalCloser} />
+					) : (
+						<Cart modalCloser={modalCloser} />
+					)}
 				</Modal>
 			)}
 		</>
