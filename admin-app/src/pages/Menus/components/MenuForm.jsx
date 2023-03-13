@@ -91,7 +91,7 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 			closeModal();
 
 			if (edit) {
-				toast.success("New menu updated successfully");
+				toast.success("Menu updated successfully");
 			} else {
 				toast.success("New menu added successfully");
 			}
@@ -270,18 +270,16 @@ export default function MenuForm({ closeModal, queryParams, edit, editData }) {
 				)}
 			</Box>
 
-			{edit && (
-				<FormControlLabel
-					control={
-						<Checkbox
-							{...register("is_active")}
-							defaultChecked={editData.is_active}
-							color="primary"
-						/>
-					}
-					label="Active Status"
-				/>
-			)}
+			<FormControlLabel
+				control={
+					<Checkbox
+						{...register("is_active")}
+						defaultChecked={editData?.is_active}
+						color="primary"
+					/>
+				}
+				label="Active Status"
+			/>
 
 			<Stack direction={"row"} justifyContent="end" gap={2} mt={3}>
 				<Button

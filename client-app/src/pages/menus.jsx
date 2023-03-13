@@ -16,8 +16,8 @@ const SELECT_OPTIONS = [
 	{ value: "", label: "Latest" },
 	{ value: "price", label: "Price (Low > High)" },
 	{ value: "-price", label: "Price (High > Low)" },
-	{ value: "avg_rating", label: "Rating (Low > High)" },
-	{ value: "-avg_rating", label: "Rating (High > Low)" },
+	{ value: "avg_rating", label: "Rating (High > Low)" },
+	{ value: "-avg_rating", label: "Rating (Low > High)" },
 	{ value: "cook_time", label: "Cooking Time (Low > High)" },
 	{ value: "-cook_time", label: "Cooking Time (High > Low)" },
 ];
@@ -128,7 +128,7 @@ export default function menus() {
 
 							<div className="flex justify-end mb-4">
 								<select
-									defaultValue={""}
+									value={ordering}
 									onChange={(e) => setOrdering(e.target.value)}
 									className="px-3 py-1 rounded font-semibold ring ring-golden ring-offset-1"
 								>

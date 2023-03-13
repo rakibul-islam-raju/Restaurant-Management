@@ -1,11 +1,15 @@
 import Star from "@/components/Star";
 import Buttton from "@/components/utils/Button";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Rating from "react-rating";
 
 function Menu({ menu, reverse = false, addTocartHandler }) {
 	return (
-		<div
+		<motion.div
+			initial={{ opacity: 0 }}
+			whileInView={{ opacity: 1 }}
+			viewport={{ once: true }}
 			className={`flex flex-col ${
 				reverse ? "md:flex-row" : "md:flex-row-reverse"
 			} justify-between`}
@@ -64,7 +68,7 @@ function Menu({ menu, reverse = false, addTocartHandler }) {
 					text="ADD TO TRAY"
 				/>
 			</div>
-		</div>
+		</motion.div>
 	);
 }
 

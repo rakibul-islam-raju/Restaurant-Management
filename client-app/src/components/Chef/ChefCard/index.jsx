@@ -1,8 +1,14 @@
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 function ChefCard({ data }) {
 	return (
-		<div className="shadow m-2 rounded hover:shadow-md group transition">
+		<motion.div
+			initial={{ opacity: 0 }}
+			whileInView={{ opacity: 1 }}
+			viewport={{ once: true }}
+			className="shadow m-2 rounded hover:shadow-md group transition"
+		>
 			<div className="relative h-72 md:h-96">
 				<Image
 					src={data?.image}
@@ -17,7 +23,7 @@ function ChefCard({ data }) {
 					<p className="text-sm">{data?.short_description}</p>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	);
 }
 

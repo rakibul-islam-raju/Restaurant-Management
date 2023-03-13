@@ -21,7 +21,13 @@ export const orderApi = apiSlice.injectEndpoints({
 				method: "PATCH",
 				body: data,
 			}),
-			invalidatesTags: ["SummaryStats", "GetOrders", "GetOrder"],
+			invalidatesTags: [
+				"SummaryStats",
+				"GetOrders",
+				"GetOrder",
+				"OrderStatistics",
+				"ServedOrderStatistics",
+			],
 		}),
 	}),
 });
