@@ -41,7 +41,9 @@ export default function Cart({ orderPage = false, modalCloser }) {
 	};
 
 	useEffect(() => {
-		if (cartItems < 1) modalCloser();
+		if (!orderPage) {
+			if (cartItems < 1) modalCloser();
+		}
 	}, [cartItems]);
 
 	return (

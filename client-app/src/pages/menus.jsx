@@ -105,7 +105,10 @@ export default function menus() {
 							<div className="w-full flex flex-col md:flex-row items-center justify-evenly border rounded mb-28">
 								{categories?.results?.length > 0 ? (
 									categories?.results?.map((item) => (
-										<div className="w-full text-center min-w-[100px]">
+										<div
+											key={item.id}
+											className="w-full text-center min-w-[100px]"
+										>
 											<div
 												className={`${
 													tabState === item.id

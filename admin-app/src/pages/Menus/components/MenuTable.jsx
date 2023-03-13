@@ -46,9 +46,7 @@ export default function MenuTable({ data, editMenuHandler, deleteHandler }) {
 								</TableCell>
 								<TableCell align="left">{row.name}</TableCell>
 								<TableCell align="left">{row.category.name}</TableCell>
-								<TableCell align="left">
-									<pre>{row.description}</pre>
-								</TableCell>
+								<TableCell align="left">{row.description}</TableCell>
 								<TableCell align="left">{row.price}</TableCell>
 								<TableCell align="left">{row.offer_price}</TableCell>
 								<TableCell align="left">{row.cook_time}</TableCell>

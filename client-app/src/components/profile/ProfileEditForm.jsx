@@ -101,9 +101,11 @@ export default function ProfileEditForm({
 								className="object-cover object-center md:object-center rounded-full"
 							/>
 						) : (
-							<div className="text-center test-white text-2xl">
-								{editData?.first_name?.charAt(0)}
-								{editData?.last_name?.charAt(0)}
+							<div className="text-center test-white text-8xl text-white font-semibold mt-6">
+								<div className="">
+									{editData?.first_name?.charAt(0)}
+									{editData?.last_name?.charAt(0)}
+								</div>
 							</div>
 						)}
 						<div className="absolute bottom-0 left-0 right-0 ml-auto mr-auto flex justify-center">
