@@ -88,7 +88,7 @@ export default function Profile() {
 					<div className="">
 						{/* user info */}
 						<div className="p-2 rounded shadow w-full flex justify-between">
-							<div className="flex gap-3 items-center">
+							<div className="flex gap-3 items-center pt-4">
 								<div className="relative w-32 h-32">
 									{userData?.image ? (
 										<Image
@@ -98,7 +98,7 @@ export default function Profile() {
 											className="object-cover object-center md:object-center rounded-full"
 										/>
 									) : (
-										<div className="bg-golden rounded-full w-full p-2">
+										<div className="bg-golden rounded-full w-full px-4 py-2 text-white font-semibold inline text-6xl">
 											{userData?.first_name?.charAt(0)}
 											{userData?.last_name?.charAt(0)}
 										</div>

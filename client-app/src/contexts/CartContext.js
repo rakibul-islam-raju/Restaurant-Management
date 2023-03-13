@@ -1,5 +1,6 @@
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export const CartContext = createContext();
 
@@ -33,12 +34,8 @@ export const CartProvider = ({ children }) => {
 			updatedCartItems[itemIndex].quantity += quantity;
 			setCartItems(updatedCartItems);
 		}
-
+		toast.success("Item has been added to the tray!");
 		setCookieHandler("cartItems", JSON.stringify(cartItems));
-		// setCookie(null, "cartItems", JSON.stringify(cartItems), {
-		// 	path: "/",
-		// 	maxAge: 30 * 24 * 60 * 60,
-		// });
 	};
 
 	const increaseItemQuantity = (index) => {
@@ -47,10 +44,6 @@ export const CartProvider = ({ children }) => {
 		setCartItems(updatedCartItems);
 
 		setCookieHandler("cartItems", JSON.stringify(updatedCartItems));
-		// setCookie(null, "cartItems", JSON.stringify(updatedCartItems), {
-		// 	path: "/",
-		// 	maxAge: 30 * 24 * 60 * 60,
-		// });
 	};
 
 	const decreaseItemQuantity = (index) => {
@@ -60,10 +53,6 @@ export const CartProvider = ({ children }) => {
 			setCartItems(updatedCartItems);
 
 			setCookieHandler("cartItems", JSON.stringify(updatedCartItems));
-			// setCookie(null, "cartItems", JSON.stringify(updatedCartItems), {
-			// 	path: "/",
-			// 	maxAge: 30 * 24 * 60 * 60,
-			// });
 		}
 	};
 
@@ -71,12 +60,8 @@ export const CartProvider = ({ children }) => {
 		const items = [...cartItems];
 		items.splice(index, 1);
 		setCartItems(items);
-
+		toast.success("Item has been removed from the tray!");
 		setCookieHandler("cartItems", JSON.stringify(items));
-		// setCookie(null, "cartItems", JSON.stringify(items), {
-		// 	path: "/",
-		// 	maxAge: 30 * 24 * 60 * 60,
-		// });
 	};
 
 	const clearCart = () => {
@@ -84,6 +69,7 @@ export const CartProvider = ({ children }) => {
 		destroyCookie(null, "cartItems", {
 			path: "/",
 		});
+		toast.success("The tray is cleared!");
 	};
 
 	const contextValues = {
