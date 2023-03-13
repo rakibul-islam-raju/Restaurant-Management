@@ -14,18 +14,24 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import * as yup from "yup";
-import { useEditReservationMutation } from "../../../features/reservation/reservationApi";
+import {
+	useAddReservationMutation,
+	useEditReservationMutation,
+} from "../../../features/reservation/reservationApi";
 
 const reservationSchema = yup.object({
+	name: yup.string().optional().min(4).max(100),
+	email: yup.string().email().optional(),
 	person: yup.number().optional().min(2).max(12),
+	phone: yup.string().min(11).max(11).optional(),
 	time: yup.string().optional(),
 	date: yup.date().optional(),
 	status: yup.string().optional(),
 	is_active: yup.boolean().optional(),
 });
 
-const RESERVATION_TIME_SLOT = ["12pm - 2pm", "2pm - 4pm"];
 const RESERVATION_STATUS = ["pending", "confirmed", "cancelled"];
 
 export default function ReservationForm({
@@ -47,6 +53,10 @@ export default function ReservationForm({
 			error: editResponseError,
 		},
 	] = useEditReservationMutation();
+	const [
+		addReservation,
+		{ isLoading: addLoading, isSuccess: addSuccess, error: addResponseError },
+	] = useAddReservationMutation();
 
 	const {
 		register,
@@ -63,13 +73,21 @@ export default function ReservationForm({
 			newData.date = moment(date).format("YYYY-MM-DD");
 		}
 
-		dispatch(
-			editReservation({
-				data: newData,
-				params: queryParams,
-				id: editData.id,
-			})
-		);
+		if (edit) {
+			dispatch(
+				editReservation({
+					data: newData,
+					params: queryParams,
+					id: editData.id,
+				})
+			);
+		} else {
+			dispatch(
+				addReservation({
+					data: newData,
+				})
+			);
+		}
 	};
 
 	const onChangeHandler = (e) => {
@@ -77,8 +95,15 @@ export default function ReservationForm({
 	};
 
 	useEffect(() => {
-		if (editSuccess) closeModal();
-	}, [editSuccess]);
+		if (editSuccess) {
+			toast.success("Reservation Updated!");
+			closeModal();
+		}
+		if (addSuccess) {
+			toast.success("Reservation Created!");
+			closeModal();
+		}
+	}, [editSuccess, addSuccess]);
 
 	return (
 		<Box component={"form"} onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -94,16 +119,37 @@ export default function ReservationForm({
 					margin="normal"
 					fullWidth
 					label="Name"
-					value={editData?.name}
-					disabled
+					defaultValue={editData?.name}
+					{...register("name")}
+					error={errors.name?.message || addResponseError?.data?.name}
+					helperText={errors.name?.message || addResponseError?.data?.name}
+					disabled={edit}
+					onChange={onChangeHandler}
 				/>
 				<TextField
 					variant="standard"
 					margin="normal"
 					fullWidth
 					label="Email"
-					value={editData?.user?.email}
-					disabled
+					defaultValue={editData?.user?.email}
+					{...register("email")}
+					error={errors.email?.message || addResponseError?.data?.email}
+					helperText={errors.email?.message || addResponseError?.data?.email}
+					disabled={edit}
+					onChange={onChangeHandler}
+				/>
+				<TextField
+					type={"tel"}
+					variant="standard"
+					margin="normal"
+					fullWidth
+					label="Phone"
+					defaultValue={editData?.phone}
+					{...register("phone")}
+					error={errors.phone?.message || addResponseError?.data?.phone}
+					helperText={errors.phone?.message || addResponseError?.data?.phone}
+					disabled={edit}
+					onChange={onChangeHandler}
 				/>
 			</Stack>
 
@@ -117,10 +163,20 @@ export default function ReservationForm({
 					label="Person"
 					defaultValue={editData?.person}
 					{...register("person")}
+					error={
+						errors.person?.message ||
+						addResponseError?.data?.person ||
+						editResponseError?.data?.person
+					}
+					helperText={
+						errors.person?.message ||
+						addResponseError?.data?.person ||
+						editResponseError?.data?.person
+					}
 					onChange={onChangeHandler}
 				/>
 				<TextField
-					select
+					type={"time"}
 					variant="standard"
 					margin="normal"
 					required
@@ -128,21 +184,24 @@ export default function ReservationForm({
 					label="Time"
 					defaultValue={editData?.time}
 					{...register("time")}
+					error={
+						errors.time?.message ||
+						addResponseError?.data?.time ||
+						editResponseError?.data?.time
+					}
+					helperText={
+						errors.time?.message ||
+						addResponseError?.data?.time ||
+						editResponseError?.data?.time
+					}
 					onChange={onChangeHandler}
-				>
-					{RESERVATION_TIME_SLOT.map((option) => (
-						<MenuItem key={option} value={option}>
-							{option}
-						</MenuItem>
-					))}
-				</TextField>
+				/>
 				<DatePicker
 					label="Date"
 					{...register("date")}
 					onChange={(newValue) => {
 						setDate(newValue);
 					}}
-					inputFormat="yyyy-MM-DD"
 					value={date}
 					renderInput={(params) => (
 						<TextField
@@ -151,6 +210,16 @@ export default function ReservationForm({
 							margin="normal"
 							required
 							fullWidth
+							error={
+								errors.date?.message ||
+								addResponseError?.data?.date ||
+								editResponseError?.data?.date
+							}
+							helperText={
+								errors.date?.message ||
+								addResponseError?.data?.date ||
+								editResponseError?.data?.date
+							}
 							{...params}
 						/>
 					)}
@@ -164,6 +233,16 @@ export default function ReservationForm({
 					label="status"
 					defaultValue={editData?.status}
 					{...register("status")}
+					error={
+						errors.status?.message ||
+						addResponseError?.data?.status ||
+						editResponseError?.data?.status
+					}
+					helperText={
+						errors.status?.message ||
+						addResponseError?.data?.status ||
+						editResponseError?.data?.status
+					}
 					onChange={onChangeHandler}
 				>
 					{RESERVATION_STATUS.map((option) => (
@@ -204,7 +283,11 @@ export default function ReservationForm({
 				>
 					Cancel
 				</Button>
-				<Button disabled={editLoading} type="submit" color="primary">
+				<Button
+					disabled={editLoading || addLoading}
+					type="submit"
+					color="primary"
+				>
 					Submit
 				</Button>
 			</Stack>

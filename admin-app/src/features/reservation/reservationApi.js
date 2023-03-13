@@ -7,6 +7,7 @@ export const reservationApi = apiSlice.injectEndpoints({
 				url: `/resarvations`,
 				params,
 			}),
+			providesTags: ["GetReservations"],
 		}),
 
 		addReservation: builder.mutation({
@@ -15,29 +16,7 @@ export const reservationApi = apiSlice.injectEndpoints({
 				method: "POST",
 				body: data,
 			}),
-			invalidatesTags: ["SummaryStats"],
-			async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-				const patchResult = dispatch(
-					apiSlice.util.updateQueryData(
-						"getReservations",
-						arg.params,
-						(draft) => {
-							const newReservation = { ...arg.data };
-							newReservation.id = draft.results[0] + 1;
-							newReservation.created_at = new Date();
-							newReservation.updated_at = new Date();
-							newReservation.is_active = true;
-
-							draft.results.unshift(newReservation);
-						}
-					)
-				);
-				try {
-					await queryFulfilled;
-				} catch (err) {
-					patchResult.undo();
-				}
-			},
+			invalidatesTags: ["GetReservations", "SummaryStats"],
 		}),
 
 		editReservation: builder.mutation({
@@ -46,30 +25,7 @@ export const reservationApi = apiSlice.injectEndpoints({
 				method: "PATCH",
 				body: data,
 			}),
-			invalidatesTags: ["SummaryStats"],
-			async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-				const patchResult = dispatch(
-					apiSlice.util.updateQueryData(
-						"getReservations",
-						arg.params,
-						(draft) => {
-							const resarvation = draft.results.find((cat) => cat.id == arg.id);
-							if (arg.data.date) resarvation.date = arg.data.date;
-							if (arg.data.time) resarvation.time = arg.data.time;
-							if (arg.data.person) resarvation.person = arg.data.person;
-							if (arg.data.is_active)
-								resarvation.is_active = arg.data.is_active;
-
-							resarvation.updated_at = new Date();
-						}
-					)
-				);
-				try {
-					await queryFulfilled;
-				} catch (err) {
-					patchResult.undo();
-				}
-			},
+			invalidatesTags: ["GetReservations", "SummaryStats"],
 		}),
 
 		deleteReservation: builder.mutation({

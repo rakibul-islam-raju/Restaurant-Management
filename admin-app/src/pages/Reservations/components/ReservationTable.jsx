@@ -2,7 +2,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
-import { Alert, Button, ButtonGroup, Tooltip } from "@mui/material";
+import { Alert, Button, ButtonGroup, Chip, Tooltip } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -30,6 +30,7 @@ export default function CategoryTable({
 						<TableCell align="left">Created At</TableCell>
 						<TableCell align="left">Updated At</TableCell>
 						<TableCell align="left">Active</TableCell>
+						<TableCell align="left">Status</TableCell>
 						<TableCell align="left">Action</TableCell>
 					</TableRow>
 				</TableHead>
@@ -55,6 +56,21 @@ export default function CategoryTable({
 								</TableCell>
 								<TableCell align="left">
 									{new Date(row.updated_at).toLocaleString()}
+								</TableCell>
+								<TableCell align="left">
+									<Chip
+										label={row?.status}
+										variant="filled"
+										color={
+											row?.status === "pending"
+												? "warning"
+												: row?.status === "confirmed"
+												? "success"
+												: row?.status === "cancelled"
+												? "error"
+												: "primary"
+										}
+									/>
 								</TableCell>
 								<TableCell align="left">
 									{row.is_active ? (
