@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: restaurant_db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=restaurant_management
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    networks:
+      - restaurant_management
+
+  api:
+    container_name: restaurant_api
+    build:
+      context: backend
+      dockerfile: ./django.Dockerfile
+    env_file:
+      - ./backend/.env
+    command: >
+      bash -c "python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - restaurant_management
+
+  web_client:
+    container_name: restaurant_web_client
+    build:
+      context: frontend/client-app
+      dockerfile: ./node.Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/client-app/.env.local
+    volumes:
+      - ./frontend/client-app:/app
+    networks:
+      - restaurant_management
+
+  web_admin:
+    container_name: restaurant_web_admin
+    build:
+      context: frontend/admin-app
+      dockerfile: ./node.Dockerfile
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/admin-app/.env.local
+    volumes:
+      - ./frontend/admin-app:/app
+    networks:
+      - restaurant_management
+
+networks:
+  restaurant_management:
